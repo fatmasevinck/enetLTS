@@ -8,4 +8,4 @@ Description: Fully robust versions of the elastic net estimator are introduced f
 Imports: ggplot2, glmnet, robustHD, grid, reshape, parallel, cvTools, stats, robustbase
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
+
