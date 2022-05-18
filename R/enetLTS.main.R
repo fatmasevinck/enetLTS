@@ -1,5 +1,5 @@
-## F. Sevinc KURNAZ 
-## 18 May 2022 
+## Author: F. Sevinc KURNAZ 
+## YTU & TUwien 
 enetLTS <-
    function(xx,
             yy,
