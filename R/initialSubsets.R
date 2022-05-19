@@ -13,8 +13,8 @@ index.subsets.binom <- function(x, y, nsamp){
 ## starting with 500 index subsets sometimes problematic. That is the reason we made it optional
 index.subsets.multinom <- function(x, y, nsamp){
   k <- ncol(y)
-  ysave <<- y
-  xsave <<- x
+  # ysave <<- y
+  # xsave <<- x
   is <- replicate(nsamp,
                   drop(matrix(do.call(rbind,lapply(lapply(1:k,function(c,y){ 
                     sample(which(y[,c]==1),2)},y),matrix)),ncol=1)))
