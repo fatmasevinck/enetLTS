@@ -15,9 +15,9 @@ warmCsteps.mod <-
         startCstep500.fun <- startCstep500.binom
         CStep.fun <- CStep.binom
       } else if (family == "multinomial"){
-        #PF# lambda <- lambdas[1] 
-        ll <- length(lambdas) ### PF changed
-        lambda <- lambdas[ceiling(ll/2)] ### PF changed from lambdas[1] 
+        lambda <- lambdas[1] 
+        # ll <- length(lambdas) ### PF changed
+        # lambda <- lambdas[ceiling(ll/2)] ### PF changed from lambdas[1] 
         startCstep500.fun <- startCstep500.multinom
         CStep.fun <- CStep.multinom
       } 
