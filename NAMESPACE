@@ -6,12 +6,11 @@ import(ggplot2)
 import(grid)
 import(glmnet)
 import(reshape)
+import(robustHD)
 import(stats)
 import(parallel)
-import(robustbase)
 
 importFrom("cvTools", "cvFolds")
-importFrom("robustHD", "lambda0")
 importFrom("graphics", "par")
 importFrom("grDevices", "colorRampPalette")
 
