@@ -48,3 +48,6 @@ winsorize.default <- function(x, standardized = FALSE, centerFun = median,
    }
    x
 }
+
+utils::globalVariables(c("Comp.1", "Comp.2", "Wavelength", "residuals"))
+
