@@ -10,7 +10,7 @@ Print a summary of the \code{enetLTS} object.
 }
 %-------------------------------------------------
 \usage{
-\method{print}{enetLTS}(x,vers=c("reweighted","raw"),zeros=FALSE,...)
+\method{print}{enetLTS}(x,vers=c("reweighted","raw"),...)
 }
 %------------------------------------
 \arguments{
@@ -21,8 +21,6 @@ Print a summary of the \code{enetLTS} object.
   predicting values from the reweighted fit, \code{"raw"} for predicting
   values from the raw fit.}
 
-\item{zeros}{a logical indicating whether to keep zero coefficients
-(\code{FALSE}, the default) or to keep them (\code{TRUE}).}
 
 \item{\dots}{additional arguments from the \code{enetLTS} object if needed.}
 }
@@ -66,8 +64,7 @@ xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
 fit1 <- enetLTS(xout,yout)
 print(fit1)
 print(fit1,vers="raw")
-print(fit1,vers="raw",zeros=TRUE)
-print(fit1,zeros=TRUE)}
+}
 
 ## for binomial
 
@@ -83,8 +80,6 @@ yout <- y                                      # wrong classification for vertic
 fit2 <- enetLTS(xout,yout,family="binomial")
 print(fit2)
 print(fit2,vers="raw")
-print(fit2,vers="raw",zeros=TRUE)
-print(fit2,zeros=TRUE)
 }
 
 ## for multinomial
@@ -107,13 +102,12 @@ yout <- y
 fit3    <- enetLTS(xout,yout,family="multinomial")
 print(fit3)
 print(fit3,vers="raw")
-print(fit3,vers="raw",zeros=TRUE)
-print(fit3,zeros=TRUE)
 }
 }
 
 %-------------------------------------------------
 \keyword{models}
 \keyword{regression}
+
 
 
