@@ -1,6 +1,7 @@
 
+
 print.enetLTS <-
-   function(x,vers=c("reweighted","raw"),zeros=FALSE,...){
+   function(x,vers=c("reweighted","raw"),...){
 
       # require(enetLTS)
       # require(predict.enetLTS)
@@ -11,16 +12,16 @@ print.enetLTS <-
 
       cat("\nCall: ", deparse(x$call), "\n\n")
 
-      coefficients <- coef.enetLTS(x,vers=vers,zeros=zeros)
+      coefficients <- drop(coef.enetLTS(x,vers=vers))
       cat("\nCoefficients:\n")
-      print(coefficients,...)
+      print(unlist(coefficients))
 
-      nCoefficients <- sum(coefficients!=0)
+      nCoefficients <- sum(unlist(coefficients)!=0)
       cat("\n number of the nonzero coefficients:\n")
       print(nCoefficients)
 
-      cat(paste("\n alpha:",x$alpha))
-      cat(paste("\n lambda:",x$lambda))
-      cat(paste("\n lambdaw:",x$lambdaw))
+      cat("\n alpha:",x$alpha)
+      cat("\n lambda:",x$lambda)
+      cat("\n lambdaw:",x$lambdaw)
 
 }
