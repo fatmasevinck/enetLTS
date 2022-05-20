@@ -24,11 +24,11 @@ enetLTS(
     nCsteps=20,
     nfold=5,
     repl=1,
-    ncores=NA,
+    ncores=1,
     tol=-1e6,
     seed=NULL,
     del=0.0125,
-    crit.plot=TRUE,
+    crit.plot=FALSE,
     typegrouped=FALSE,
     type.response=c("link","response","class")
   )
@@ -307,6 +307,9 @@ fit <- enetLTS(xout,yout,family="multinomial",alphas=alphas,lambdas=lambdas)
 \keyword{classification}
 \keyword{sparse}
 \keyword{robust}
+
+
+
 
 
 
