@@ -67,6 +67,8 @@ cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
                            yy = yy,
                            nfold = nfold,
                            repl = repl,
+                           type.convert, 
+                           as.is = TRUE,
                            mc.cores = ncores,
                            mc.allow.recursive = FALSE)
 
