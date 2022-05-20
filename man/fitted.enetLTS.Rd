@@ -73,7 +73,7 @@ yout <- y                                      # wrong classification for vertic
 
 
 \donttest{
-fit2 <- enetLTS(xout,yout,family="binomial",crit.plot=FALSE)
+fit2 <- enetLTS(xout,yout,family="binomial")
 fitted(fit2)
 fitted(fit2,vers="raw")
 fitted(fit2,vers="both",type="class")
@@ -115,5 +115,7 @@ Fatma Sevinc KURNAZ, Irene HOFFMANN, Peter FILZMOSER
 
 \keyword{regression}
 \keyword{classification}
+
+
 
 
