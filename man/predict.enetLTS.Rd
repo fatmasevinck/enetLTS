@@ -95,6 +95,7 @@ fit2 <- enetLTS(xout,yout,family="binomial")
 predict(fit2,newX=xout)
 predict(fit2,newX=xout,type="coefficients")
 predict(fit2,newX=xout,type="nonzero",vers="raw")
+predict(fit2,newX=newX,type="response")
 predict(fit2,newX=newX,type="class")
 predict(fit2,newX=newX,type="coefficients",vers="raw")
 predict(fit2,newX=newX,type="nonzero")
@@ -122,9 +123,10 @@ fit3    <- enetLTS(xout,yout,family="multinomial")
 predict(fit3,newX=xout)
 predict(fit3,newX=xout,type="coefficients")
 predict(fit3,newX=xout,type="nonzero",vers="raw")
-predict(fit3,newX=newX,type="class")
-predict(fit3,newX=newX,type="coefficients",vers="raw")
-predict(fit3,newX=newX,type="nonzero")
+predict(fit3,newX=xout,type="response")
+predict(fit3,newX=xout,type="class")
+predict(fit3,newX=xout,type="coefficients",vers="raw")
+predict(fit3,newX=xout,type="nonzero")
 }
 }
 
@@ -135,5 +137,8 @@ Fatma Sevinc KURNAZ, Irene HOFFMANN, Peter FILZMOSER
 %-------------------------------------------------
 \keyword{regression}
 \keyword{classification}
+
+
+
 
 
