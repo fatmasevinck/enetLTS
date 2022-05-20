@@ -26,8 +26,10 @@ A numeric vector (or a list object for family="multinomial") containing the requ
 \code{\link{predict.enetLTS}},
 \code{\link{coef.enetLTS}}
 }
+
 \examples{
 ## for gaussian
+
 set.seed(86)
 n <- 100; p <- 25                             # number of observations and variables
 beta <- rep(0,p); beta[1:6] <- 1              # 10\% nonzero coefficients
@@ -41,10 +43,13 @@ yout <- c(x \%*\% beta + sigma * eout)        # response
 xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
 
 \donttest{
-fit1 <- enetLTS(xout,yout,alphas=0.5,lambdas=0.05,crit.plot=FALSE)
-nonzeroCoef.enetLTS(fit1)}
+fit1 <- enetLTS(xout,yout)
+nonzeroCoef.enetLTS(fit1)
+nonzeroCoef.enetLTS(fit1,vers="raw")
+}
 
 ## for binomial
+
 eps <-0.05                                     # \%10 contamination to only class 0
 m <- ceiling(eps*n)
 y <- sample(0:1,n,replace=TRUE)
@@ -53,9 +58,11 @@ xout[y==0,][1:m,] <- xout[1:m,] + 10;          # class 0
 yout <- y                                      # wrong classification for vertical outliers
 
 \donttest{
-fit <- enetLTS(xout,yout,family="binomial",alphas=0.5,lambdas=0.05,crit.plot=FALSE)
-nonzeroCoef.enetLTS(fit2,vers="reweighted")
+fit2 <- enetLTS(xout,yout,family="binomial")
+nonzeroCoef.enetLTS(fit2)
+nonzeroCoef.enetLTS(fit2,vers="raw")
 }
+
 
 ## for multinomial
 
@@ -75,9 +82,12 @@ yout <- y
 
 \donttest{
 fit3    <- enetLTS(xout,yout,family="multinomial")
-nonzeroCoef.enetLTS(fit3,vers="reweighted")
+nonzeroCoef.enetLTS(fit3)
+nonzeroCoef.enetLTS(fit3,vers="raw")
+
 }
 }
+
 
 \author{
 Fatma Sevinc KURNAZ, Irene HOFFMANN, Peter FILZMOSER
@@ -85,5 +95,6 @@ Fatma Sevinc KURNAZ, Irene HOFFMANN, Peter FILZMOSER
 
 \keyword{regression}
 \keyword{classification}
+
 
 
