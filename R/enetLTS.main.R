@@ -14,17 +14,17 @@ enetLTS <-
             nCsteps=20,
             nfold=5,
             repl=1,
-            ncores=NA,
+            ncores=1,
             tol=-1e6,
             seed=NULL,
             del=0.0125,
-            crit.plot=TRUE,
+            crit.plot=FALSE,
             typegrouped=FALSE,
             type.response=c("link","response","class"))
    {
 
       matchedCall      <- match.call()
-      matchedCall[[1]] <- as.name("enetLTS.main")
+      matchedCall[[1]] <- as.name("enetLTS")
       family           <- match.arg(family)
       #type <- match.arg(type)
 
@@ -109,4 +109,5 @@ enetLTS <-
       output$call   <- matchedCall
       output
    }
+
 
