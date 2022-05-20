@@ -54,7 +54,7 @@ yout <- c(x \%*\% beta + sigma * eout)        # response
 xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
 
 \donttest{
-fit1 <- enetLTS(xout,yout,crit.plot=FALSE)
+fit1 <- enetLTS(xout,yout)
 coef(fit1)
 coef(fit1,vers="raw")
 coef(fit1,vers="reweighted",zeros=FALSE)
@@ -71,7 +71,7 @@ xout[y==0,][1:m,] <- xout[1:m,] + 10;          # class 0
 yout <- y                                      # wrong classification for vertical outliers
 
 \donttest{
-fit2 <- enetLTS(xout,yout,family="binomial",crit.plot=FALSE)
+fit2 <- enetLTS(xout,yout,family="binomial")
 coef(fit2)
 coef(fit2,vers="reweighted")
 coef(fit2,vers="raw",zeros=FALSE)
