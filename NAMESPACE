@@ -6,21 +6,23 @@ import(ggplot2)
 import(grid)
 import(glmnet)
 import(reshape)
-import(robustHD)
 import(parallel)
-import(robustbase)
 import(stats)
+import(robustHD)
 
+
+importFrom("robustbase","covMcd")
 importFrom("cvTools", "cvFolds")
 importFrom("graphics", "par")
 importFrom("grDevices", "colorRampPalette")
 
 
+
+S3method(residuals, enetLTS)
+S3method(weights, enetLTS)
+S3method(plot, enetLTS)
 S3method(coef, enetLTS)
 S3method(fitted, enetLTS)
 S3method(predict, enetLTS)
 S3method(print, enetLTS)
-S3method(residuals, enetLTS)
-S3method(weights, enetLTS)
-S3method(plot, enetLTS)
 
