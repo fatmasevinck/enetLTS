@@ -1,24 +1,24 @@
 
-cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
+cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas, 
                             nfold, repl, ncores, plot=TRUE){
    family <- "gaussian"
-   RTMSPE <- RMSPE <- NULL
+   # RTMSPE <- RMSPE <- NULL
    wh <- (alphas<0 | alphas>1)
    if (sum(wh)>0) stop ("alphas can take the values only between 0 and 1")
    if (missing(alphas)) stop ("provide an alphas sequence")
    if (missing(lambdas)) stop ("provide an lambdas sequence")
-
+   
    combis_ind <- expand.grid(1:length(alphas), 1:length(lambdas))
    indcombi <- 1:nrow(combis_ind)
-
-   calc_evalCrit <- function(rowind, combis_ind, alphas, lambdas,
+   
+   calc_evalCrit <- function(rowind, combis_ind, alphas, lambdas, 
                              index, xx, yy, nfold, repl){
-
+      
       i <- combis_ind[rowind, 1] # alphas
       j <- combis_ind[rowind, 2] # lambdas
       alpha <- alphas[i]
       lambda <- lambdas[j]
-
+      
       if (is.null(index)) {
          x <- xx
          y <- yy } else {
@@ -69,10 +69,10 @@ cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
                            repl = repl,
                            mc.cores = ncores,
                            mc.allow.recursive = FALSE)
-
+   
    evalCrit <- matrix(unlist(temp_result), ncol = length(lambdas) , byrow = FALSE) # row alphas, col lambdas
    dimnames(evalCrit) <- list(paste("alpha", alphas), paste("lambda", lambdas))
-
+   
    optind <- which(evalCrit == min(evalCrit, na.rm = TRUE), arr.ind = TRUE)[1, ]
    alpha_optind <- unlist(optind[1])  # row
    lambda_optind <- unlist(optind[2])  # col
@@ -82,8 +82,7 @@ cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
    lambdas <- round(lambdas,4)
    alpha <- alphas[alpha_optind]
    lambda <- lambdas[lambda_optind]
-
-    
+   
    if (plot==TRUE){
       print(paste("optimal model: lambda =", lambda, "alpha =", alpha))
       lenCol <- length(alphas)*length(lambdas)
@@ -97,19 +96,21 @@ cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
          names(ggmspe) <- c("lambda", "alpha", "RTMSPE")
          mspeplot <- ggplot(ggmspe, aes(x=as.factor(alpha), y=as.factor(lambda), fill=RTMSPE)) +
             geom_tile() +  scale_fill_gradientn(colours=mycol.b) + theme(axis.text.x=element_text(angle=-90))
-         mspeplot <- mspeplot + ggtitle(paste0("RTMSPE (minimum at lambda=", lambda,",alpha=",alpha,", ",family,")"))
+         mspeplot <- mspeplot + ggtitle(paste0("RTMSPE (optimal at lambda=", lambda,",alpha=",alpha,", ",family,")"))
       } else {
          names(ggmspe) <- c("lambda", "alpha", "RMSPE")
          mspeplot <- ggplot(ggmspe, aes(x=as.factor(alpha), y=as.factor(lambda), fill=RMSPE)) +
             geom_tile() +  scale_fill_gradientn(colours=mycol.b) + theme(axis.text.x=element_text(angle=-90))
-         mspeplot <- mspeplot + ggtitle(paste0("RMSPE (minimum at lambda=", lambda, ",alpha=", alpha, ", ", family,")"))
+         mspeplot <- mspeplot + ggtitle(paste0("RMSPE (optimal at lambda=", lambda, ",alpha=", alpha, ", ", family,")"))
       }
       mspeplot <- mspeplot + xlab("lambda") +  ylab("alpha")
       grid.newpage()
       pushViewport(viewport(layout=grid.layout(1,1)))
       print(mspeplot, vp=viewport(layout.pos.row=1, layout.pos.col=1))
    }
-
+   
    return(list(indexbest=indexbest,evalCrit=evalCrit,minevalCrit=minevalCrit,lambdaopt=lambda,alphaopt=alpha))
 }
+
+
 
