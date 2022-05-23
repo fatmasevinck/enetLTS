@@ -83,11 +83,12 @@ cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
    alpha <- alphas[alpha_optind]
    lambda <- lambdas[lambda_optind]
 
+    
    if (plot==TRUE){
       print(paste("optimal model: lambda =", lambda, "alpha =", alpha))
       lenCol <- length(alphas)*length(lambdas)
       mycol.b <- colorRampPalette(c("black", "blue2", "purple", "orange", "yellow"))(lenCol)
-
+      
       ggmspe <- evalCrit
       rownames(ggmspe) <- alphas
       colnames(ggmspe) <- lambdas
@@ -96,12 +97,12 @@ cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
          names(ggmspe) <- c("lambda", "alpha", "RTMSPE")
          mspeplot <- ggplot(ggmspe, aes(x=as.factor(alpha), y=as.factor(lambda), fill=RTMSPE)) +
             geom_tile() +  scale_fill_gradientn(colours=mycol.b) + theme(axis.text.x=element_text(angle=-90))
-         mspeplot <- mspeplot + ggtitle(paste0("RTMSPE (optimal at lambda=", lambda,",alpha=",alpha,", ",family,")"))
+         mspeplot <- mspeplot + ggtitle(paste0("RTMSPE (minimum at lambda=", lambda,",alpha=",alpha,", ",family,")"))
       } else {
          names(ggmspe) <- c("lambda", "alpha", "RMSPE")
          mspeplot <- ggplot(ggmspe, aes(x=as.factor(alpha), y=as.factor(lambda), fill=RMSPE)) +
             geom_tile() +  scale_fill_gradientn(colours=mycol.b) + theme(axis.text.x=element_text(angle=-90))
-         mspeplot <- mspeplot + ggtitle(paste0("RMSPE (optimal at lambda=", lambda, ",alpha=", alpha, ", ", family,")"))
+         mspeplot <- mspeplot + ggtitle(paste0("RMSPE (minimum at lambda=", lambda, ",alpha=", alpha, ", ", family,")"))
       }
       mspeplot <- mspeplot + xlab("lambda") +  ylab("alpha")
       grid.newpage()
