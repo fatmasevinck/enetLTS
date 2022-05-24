@@ -61,11 +61,11 @@ If you already have package devtools installed, the first line can be skipped.
 Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. 
 
 ```{r, echo = FALSE, eval = FALSE}
-# install and load package
-install.packages("enetLTS")
-library(enetLTS)
-# fit the model for family="gaussian"
-fit.gaussian <- enetLTS(X,y)
+> # install and load package
+> install.packages("enetLTS")
+> library(enetLTS)
+> # fit the model for family="gaussian"
+> fit.gaussian <- enetLTS(X,y)
 ```
 
 Several plots are available for the results: plotCoef.enetLTS() visualizes the coefficients, 
