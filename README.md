@@ -29,14 +29,18 @@ final model estimates.
 
 Package `enetLTS` is on CRAN (The Comprehensive R Archive Network), hence the latest release can be easily installed from the R command as follows
 
-install.packages("enetLTS")
+```R
+> install.packages("enetLTS")
+```
 
 ## Building from source
 
 To install the latest (possibly unstable) version from GitHub, you can pull this repository and install it from the R command line as follows
 
-install.packages("devtools")
-devtools::install_github("fatmasevinck/enetLTS")
+```R
+> install.packages("devtools")
+> devtools::install_github("fatmasevinck/enetLTS")
+```
 
 If you already have package devtools installed, the first line can be skipped.
 
