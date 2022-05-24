@@ -56,13 +56,27 @@ To install the latest (possibly unstable) version from GitHub, you can pull this
 If you already have package devtools installed, the first line can be skipped.
 
 
-# Problem definition 
+# Example: Robust and Sparse Linear Regression
 
-Suppose the model is 
+Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. 
 
-$$
-y = X\beta + \varepsilon
-$$
+```{r, echo = FALSE, eval = FALSE}
+# install and load package
+install.packages("enetLTS")
+library(enetLTS)
+# fit the model for family="gaussian"
+fit.gaussian <- enetLTS(X,y)
+```
+
+Several plots are available for the results: plotCoef.enetLTS() visualizes the coefficients, 
+plotResid.enetLTS() plots the values of residuals vs fitted values, 
+and plotDiagnostic.enetLTS() allows to produce various diagnostic
+plots for the final model fit. 
+Examples of these plots are shown in Figure \ref{fig:plotexamples}.
+
+# Example: Robust and Sparse Binary Regression 
+
+# Example: Robust and Sparse Multinomial Regression
 
 # Citation info
 
