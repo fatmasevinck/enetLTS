@@ -1,26 +1,23 @@
 ---
-title: 'Paper title'
+title: '`enetLTS`: Robust and Sparse Methods for High Dimensional Linear and binary and Multinomial Regression'
 tags:
   - R
   - Robust regression
+  - Elastic net
   - outlier detection
 authors:
-  - name: Author 1
-    orcid: 0000-0000-0000-0000
+  - name: Fatma Sevinc KURNAZ
+    orcid: 0000-0002-5958-7366 
     affiliation: 1
-  - name: Author 2
-    orcid: 0000-0000-0000-0000
+  - name: Peter FILZMOSER
+    orcid: 0000-0002-8014-4682
     affiliation: 2
-  - name: Author 3
-    orcid: 0000-0000-0000-0000
-    affiliation: 3
 affiliations:
- - name: Department of X, Y University, Istanbul, Türkiye
+ - name: Department of Statistics, ildiz Technical University, Istanbul, Turkey
    index: 1
- - name: Department of X, Y University, Istanbul, Türkiye
+ - name: Institute of Statistics and Mathematical Methods in Economics, TU Wien, Vienna, Austria
    index: 2
- - name: Department of X, Y University, Istanbul, Türkiye
-   index: 3
+
 
 
 date: 24 May 2022
