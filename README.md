@@ -28,8 +28,11 @@ final model estimates.
 ## Implemented Methods 
 
 - `enetLTS()`: elastic net trimmed squared regression for families:
+
    1- `gaussian`
+
    2- `binomial`
+   
    3- `multinomial`
                                                                   
 
