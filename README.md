@@ -2,7 +2,7 @@
 
 ## Summary
 
-`enetLTS` is an R ([Development Core Team, 2021](https://www.R-project.org/)) package that provides a fully robust version of 
+`enetLTS` is an `R` package that provides a fully robust version of 
 elastic net estimator for high dimensional linear and logistic (including 
 binary and multinomial) regression. The elastic net penalization provides 
 intrinsic variable selection and coefficient estimates for highly correlated 
@@ -82,7 +82,4 @@ Examples of these plots are shown in Figure \ref{fig:plotexamples}.
 
 Friedman J., Hastie T. and Tibshirani R. (2010) Regularization paths for generalized linear models via coordinate descent. Journal of Statistical Software, 33(1), 1-22. DOI
 [10.1163/ej.9789004178922.i-328.7](https://www.jstatsoft.org/article/download/v033i01/361)
-
-Development Core Team, (2021), R Foundation for Statistical Computing Vienna Austria. 
-(https://www.R-project.org/).
 
