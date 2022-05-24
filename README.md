@@ -2,7 +2,7 @@
 
 ## Summary
 
-`enetLTS` is an R ([Development core Team, 2021](https://www.R-project.org/)) package that provides a fully robust version of 
+`enetLTS` is an R ([Development Core Team, 2021](https://www.R-project.org/)) package that provides a fully robust version of 
 elastic net estimator for high dimensional linear and logistic (including 
 binary and multinomial) regression. The elastic net penalization provides 
 intrinsic variable selection and coefficient estimates for highly correlated 
