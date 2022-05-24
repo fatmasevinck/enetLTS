@@ -68,18 +68,6 @@ literature e.g. [@Insolia21b; @Insolia21a; @Monti21],
 as well as in empirical research e.g. [@Segaert18; @Jensch22].
 
 
-
-Some text.... 
-Here is the sample reference [@Insolia21a]
-
-[@Alfons21R]
-
-
-# Statement of need 
-
-Yet another section
-
-
 # Installation and basic usage
 
 Sample code 
@@ -88,12 +76,48 @@ Sample code
 > install.packages("enesLTS")
 ```
 
-Sample equation 
 
-$$
-y = \beta_0 + \beta_1 x + \varepsilon
-$$
+# Mathematics
 
-References will automatically be placed in the references part. 
+Package `enetLTS` fits the linear regression, binary and multinomial regression via penalized maximum likelihood solving the following problem:
+
+\begin{equation}
+\label{eq:mlproblem}
+\operatorname*{arg\,min}_{\pmb{\beta}}
+\left\{\sum_{i=1}^h \ell_i(y_i,\beta_0+x_i^T\pmb{\beta}) + h\lambda\left[(1-\alpha)\frac{1}{2} \sum_{j=1}^p\pmb{\beta}_j^2 + \alpha \sum_{j=1}^p|\pmb{\beta}_j|\right]
+\right\}
+\end{equation}
+
+In the equation \autoref{eq:mlproblem}, $\ell_i(y_i,\beta_0+x_i^T\pmb{\beta})$ corresponds to the negative log-likelihood contribution belonging to the `family` for observation $i$. The non-negative tuning parameter $\lambda$ controls the entire strength of the
+penalty. The tuning parameter $\alpha \in [0,1]$ allows to mix the
+proportion of the ridge ($L_2$) and the lasso ($L_1$) penalty.
+
+# Example: Robust and Sparse Linear Regression
+
+Like many other packages, the esy way to use the package `enetLTS` is to install it directly from `CRAN`. 
+
+```{r, echo = FALSE, eval = FALSE}
+# install and load package
+install.packages("enetLTS")
+library(enetLTS)
+# fit the model for family="gaussian"
+fit.gaussian <- enetLTS(X,y)
+```
+
+Several plots are available for the results: plotCoef.enetLTS() visualizes the coefficients, 
+plotResid.enetLTS() plots the values of residuals vs fitted values, 
+and plotDiagnostic.enetLTS() allows to produce various diagnostic
+plots for the final model fit. 
+Examples of these plots are shown in Figure \ref{fig:plotexamples}.
+
+
+# Example: Robust and Sparse Binary Regression
+
+
+
+
+# Example: Robust and Sparse Multinomial Regression
+
+
 
 # References
