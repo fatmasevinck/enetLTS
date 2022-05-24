@@ -64,7 +64,7 @@ Package `enetLTS` therefore provides
 researchers with access to robust solutions and variable selection at the same time
 with high-dimensional linear and logistic regression data. 
 It has been used in many benchmarking studies in the statistical
-literature e.g. [@Insolia21a; @Insolia21b; Monti21], 
+literature e.g. [@Insolia21a; @Insolia21b; @Monti21], 
 as well as in empirical research e.g. [@Segaert18; @Jensch22].
 
 
