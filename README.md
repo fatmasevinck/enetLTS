@@ -80,7 +80,8 @@ Examples of these plots are shown in Figure \ref{fig:plotexamples}.
 
 # References 
 
-Friedman J., Hastie T. and Tibshirani R. (2010) Regularization paths for generalized linear models via coordinate descent. Journal of Statistical Software, 33(1), 1-22. DOI[10.1163/ej.9789004178922.i-328.7](https://www.jstatsoft.org/article/download/v033i01/361)
+Friedman J., Hastie T. and Tibshirani R. (2010) Regularization paths for generalized linear models via coordinate descent. Journal of Statistical Software, 33(1), 1-22. DOI
+[10.1163/ej.9789004178922.i-328.7](https://www.jstatsoft.org/article/download/v033i01/361)
 
 
 
