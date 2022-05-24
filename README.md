@@ -14,7 +14,7 @@ The main idea of the algorithm is to search for outlier-free subsets on which th
 net estimators can be applied. Outlier-free subsets are determined by trimming 
 the penalized log-likelihood function belonging to the regression model. 
 The algorithm starts with 500 elemental subsets
-only for one combination of \eqn{\alpha} and \eqn{\lambda}, and takes the *warm start* strategy
+only for one combination of $\alpha$ and $\lambda$, and takes the *warm start* strategy
 for subsequent combinations in order to save the computation time.
 The final reweighting step is added to improve the statistical 
 efficiency of the proposed methods. 
