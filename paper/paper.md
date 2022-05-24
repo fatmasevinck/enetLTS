@@ -27,7 +27,7 @@ bibliography: paper.bib
 # Summary
 
 
-`enetLTS` is an R [@R21] package that provides a fully robust version of 
+`enetLTS` is an `R` package that provides a fully robust version of 
 elastic net estimator for high dimensional linear and logistic (including 
 binary and multinomial) regression. The elastic net penalization provides 
 intrinsic variable selection and coefficient estimates for highly correlated 
@@ -70,7 +70,7 @@ as well as in empirical research e.g. [@Segaert18; @Jensch22].
 
 # Example: Robust and Sparse Linear Regression
 
-Like many other packages, the esy way to use the package `enetLTS` is to install it directly from `CRAN`. 
+Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. 
 
 ```R
 > # install and load package
