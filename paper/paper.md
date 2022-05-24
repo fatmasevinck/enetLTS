@@ -97,8 +97,8 @@ Examples of these plots are shown in Figure \ref{fig:plotexamples}.
 
 # Related Software
 
-Package robustHD provides the sparseLTS estimator for linear regression based on the trimming idea for high dimensional linear regression [@Alfons21R]. Package pense provides implementations of robust S- and MM-type estimators using elastic net
-regularization for linear regression [@Keplinger21]. Package glmnet implements the elastic net estimator for generalized linear regression models [@Friedman21R]. Moreover, the procedure of the R package \textit{enetLTS}~[@Kurnaz22Rcran]. is implemented using internally the R package \textit{glmnet} [@Friedman21R].  
+Package `robustHD` provides the sparseLTS estimator for linear regression based on the trimming idea for high dimensional linear regression [@Alfons21R]. Package `pense` provides implementations of robust S- and MM-type estimators using elastic net
+regularization for linear regression [@Keplinger21]. Package `glmnet` implements the elastic net estimator for generalized linear regression models [@Friedman21R]. Moreover, the procedure of the R package `enetLTS` [@Kurnaz22Rcran]. is implemented using internally the R package `glmnet` [@Friedman21R].  
 
 
 # Acknowledgements
