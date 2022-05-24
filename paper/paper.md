@@ -1,5 +1,5 @@
 ---
-title: '`enetLTS`: Robust and Sparse Methods for High Dimensional Linear and binary and Multinomial Regression'
+title: '`enetLTS`: Robust and Sparse Methods for High Dimensional Linear and Binary and Multinomial Regression'
 tags:
   - R
   - Robust regression
