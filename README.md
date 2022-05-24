@@ -60,7 +60,7 @@ If you already have package devtools installed, the first line can be skipped.
 
 Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. 
 
-```{r, echo = FALSE, eval = FALSE}
+```R
 > # install and load package
 > install.packages("enetLTS")
 > library(enetLTS)
