@@ -13,7 +13,7 @@ authors:
     orcid: 0000-0002-8014-4682
     affiliation: 2
 affiliations:
- - name: Department of Statistics, ildiz Technical University, Istanbul, Turkey
+ - name: Department of Statistics, Yildiz Technical University, Istanbul, Turkey
    index: 1
  - name: Institute of Statistics and Mathematical Methods in Economics, TU Wien, Vienna, Austria
    index: 2
