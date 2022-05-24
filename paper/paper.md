@@ -45,7 +45,7 @@ The final reweighting step is added to improve the statistical
 efficiency of the proposed methods. 
 From this point of view, the enet-LTS estimator can be seen as trimmed version 
 of the elastic net regression estimator for linear, binary and multinomial 
-regression ([@Friedman10](https://www.jstatsoft.org/article/download/v033i01/361)). 
+regression [@Friedman10]. 
 Selecting optimal model with optimal tuning parameters is done via cross-validation, 
 and various plots are available to illustrate model selection and to evaluate the 
 final model estimates. 
