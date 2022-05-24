@@ -27,13 +27,13 @@ bibliography: paper.bib
 # Summary
 
 
-`enetLTS` is an R ([Development Core Team, 2021](https://www.R-project.org/)) package that provides a fully robust version of 
+`enetLTS` is an R [@R21] package that provides a fully robust version of 
 elastic net estimator for high dimensional linear and logistic (including 
 binary and multinomial) regression. The elastic net penalization provides 
 intrinsic variable selection and coefficient estimates for highly correlated 
 variables in particular for high-dimensional low sample size 
 data sets, and it has been extended to generalized linear regression models 
-([Friedman et al. 2010](https://www.jstatsoft.org/article/download/v033i01/361)). 
+[@Friedman10]. 
 Combining these advantages with trimming idea yields the robust solutions.
 The main idea of the algorithm is to search for outlier-free subsets on which the classical elastic 
 net estimators can be applied. Outlier-free subsets are determined by trimming 
@@ -57,15 +57,15 @@ final model estimates.
 
 A number of new robust linear regression methods have been developed during the last 
 decade to improve the calculation for high dimensional linear regression, such as 
-`[@Alfons21R:2021; @Keplinger21R:2021]`. 
+[@Alfons21R; @Keplinger21R]. 
 However, to the best of our knowledge, the robust logistic (both binary and multinomial) 
 regression for high dimensional data is not available in elsewhere.
 Package `enetLTS` therefore provides
 researchers with access to robust solutions and variable selection at the same time
 with high-dimensional linear and logistic regression data. 
 It has been used in many benchmarking studies in the statistical
-literature e.g. `[@Insolia21a:2021; @Insolia21b:2021; Monti21:2021]`, 
-as well as in empirical research e.g. `[@Segaert18:2018; @Jensch22:2022]`.
+literature e.g. [@Insolia21a; @Insolia21b; Monti21], 
+as well as in empirical research e.g. [@Segaert18; @Jensch22].
 
 
 
