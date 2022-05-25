@@ -109,7 +109,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
     if (vers=="reweighted"){
       mainfit          <- paste("Standardized Residuals vs Index for Regression")
       xlab             <- "Index"
-      ylab             <- "Residuals"
+      ylab             <- "Standardized residuals"
       lab.val          <- c("regular observation","outliers")
       classification   <- factor(as.numeric(!object$raw.wt==0))
       ind              <- factor(as.numeric(object$raw.wt==0))
@@ -122,7 +122,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
     } else if (vers=="raw"){
       mainfit          <- paste("Standardized Raw Residuals vs Index for Regression")
       xlab             <- "Index"
-      ylab             <- "Raw residuals"
+      ylab             <- "Standardized raw residuals"
       lab.val          <- c("best subset","outliers")
       residuals        <- y - x %*% raw.coefficients
       residuals        <- residuals/mad(residuals)
@@ -203,7 +203,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       if (vers=="reweighted"){
         mainfit          <- expression(paste("Standardized Residuals vs ", X*hat(beta), " for Linear Regression"))
         xlab             <- expression(X*hat(beta))
-        ylab             <- "Standarddized residuals"
+        ylab             <- "Standardized residuals"
         lab.val          <- c("regular observation","outliers")
         classification   <- factor(as.numeric(!object$raw.wt==0))
         ind              <- factor(as.numeric(object$raw.wt==0))
@@ -216,7 +216,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       } else if (vers=="raw"){
         mainfit          <- expression(paste("Standardized Raw Residuals vs ", X*hat(beta)[raw], " for Linear Regression"))
         xlab             <- expression(X*hat(beta)[raw])
-        ylab             <- "Stamdardized raw residuals"
+        ylab             <- "Standardized raw residuals"
         lab.val          <- c("best subset","outliers")
         residuals        <- y - x %*% raw.coefficients
         residuals        <- residuals/mad(residuals)
