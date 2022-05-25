@@ -58,7 +58,8 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
             axis.text.x  = element_text(size = 13),
             legend.text  = element_text(size = 13),
             legend.title = element_text(size = 13),
-            legend.position = "bottom") +
+            legend.position = "bottom")+
+      guides(color=guide_legend(nrow=2, byrow=TRUE)) +
       scale_colour_discrete(name= "Groups") +
       # scale_shape_discrete(name = "Diagnostics", breaks=c("0", "1"), labels = lab.val)
       scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val)
