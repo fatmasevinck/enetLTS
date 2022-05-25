@@ -48,6 +48,7 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
             legend.text  = element_text(size = 13),
             legend.title = element_text(size = 13),
             legend.position = "bottom") +
+      guides(color=guide_legend(nrow=2, byrow=TRUE)) +
       scale_colour_discrete(name= "Groups") +
       scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val)
     print(plot)
