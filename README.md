@@ -62,16 +62,16 @@ We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/c
 the explanatory variable is determined by the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. This data set is available in package `robustHD`.
 
 ```R
-# load data
-library("robustHD")
-data("nci60")  # contains matrices 'protein' and 'gene'
+> # load data
+> library("robustHD")
+> data("nci60")  # contains matrices 'protein' and 'gene'
 
-# define response variable
-y <- protein[, 92]
-# screen most correlated predictor variables
-correlations <- apply(gene, 2, corHuber, y)
-keep <- partialOrder(abs(correlations), 100, decreasing = TRUE)
-X <- gene[, keep]
+> # define response variable
+> y <- protein[, 92]
+> # screen most correlated predictor variables
+> correlations <- apply(gene, 2, corHuber, y)
+> keep <- partialOrder(abs(correlations), 100, decreasing = TRUE)
+> X <- gene[, keep]
 ```
 
 Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. 
