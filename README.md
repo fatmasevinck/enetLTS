@@ -87,8 +87,8 @@ Like many other packages, the easy way to use the package `enetLTS` is to instal
 > fit.gaussian
 > enetLTS estimator 
 >
-> Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas,      lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE,  
-> hsize = > 0.75, nsamp = 500, nCsteps = 20, nfold = 5, repl = 1,      ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+> Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE,  
+> hsize = > 0.75, nsamp = 500, nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
 > 
 >
 > Coefficients:
