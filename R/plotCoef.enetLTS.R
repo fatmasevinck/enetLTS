@@ -33,7 +33,9 @@ plotCoef.enetLTS <- function(object,vers=c("reweighted","raw"),
                 axis.text.x=element_text(angle=90),
                 axis.text.y=element_text(size = 13),
                 axis.title.x=element_blank(),
-                axis.title.y=element_blank()) +
+                axis.title.y=element_blank(),
+                legend.position = "bottom") +
+          guides(color=guide_legend(nrow=2, byrow=TRUE)) +
           scale_x_continuous("", labels = as.character(1:nrow(coefficients)),
                              breaks = 1:nrow(coefficients))
         print(plot)
@@ -52,7 +54,9 @@ plotCoef.enetLTS <- function(object,vers=c("reweighted","raw"),
                 axis.text.x=element_text(angle=90),
                 axis.text.y=element_text(size = 13),
                 axis.title.x=element_blank(),
-                axis.title.y=element_blank()) +
+                axis.title.y=element_blank(),
+                legend.position = "bottom") +
+          guides(color=guide_legend(nrow=2, byrow=TRUE)) +
           scale_x_continuous("", labels = as.character(1:nrow(raw.coefficients)), breaks = 1:nrow(raw.coefficients))
         print(raw.plot)
       }
