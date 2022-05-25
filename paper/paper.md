@@ -163,9 +163,7 @@ and `plotDiagnostic.enetLTS()` allows to produce various diagnostic
 plots for the final model fit. 
 Examples of these plots are shown in Figure \ref{fig:plotexamples}.
 
-![coef (left); diagnostic (right)\label{fig:plotexamples}](JOSSgausPlotDiagnosticNCI60.pdf.png)
-
-![coef (left); diagnostic (right)\label{fig:plotexamples}](JOSSgausPlotResidNCI60aa.pdf.png)
+![coef (left); diagnostic (right)\label{fig:plotexamples}](gausFigures.png)
 
 # Example: Robust and Sparse Binary Regression
 
