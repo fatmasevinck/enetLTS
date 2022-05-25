@@ -38,7 +38,7 @@ final model estimates.
 
 ## Installation
 
-Package `enetLTS` is on CRAN (The Comprehensive R Archive Network), hence the latest release can be easily installed from the `R` command as follows
+Package `enetLTS` is on CRAN (The Comprehensive `R` Archive Network), hence the latest release can be easily installed from the `R` command as follows
 
 ```R
 > install.packages("enetLTS")
