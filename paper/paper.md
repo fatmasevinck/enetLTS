@@ -70,6 +70,22 @@ as well as in empirical research e.g. [@Segaert18; @Jensch22].
 
 # Example: Robust and Sparse Linear Regression
 
+We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data in order to illustrate the functionality of the `enetLTS` model for linear regression. As in ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)), the response variable is determined by the protein expressions for a specific protein, which is 92th protein, and
+the explanatory variable is determined by the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. This data set is available in package `robustHD`.
+
+```R
+> # load data
+> library("robustHD")
+> data("nci60")  # contains matrices 'protein' and 'gene'
+
+> # define response variable
+> y <- protein[, 92]
+> # screen most correlated predictor variables
+> correlations <- apply(gene, 2, corHuber, y)
+> keep <- partialOrder(abs(correlations), 100, decreasing = TRUE)
+> X <- gene[, keep]
+```
+
 Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. 
 
 ```R
@@ -78,11 +94,52 @@ Like many other packages, the easy way to use the package `enetLTS` is to instal
 > library(enetLTS)
 > # fit the model for family="gaussian"
 > fit.gaussian <- enetLTS(X,y)
+> [1] "optimal model: lambda = 0.1391 alpha = 0.6"
+>
+> fit.gaussian
+> enetLTS estimator 
+>
+> Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE,  
+>   hsize = > 0.75, nsamp = 500, nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+> 
+>
+> Coefficients:
+>            1            2            3            4            5            6            7            8            9 
+> -5.227875054  0.240931448  0.000000000  0.116076316  0.027573388  0.000000000  0.000000000  0.000000000  0.000000000 
+>           10           11           12           13           14           15           16           17           18 
+>  0.041368849  0.000000000  0.000000000  0.032874491  0.000000000  0.000000000  0.000000000  0.000000000  0.391369317 
+>           19           20           21           22           23           24           25           26           27 
+>  0.053524802  0.000000000  0.000000000  0.000000000  0.000000000  0.028517873 -0.257094024  0.000000000  0.000000000 
+>           28           29           30           31           32           33           34           35           36 
+>  0.000000000 -0.095686659  0.000000000  0.000000000  0.000000000  0.093010871  0.000000000  0.000000000  0.000000000 
+>           37           38           39           40           41           42           43           44           45 
+>  0.000000000  0.000000000  0.055097698 -0.158542779  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000 
+>           46           47           48           49           50           51           52           53           54 
+>  0.000000000 -0.042666773  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000 
+>           55           56           57           58           59           60           61           62           63 
+>  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000 
+>           64           65           66           67           68           69           70           71           72 
+> -0.013522905  0.000000000  0.000000000  0.000000000  0.000000000  0.129058794  0.000000000  0.088705925  0.000000000 
+>           73           74           75           76           77           78           79           80           81 
+>  0.097641709  0.082569621  0.000000000  0.000000000  0.111312062  0.000000000  0.000000000  0.000000000  0.000000000 
+>           82           83           84           85           86           87           88           89           90 
+>  0.000000000  0.000000000  0.000000000  0.119835636 -0.046678268  0.000000000 -0.049993645  0.000000000  0.000000000 
+>           91           92           93           94           95           96           97           98           99 
+>  0.005319332  0.183509787  0.000000000  0.000000000  0.000000000 -0.002034250  0.000000000  0.000000000  0.040520680 
+>          100          101 
+>  0.000000000  0.030654977 
+> 
+>  number of the nonzero coefficients:
+> [1] 29
+> 
+>  alpha: 0.6
+>  lambda: 0.1391
+>  lambdaw: 0.07545663
 ```
 
-Several plots are available for the results: plotCoef.enetLTS() visualizes the coefficients, 
-plotResid.enetLTS() plots the values of residuals vs fitted values, 
-and plotDiagnostic.enetLTS() allows to produce various diagnostic
+Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients, 
+`plotResid.enetLTS()` plots the values of residuals vs fitted values, 
+and `plotDiagnostic.enetLTS()` allows to produce various diagnostic
 plots for the final model fit. 
 Examples of these plots are shown in Figure \ref{fig:plotexamples}.
 
