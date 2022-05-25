@@ -46,7 +46,8 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
             axis.text.y  = element_text(size = 13),
             axis.text.x  = element_text(size = 13),
             legend.text  = element_text(size = 13),
-            legend.title = element_text(size = 13)) +
+            legend.title = element_text(size = 13),
+            legend.position = "bottom") +
       scale_colour_discrete(name= "Groups") +
       scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val)
     print(plot)
@@ -96,7 +97,8 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
             axis.text.y  = element_text(size = 13),
             axis.text.x  = element_text(size = 13),
             legend.text  = element_text(size = 13),
-            legend.title = element_text(size = 13)) +
+            legend.title = element_text(size = 13),
+            legend.position = "bottom") +
       scale_colour_discrete(name = "Diagnostics", breaks = c("1", "0"), labels = lab.val) +
       scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val); options(warn = - 1)
     print(plot)
