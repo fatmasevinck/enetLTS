@@ -123,6 +123,13 @@ Coefficients:
  lambdaw: 0.07545663
 ```
 
+`enetLTS()` 
+
+The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on 
+certain grids for $\alpha$ and $\lambda$. 
+Evaluation criterion for 5-fold cross-validation is summarized by heatmap for users if the arguman 
+is chosen as `crit.plot="TRUE"`.
+
 ![Heatmap for 5-fold cross-validation](paper/JOSSgausHeatMap.png)
 
 
@@ -133,7 +140,8 @@ plots for the final model fit.
 
 ![residuals (left); diagnostic (right)\label{fig:plotexamples}{width=%110}](paper/JOSSgausNCI60.png)
 
-Examples of the residuals plot (left) and the diagnostic plot (right) for output of function `enetLTS()` with the arguman `family="gaussian"`.
+Examples of the residuals plot (left) and the diagnostic plot (right) for output of function 
+`enetLTS()` with the arguman `family="gaussian"`.
 
 # Example: Robust and Sparse Binary Regression 
 
@@ -141,7 +149,8 @@ Examples of the residuals plot (left) and the diagnostic plot (right) for output
 
 # References 
 
-Friedman J., Hastie T. and Tibshirani R. (2010) Regularization paths for generalized linear models via coordinate descent. Journal of Statistical Software, 33(1), 1-22. DOI
+Friedman J., Hastie T. and Tibshirani R. (2010) Regularization paths for generalized linear 
+models via coordinate descent. Journal of Statistical Software, 33(1), 1-22. DOI
 [10.1163/ej.9789004178922.i-328.7](https://www.jstatsoft.org/article/download/v033i01/361)
 
 Reinhold, W. C., Sunshine, M., Liu, H., Varma, S., Kohn, K. W., Morris, J., Doroshow, J., &
