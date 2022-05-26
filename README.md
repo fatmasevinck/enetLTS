@@ -123,6 +123,9 @@ Coefficients:
  lambdaw: 0.07545663
 ```
 
+![Heatmap for 5-fold cross-validation](paper/JOSSgausHeatMap.png)
+
+
 Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients, 
 `plotResid.enetLTS()` plots the values of residuals vs fitted values, 
 and `plotDiagnostic.enetLTS()` allows to produce various diagnostic
