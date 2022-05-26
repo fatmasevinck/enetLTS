@@ -163,7 +163,7 @@ and `plotDiagnostic.enetLTS()` allows to produce various diagnostic
 plots for the final model fit. 
 Examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
 
-![Examples of plot functions residual (left); diagnostic (right)\label{fig:plotexamplesGuas}{witdh=80%}](JOSSgausNCI60.png)
+![Examples of plot functions residual (left); diagnostic (right)\label{fig:plotexamplesGuas}](JOSSgausNCI60.png){ witdh=80% }
 
 # Example: Robust and Sparse Binary Regression
 
