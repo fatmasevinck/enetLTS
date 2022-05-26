@@ -3,7 +3,7 @@ cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
                             nfold, repl, ncores, plot=TRUE){
 
    family <- "gaussian"
-   RTMSPE <- RMSPE <- NULL
+   RTMSPE <- RMSPE <- TMNLL <- MNLL <- NULL
    wh <- (alphas<0 | alphas>1)
    if (sum(wh)>0) stop ("alphas can take the values only between 0 and 1")
    if (missing(alphas)) stop ("provide an alphas sequence")
