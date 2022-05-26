@@ -71,7 +71,7 @@ cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
                            mc.cores = ncores,
                            mc.allow.recursive = FALSE)
    
-   evalCrit <- matrix(unlist(temp_result), ncol = length(lambdas) , byrow = FALSE) # row alphas, col lambdas
+   evalCrit <- matrix(unlist(temp_result), ncol = length(lambdas), byrow = FALSE) # row alphas, col lambdas
    dimnames(evalCrit) <- list(paste("alpha", alphas), paste("lambda", lambdas))
    
    optind <- which(evalCrit == min(evalCrit, na.rm = TRUE), arr.ind = TRUE)[1, ]
