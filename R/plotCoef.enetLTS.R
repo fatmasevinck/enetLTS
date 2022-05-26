@@ -29,7 +29,7 @@ plotCoef.enetLTS <- function(object,vers=c("reweighted","raw"),
                                              linetype=class)) +
           geom_line() + geom_hline(yintercept=0, linetype="dashed",color="gray") +
           labs(title=paste(names(object$inputs$yy),main)) +
-          theme(plot.title=element_text(size=rel(1.3),face="bold"),
+          theme(plot.title=element_text(size=rel(1.3)),
                 axis.text.x=element_text(angle=90),
                 axis.text.y=element_text(size = 13),
                 axis.title.x=element_blank(),
@@ -48,7 +48,7 @@ plotCoef.enetLTS <- function(object,vers=c("reweighted","raw"),
                                                      linetype = class)) +
           geom_line() + geom_hline(yintercept=0, linetype="dashed",color="gray") +
           labs(title=paste(names(object$inputs$yy),main)) +
-          theme(plot.title=element_text(size=rel(1.3),face="bold"),
+          theme(plot.title=element_text(size=rel(1.3)),
                 axis.text.x=element_text(angle=90),
                 axis.text.y=element_text(size = 13),
                 axis.title.x=element_blank(),
@@ -70,7 +70,7 @@ plotCoef.enetLTS <- function(object,vers=c("reweighted","raw"),
                                              linetype = class)) +
           geom_line() + geom_hline(yintercept=0, linetype="dashed",color="gray") +
           labs(title=paste(names(object$inputs$yy),main)) +
-          theme(plot.title=element_text(size=rel(1.3),face="bold"),
+          theme(plot.title=element_text(size=rel(1.3)),
                 legend.position="none",
                 axis.text.x=element_text(angle=90),
                 axis.text.y=element_text(size = 13),
@@ -90,7 +90,7 @@ plotCoef.enetLTS <- function(object,vers=c("reweighted","raw"),
                                                  linetype = class)) +
           geom_line() + geom_hline(yintercept=0, linetype="dashed",color="gray") +
           labs(title=paste(names(object$inputs$yy),main)) +
-          theme(plot.title=element_text(size=rel(1),face="bold"),
+          theme(plot.title=element_text(size=rel(1)),
                 legend.position="none",
                 axis.text.x=element_text(angle=90),
                 axis.text.y=element_text(size = 13),
