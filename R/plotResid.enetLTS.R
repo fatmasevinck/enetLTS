@@ -52,7 +52,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       geom_point(size=2) +
       geom_hline(yintercept=0, linetype="dashed",color="gray") +
       labs(title = mainfit, x = xlab, y = ylab) +
-      theme(plot.title   = element_text(size=rel(1.3),face="bold"),
+      theme(plot.title   = element_text(size=rel(1.3)),
             axis.title   = element_text(size = 13),
             axis.text.y  = element_text(size = 13),
             axis.text.x  = element_text(size = 13),
@@ -97,7 +97,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       geom_point(size=2) +
       geom_hline(yintercept=0, linetype="dashed",color="gray") +
       labs(title = mainfit, x = xlab, y = ylab) +
-      theme(plot.title   = element_text(size=rel(1.3),face="bold"),
+      theme(plot.title   = element_text(size=rel(1.3)),
             axis.title   = element_text(size = 13),
             axis.text.y  = element_text(size = 13),
             axis.text.x  = element_text(size = 13),
@@ -145,7 +145,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       geom_hline(yintercept=-2.5,linetype="solid",color="gray") +
       geom_hline(yintercept=2.5,linetype="solid",color="gray") +
       labs(title = mainfit, x = xlab, y = ylab) +
-      theme(plot.title   = element_text(size=rel(1.3),face="bold"),
+      theme(plot.title   = element_text(size=rel(1.3)),
             axis.title   = element_text(size = 13),
             axis.text.y  = element_text(size = 13),
             axis.text.x  = element_text(size = 13),
@@ -193,7 +193,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
         geom_point(size=2) +
         geom_hline(yintercept=0, linetype="dashed",color="gray") +
         labs(title = mainfit, x = xlab, y = ylab) +
-        theme(plot.title   = element_text(size=rel(1.3),face="bold"),
+        theme(plot.title   = element_text(size=rel(1.3)),
               axis.title   = element_text(size = 13),
               axis.text.y  = element_text(size = 13),
               axis.text.x  = element_text(size = 13),
@@ -241,7 +241,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
         geom_hline(yintercept=-2.5,linetype="solid",color="gray") +
         geom_hline(yintercept=2.5,linetype="solid",color="gray") +
         labs(title = mainfit, x = xlab, y = ylab) +
-        theme(plot.title   = element_text(size=rel(1.3),face="bold"),
+        theme(plot.title   = element_text(size=rel(1.3)),
               axis.title   = element_text(size = 13),
               axis.text.y  = element_text(size = 13),
               axis.text.x  = element_text(size = 13),
