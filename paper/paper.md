@@ -163,7 +163,7 @@ and `plotDiagnostic.enetLTS()` allows to produce various diagnostic
 plots for the final model fit. 
 Examples of these plots are shown in Figure \ref{fig:plotexamples}.
 
-![residuals (left); diagnostic (right)\label{fig:plotexamples}](gausFigures.png)
+![coef (left); diagnostic (right)\label{fig:plotexamples}](JOSSgausNCI60.png)
 
 # Example: Robust and Sparse Binary Regression
 
@@ -181,7 +181,7 @@ regularization for linear regression [@Keplinger21R]. Package `glmnet` implement
 
 # Acknowledgements
 
-This work is supported in part by grant TUBITAK 2219 from Scientific and Technological Research Council of Turkey (TUBITAK). 
+Fatma Sevinc KURNAZ is supported in part by grant TUBITAK 2219 from Scientific and Technological Research Council of Turkey (TUBITAK). 
 
 
 # References
