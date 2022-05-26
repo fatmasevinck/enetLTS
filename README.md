@@ -130,7 +130,7 @@ plots for the final model fit.
 
 ![residuals (left); diagnostic (right)\label{fig:plotexamples}{width=%110}](paper/JOSSgausNCI60.png)
 
-Examples of the residuals plot (left) and the diagnostic plot (right) for output of function `enetLTS()` with the arguman `family=gaussian`.
+Examples of the residuals plot (left) and the diagnostic plot (right) for output of function `enetLTS()` with the arguman `family="gaussian"`.
 
 # Example: Robust and Sparse Binary Regression 
 
