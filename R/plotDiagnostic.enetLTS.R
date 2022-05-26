@@ -41,7 +41,7 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       geom_point(data = pc.scores, aes(x=Comp.1, y=Comp.2, colour = factor(y),
                                        shape=classification), size=2) +
       labs(title = mainfit, x = xlab, y = ylab) +
-      theme(plot.title=element_text(size=rel(1.3),face="bold"),
+      theme(plot.title=element_text(size=rel(1.3)),
             axis.title   = element_text(size = 13),
             axis.text.y  = element_text(size = 13),
             axis.text.x  = element_text(size = 13),
@@ -93,7 +93,7 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       geom_hline(yintercept=1, linetype="dashed", color="gray") +
       geom_hline(yintercept=0, linetype="dashed", color="gray") +
       labs(title = mainfit, x = xlab, y = ylab) +
-      theme(plot.title   = element_text(size=rel(1.3),face="bold"),
+      theme(plot.title   = element_text(size=rel(1.3)),
             axis.title   = element_text(size = 13),
             axis.text.y  = element_text(size = 13),
             axis.text.x  = element_text(size = 13),
@@ -141,7 +141,7 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       # geom_hline(yintercept=0, linetype="dashed",color="gray") +
       geom_abline(intercept = 0, slope = 1, color="gray", size = 0.5) +
       labs(title = mainfit, x = xlab, y = ylab) +
-      theme(plot.title   = element_text(size=rel(1.3),face="bold"),
+      theme(plot.title   = element_text(size=rel(1.3)),
             axis.title   = element_text(size = 13),
             axis.text.y  = element_text(size = 13),
             axis.text.x  = element_text(size = 13),
