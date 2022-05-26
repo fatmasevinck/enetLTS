@@ -149,9 +149,10 @@ Several plots are available for the results: `plotCoef.enetLTS()` visualizes the
 `plotResid.enetLTS()` plots the values of residuals vs fitted values, 
 and `plotDiagnostic.enetLTS()` allows to produce various diagnostic
 plots for the final model fit. 
-Examples of these plots are shown in Figure \ref{fig:plotexamples}.
 
 ![residuals (left); diagnostic (right)\label{fig:plotexamples}{width=%110}](paper/JOSSgausNCI60.png)
+
+Examples of the residuals plot (left) and the diagnostic plot (right) for output of function `enetLTS()` with the arguman `family=gaussian`.
 
 # Example: Robust and Sparse Binary Regression 
 
