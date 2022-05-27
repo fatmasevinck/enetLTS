@@ -172,6 +172,10 @@ Examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
 
 # Example: Robust and Sparse Multinomial Regression
 
+The fuit data set has been well-known in the context of robust discrimination. 
+It contains spectral information with 256 wavelengths,
+thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named
+D, M, and HA, with group sizes 490, 106, and 500. 
 
 # Related Software
 
