@@ -14,12 +14,15 @@ print.enetLTS <-
       
       if (x$inputs$family=="multinomial"){
          coefficients <- coef.enetLTS(x,vers=vers)
+          cat("\nCoefficients:\n")
+      print(coefficients)
       } else {
          coefficients <- drop(coef.enetLTS(x,vers=vers))
+          cat("\nCoefficients:\n")
+      print(unlist(coefficients))
       }
       
-      cat("\nCoefficients:\n")
-      print(unlist(coefficients))
+     
 
       nCoefficients <- sum(unlist(coefficients)!=0)
       cat("\n number of the nonzero coefficients:\n")
