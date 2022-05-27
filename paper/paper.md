@@ -101,7 +101,7 @@ enetLTS estimator
 
 Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas,      
  lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE,      
- hsize = 0.75, nsamp = 500, nCsteps = 20, nfold = 5, repl = 1,      
+ hsize = 0.75, nsamp = c(500,10), nCsteps = 20, nfold = 5, repl = 1,      
  ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
 
 
@@ -189,7 +189,7 @@ D, M, and HA, with group sizes 490, 106, and 500.
 > yy <- factor(grp-1)
 >
 > set.seed(123)
-> fitELTS2 <- enetLTS(xx,yy,family="multinomial",
+> fitELTS2 <- enetLTS(xx, yy, family="multinomial",
                     alphas=seq(from=0.01,to=0.1,by=0.01), 
                     lambdas=seq(from=0.01,to=0.1,by=0.01),
                     lambdaw=NULL, intercept=TRUE, hsize=0.75, 
