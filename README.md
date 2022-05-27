@@ -175,9 +175,8 @@ D, M, and HA, with group sizes 490, 106, and 500.
 +                    tol=-1e6, scal=TRUE, seed=NULL, crit.plot=TRUE)
 > [1] "optimal model: lambda = 0.01 alpha = 0.02"
 >  
-
   ```    
- 
+ ![Heatmap for 5-fold cross-validation](paper/JOSSmultinomHeatMap.png)
  
  
 # References 
