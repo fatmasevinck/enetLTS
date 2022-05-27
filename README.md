@@ -178,6 +178,8 @@ D, M, and HA, with group sizes 490, 106, and 500.
   ```    
  ![Heatmap for 5-fold cross-validation](paper/JOSSmultinomHeatMap.png)
  
+ ![Coefficients and residuals and diagnostic plots](paper/JOSSmultinomPlots.png)
+ 
  
 # References 
 
