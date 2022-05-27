@@ -452,6 +452,7 @@ $`1`
   ```    
 
 
+
 ![Heatmap for 5-fold cross-validation and Coefficients](paper/JOSSmultinomHeatmapCoef.png)
  
  
