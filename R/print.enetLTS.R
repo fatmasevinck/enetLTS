@@ -11,8 +11,13 @@ print.enetLTS <-
       cat("enetLTS estimator \n")
 
       cat("\nCall: ", deparse(x$call), "\n\n")
-
-      coefficients <- drop(coef.enetLTS(x,vers=vers))
+      
+      if (x$inputs$family=="multinomial"){
+         coefficients <- coef.enetLTS(x,vers=vers)
+      } else {
+         coefficients <- drop(coef.enetLTS(x,vers=vers))
+      }
+      
       cat("\nCoefficients:\n")
       print(unlist(coefficients))
 
