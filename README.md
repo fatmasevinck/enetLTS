@@ -454,9 +454,10 @@ $`1`
 The optimal model fit is selected via 5-fold cross-validation. 
 Following heatmap shows all possible candidates. 
 Plot functions are re-organized to be suitable for multinomial regression. 
-In `plotResid.enetLTS()`, Residuals are turned into the deviances 
+In `plotResid.enetLTS()`, residuals are turned into the deviances as in binary regression case.  
 `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal 
 components, explaining nearly all of the variability. 
+These plots are demonstrated as follows.
 
 
 ![Heatmap for 5-fold cross-validation and Coefficients](paper/JOSSmultinomHeatmapCoef.png)
