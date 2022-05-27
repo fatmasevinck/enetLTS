@@ -161,13 +161,13 @@ D, M, and HA, with group sizes 490, 106, and 500.
 > data(fruit)
 > 
 > d <- fruit[,-1]  # first column includes the fruid names 
-> xx <- as.matrix(d)
+> X <- as.matrix(d)
 > # define response variable
 > grp <- c(rep(1,490),rep(2,106),rep(3,500)) 
-> yy <- factor(grp-1)
+> y <- factor(grp-1)
 >
 > set.seed(123)
-> fit.multinom <- enetLTS(xx, yy, family="multinomial",
+> fit.multinom <- enetLTS(X, y, family="multinomial",
 +                    alphas=seq(from=0.01,to=0.1,by=0.01), 
 +                    lambdas=seq(from=0.01,to=0.1,by=0.01),
 +                    lambdaw=NULL, intercept=TRUE, hsize=0.75, 
