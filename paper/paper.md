@@ -181,7 +181,7 @@ regularization for linear regression [@Keplinger21R]. Package `glmnet` implement
 
 # Acknowledgements
 
-Fatma Sevinc KURNAZ is supported in part by grant TUBITAK 2219 from Scientific and Technological Research Council of Turkey (TUBITAK). 
+Fatma Sevinc KURNAZ is supported by grant TUBITAK 2219 from Scientific and Technological Research Council of Turkey (TUBITAK). 
 
 
 # References
