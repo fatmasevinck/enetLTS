@@ -452,9 +452,8 @@ $`1`
   ```    
 
 
-![Heatmap for 5-fold cross-validation](paper/JOSSmultinomHeatMap.png)
+![Heatmap for 5-fold cross-validation and Coefficients](paper/JOSSmultinomHeatMapCoef.png)
  
-![Coefficients and residuals and diagnostic plots](paper/JOSSmultinomPlots.png)
  
  ![Residuals and diagnostic plots](paper/JOSSmultinomResidDiag.png)
  
