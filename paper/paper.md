@@ -177,6 +177,27 @@ It contains spectral information with 256 wavelengths,
 thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named
 D, M, and HA, with group sizes 490, 106, and 500. 
 
+```R
+> # load data
+> library(rrcov)
+> data(fruit)
+> 
+> d <- fruit[,-1]  # first column includes the fruid names 
+> xx <- as.matrix(d)
+> # define response variable
+> grp <- c(rep(1,490),rep(2,106),rep(3,500)) 
+> yy <- factor(grp-1)
+>
+> set.seed(123)
+> fitELTS2 <- enetLTS(xx,yy,family="multinomial",
+                    alphas=seq(from=0.01,to=0.1,by=0.01), 
+                    lambdas=seq(from=0.01,to=0.1,by=0.01),
+                    lambdaw=NULL, intercept=TRUE, hsize=0.75, 
+                    nsamp=c(500,10), nCsteps=20, nfold=5, repl=1, ncores=1, 
+                    tol=-1e6, scal=TRUE, seed=NULL, crit.plot=TRUE)
+                    
+
+
 # Related Software
 
 Package `robustHD` provides the sparseLTS estimator for linear regression based on the trimming idea for high dimensional linear regression [@Alfons21R]. Package `pense` provides implementations of robust S- and MM-type estimators using elastic net
