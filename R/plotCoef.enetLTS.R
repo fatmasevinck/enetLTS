@@ -21,12 +21,12 @@ plotCoef.enetLTS <- function(object,vers=c("reweighted","raw"),
       if (vers=="reweighted") {
         main <- "enetLTS coefficients for multinomial logistic regression"
         plotcoefs <- data.frame(Wavelength = rep(1:nrow(coefficients),ncol(coefficients)),
-                                class = as.character(rep(1:ncol(coefficients),each=nrow(coefficients))),
+                                Groups = as.character(rep(1:ncol(coefficients),each=nrow(coefficients))),
                                 coefficients = as.vector(coefficients))
         plot <- ggplot(data = plotcoefs, aes(x = Wavelength,
                                              y = coefficients,
-                                             colour=class,
-                                             linetype=class)) +
+                                             colour=Groups,
+                                             linetype=Groups)) +
           geom_line() + geom_hline(yintercept=0, linetype="dashed",color="gray") +
           labs(title=paste(names(object$inputs$yy),main)) +
           theme(plot.title=element_text(size=rel(1.3)),
@@ -40,12 +40,12 @@ plotCoef.enetLTS <- function(object,vers=c("reweighted","raw"),
       } else if (vers=="raw"){
         main <- "enetLTS raw coefficients for multinomial logistic regression"
         raw.plotcoefs <- data.frame(Wavelength = rep(1:nrow(raw.coefficients),ncol(raw.coefficients)),
-                                    class = as.character(rep(1:ncol(raw.coefficients),each=nrow(raw.coefficients))),
+                                    Groups = as.character(rep(1:ncol(raw.coefficients),each=nrow(raw.coefficients))),
                                     raw.coefficients = as.vector(raw.coefficients))
         raw.plot <- ggplot(data = raw.plotcoefs, aes(x = Wavelength,
                                                      y = raw.coefficients,
-                                                     colour = class,
-                                                     linetype = class)) +
+                                                     colour = Groups,
+                                                     linetype = Groups)) +
           geom_line() + geom_hline(yintercept=0, linetype="dashed",color="gray") +
           labs(title=paste(names(object$inputs$yy),main)) +
           theme(plot.title=element_text(size=rel(1.3)),
