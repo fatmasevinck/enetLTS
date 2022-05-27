@@ -186,7 +186,7 @@ D, M, and HA, with group sizes 490, 106, and 500.
                     lambdaw=NULL, intercept=TRUE, hsize=0.75, 
                     nsamp=c(500,10), nCsteps=20, nfold=5, repl=1, ncores=1, 
                     tol=-1e6, scal=TRUE, seed=NULL, crit.plot=TRUE)
-                    
+ ```                
 
 
 # Related Software
