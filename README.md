@@ -122,6 +122,8 @@ In order to provide an example for binary regression, we simulate the data and a
 
 ![Coefficients](paper/JOSSbinomPlotCoefSIM.png)
 
+![Residuals and Diagnostics](paper/JOSSbinomResidDiagSIM.png)
+
 # Example: Robust and Sparse Multinomial Regression
 
 The fuit data set has been well-known in the context of robust discrimination. It contains spectral information with 256 wavelengths, thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov`.
