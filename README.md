@@ -105,7 +105,7 @@ Coefficients:
  lambdaw: 0.07545663
 ```
 
-The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. Evaluation criterion for 5-fold cross-validation is summarized by heatmap for users if the arguman is chosen as `crit.plot="TRUE"`.
+The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. Evaluation criterion for 5-fold cross-validation is summarized by heatmap for users if the arguman is chosen as `crit.plot="TRUE"`. 
 
 ![Heatmap for 5-fold cross-validation](paper/JOSSgausHeatMap.png)
 
@@ -184,13 +184,13 @@ The fuit data set has been well-known in the context of robust discrimination. I
 With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression.
 
 ```R
-> fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01))
+> fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01),crit.plot=FALSE)
 > [1] "optimal model: lambda = 0.01 alpha = 0.02"
 > 
 > fit.mutinom 
 enetLTS estimator 
 
-Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = FALSE) 
 
 
 Coefficients:
@@ -463,7 +463,7 @@ $`1`
  lambdaw: 0.003971358
   ```    
 
-The optimal model fit is selected via 5-fold cross-validation. Following heatmap shows all possible candidates. To determine updated parameter $\lambda$ (`lambdaw`), we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. `plotCoef.enetLTS()` includes group information for multinomial regression. Plot functions are re-organized to be suitable for multinomial regression. In `plotResid.enetLTS()`, residuals are turned into the deviances as in binary regression case. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components, explaining nearly all of the variability. These plots are demonstrated as follows.
+The optimal model fit is selected via 5-fold cross-validation. In order to show heatmap belonging to all possible candidates. To determine updated parameter $\lambda$ (`lambdaw`), we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. `plotCoef.enetLTS()` includes group information for multinomial regression. Plot functions are re-organized to be suitable for multinomial regression. In `plotResid.enetLTS()`, residuals are turned into the deviances as in binary regression case. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components, explaining nearly all of the variability. These plots are demonstrated as follows.
 
 
 ![Coefficients](paper/JOSSmultinomCoef.png)
