@@ -120,6 +120,7 @@ Examples of the residuals plot (left) and the diagnostic plot (right) for output
 
 In order to provide an example for binary regression, we simulate the data and apply the `enetLTS()`function with the option `family="binomial"`.
 
+![Coefficients](paper/JOSSbinomPlotCoefSIM.png)
 
 # Example: Robust and Sparse Multinomial Regression
 
