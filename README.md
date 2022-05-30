@@ -118,7 +118,7 @@ Examples of the residuals plot (left) and the diagnostic plot (right) for output
 
 # Example: Robust and Sparse Binary Regression 
 
-In this part, we simulate data and apply the `enetLTS()`function with the option `family="binomial"`.
+In order to provide an example for binary case, we simulate the data and apply the `enetLTS()`function with the option `family="binomial"`.
 
 
 # Example: Robust and Sparse Multinomial Regression
