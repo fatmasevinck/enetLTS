@@ -74,7 +74,7 @@ the explanatory variable is determined by the gene expressions of the 100 genes 
 > X <- gene[, keep]
 ```
 
-Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. 
+Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. The default `family` option is `gaussian`.
 
 ```R
 > # install and load package
@@ -165,14 +165,13 @@ D, M, and HA, with group sizes 490, 106, and 500. This data set is available in 
 > # define response variable
 > grp <- c(rep(1,490),rep(2,106),rep(3,500)) 
 > y <- factor(grp-1)
->
-> set.seed(123)
+```
+With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression.
+
+```R
 > fit.multinom <- enetLTS(X, y, family="multinomial",
 +                    alphas=seq(from=0.01,to=0.1,by=0.01), 
-+                    lambdas=seq(from=0.01,to=0.1,by=0.01),
-+                    lambdaw=NULL, intercept=TRUE, hsize=0.75, 
-+                    nsamp=c(500,10), nCsteps=20, nfold=5, repl=1, ncores=1, 
-+                    tol=-1e6, scal=TRUE, seed=NULL, crit.plot=TRUE)
++                    lambdas=seq(from=0.01,to=0.1,by=0.01))
 > [1] "optimal model: lambda = 0.01 alpha = 0.02"
 > 
 > fit.mutinom 
