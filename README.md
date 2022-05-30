@@ -428,9 +428,17 @@ The optimal model fit is selected via 5-fold cross-validation. Following heatmap
  
 # References 
 
+A. Alfons (2021). robustHD: An R package for robust regression with high-dimensional data. 
+Journal of Open Source Software, 6(67), 3786. DOI
+[10.21105/joss.03786](https://joss.theoj.org/papers/10.21105/joss.03786)
+
 Friedman J., Hastie T. and Tibshirani R. (2010). Regularization paths for generalized linear 
 models via coordinate descent. Journal of Statistical Software, 33(1), 1-22. DOI
 [10.1163/ej.9789004178922.i-328.7](https://www.jstatsoft.org/article/download/v033i01/361)
+
+J. Friedman and T. Hastie and R. Tibshirani and B. Narasimhan and K. Tay and N. Simon and J. Qian and J. Yang (2021).
+glmnet: Lasso and Elastic-Net Regularized Generalized Linear Models. R Foundation for Statistical Computing, Vienna, Austria. R package version 4.1--3 
+(https://CRAN.R-project.org/package=glmnet)
 
 Reinhold, W. C., Sunshine, M., Liu, H., Varma, S., Kohn, K. W., Morris, J., Doroshow, J., &
 Pommier, Y. (2012). CellMiner: A web-based suite of genomic and pharmacologic tools to
@@ -438,6 +446,3 @@ explore transcript and drug patterns in the NCI-60 cell line set. Cancer Researc
 3499–3511. DOI
 [10.1158/0008-5472.can-12-1370](https://pubmed.ncbi.nlm.nih.gov/22802077/)
 
-A. Alfons (2021). robustHD: An R package for robust regression with high-dimensional data. 
-Journal of Open Source Software, 6(67), 3786. DOI
-[10.21105/joss.03786](https://joss.theoj.org/papers/10.21105/joss.03786)
