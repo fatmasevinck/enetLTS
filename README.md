@@ -120,6 +120,47 @@ Examples of the residuals plot (left) and the diagnostic plot (right) for output
 
 In order to provide an example for binary regression, we simulate the data and apply the `enetLTS()`function with the option `family="binomial"`.
 
+```R
+> # install and load package
+> install.packages("enetLTS")
+> library(enetLTS)
+> # fit the model for family="binomial"
+> fit.binomial <- enetLTS(Xout,yout,family="binomial",alphas=alphas, lambdas=lambdas)
+> fit.binomial
+enetLTS estimator 
+
+Call:  enetLTS(xx = Xout, yy = yout, family = "binomial", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+
+
+Coefficients:
+           1            2            3            4            5            6            7            8            9           10           11 
+ 0.579930614  0.000000000  0.171183029  0.341955391  0.919454907  0.381003985  0.718333553  0.501985527  0.290157186  0.212887818  0.005266030 
+          12           13           14           15           16           17           18           19           20           21           22 
+ 0.000000000  0.000000000  0.000000000  0.000000000 -0.041072940 -0.031681781  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000 
+          23           24           25           26           27           28           29           30           31           32           33 
+-0.417059509  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000 -0.003558941  0.000000000  0.000000000 
+          34           35           36           37           38           39           40           41           42           43           44 
+ 0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.152370580  0.089238293  0.000000000  0.507285644 
+          45           46           47           48           49           50           51           52           53           54           55 
+ 0.000000000  0.143229926  0.000000000  0.000000000  0.000000000  0.044119614  0.000000000  0.000000000  0.000000000 -0.077125826  0.000000000 
+          56           57           58           59           60           61           62           63           64           65           66 
+ 0.000000000  0.000000000  0.000000000  0.086351009  0.084402171  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.469576908 
+          67           68           69           70           71           72           73           74           75           76           77 
+ 0.000000000  0.000000000  0.000000000  0.277417721  0.000000000  0.000000000  0.000000000 -0.181325996  0.000000000 -0.182103786 -0.301887232 
+          78           79           80           81           82           83           84           85           86           87           88 
+ 0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000 -0.050008728  0.000000000  0.000000000 -0.009236430 
+          89           90           91           92           93           94           95           96           97           98           99 
+ 0.000000000  0.634832462  0.020192954  0.167319544  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000 -0.020644080 
+         100          101 
+-0.069398907  0.000000000 
+
+ number of the nonzero coefficients:
+[1] 34
+
+ alpha: 0.65
+ lambda: 0.0023
+ lambdaw: 0.02225821
+```
 ![Coefficients](paper/JOSSbinomPlotCoefSIM.png)
 
 ![Residuals and Diagnostics](paper/JOSSbinomResidDiagSIM.png)
