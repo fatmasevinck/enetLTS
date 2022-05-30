@@ -468,7 +468,7 @@ $`1`
   ```    
 
 The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. 
-To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. `plotCoef.enetLTS()` includes group information for multinomial regression. Plot functions are re-organized to be suitable for multinomial regression. In `plotResid.enetLTS()`, residuals are turned into the deviances as in binary regression case. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components, explaining nearly all of the variability. These plots are demonstrated as follows.
+To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from package `glmnet` [(Friedman et al., 2021)](https://CRAN.R-project.org/package=glmnet) for current `family` option. `plotCoef.enetLTS()` includes group information for multinomial regression. Plot functions are re-organized to be suitable for multinomial regression. In `plotResid.enetLTS()`, residuals are turned into the deviances as in binary regression case. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components, explaining nearly all of the variability. These plots are demonstrated as follows.
 
 
 ![Coefficients](paper/JOSSmultinomCoef.png)
