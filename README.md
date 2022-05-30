@@ -126,34 +126,22 @@ Coefficients:
  lambdaw: 0.07545663
 ```
 
-`enetLTS()` 
-
-The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on 
-certain grids for $\alpha$ and $\lambda$. 
-Evaluation criterion for 5-fold cross-validation is summarized by heatmap for users if the arguman 
-is chosen as `crit.plot="TRUE"`.
+The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. Evaluation criterion for 5-fold cross-validation is summarized by heatmap for users if the arguman is chosen as `crit.plot="TRUE"`.
 
 ![Heatmap for 5-fold cross-validation](paper/JOSSgausHeatMap.png)
 
 
-Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients, 
-`plotResid.enetLTS()` plots the values of residuals vs fitted values, 
-and `plotDiagnostic.enetLTS()` allows to produce various diagnostic
-plots for the final model fit. 
+Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. 
 
 ![residuals (left); diagnostic (right)\label{fig:plotexamples}{width=%110}](paper/JOSSgausNCI60.png)
 
-Examples of the residuals plot (left) and the diagnostic plot (right) for output of function 
-`enetLTS()` with the arguman `family="gaussian"`.
+Examples of the residuals plot (left) and the diagnostic plot (right) for output of function `enetLTS()` with the arguman `family="gaussian"`.
 
 # Example: Robust and Sparse Binary Regression 
 
 # Example: Robust and Sparse Multinomial Regression
 
-The fuit data set has been well-known in the context of robust discrimination. 
-It contains spectral information with 256 wavelengths,
-thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named
-D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov`.
+The fuit data set has been well-known in the context of robust discrimination. It contains spectral information with 256 wavelengths, thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov`.
 
 ```R
 > # load data
@@ -450,14 +438,7 @@ $`1`
  lambdaw: 0.003971358
   ```    
 
-The optimal model fit is selected via 5-fold cross-validation. Following heatmap shows all possible candidates. 
-To determine updated parameter $\lambda$ (`lambdaw`), we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option.  
-`plotCoef.enetLTS()` includes group information for multinomial regression.  
-Plot functions are re-organized to be suitable for multinomial regression. 
-In `plotResid.enetLTS()`, residuals are turned into the deviances as in binary regression case.  
-`plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal 
-components, explaining nearly all of the variability. 
-These plots are demonstrated as follows.
+The optimal model fit is selected via 5-fold cross-validation. Following heatmap shows all possible candidates. To determine updated parameter $\lambda$ (`lambdaw`), we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. `plotCoef.enetLTS()` includes group information for multinomial regression. Plot functions are re-organized to be suitable for multinomial regression. In `plotResid.enetLTS()`, residuals are turned into the deviances as in binary regression case. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components, explaining nearly all of the variability. These plots are demonstrated as follows.
 
 
 ![Coefficients](paper/JOSSmultinomCoef.png)
