@@ -139,9 +139,7 @@ The fuit data set has been well-known in the context of robust discrimination. I
 With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression.
 
 ```R
-> fit.multinom <- enetLTS(X, y, family="multinomial",
-+                    alphas=seq(from=0.01,to=0.1,by=0.01), 
-+                    lambdas=seq(from=0.01,to=0.1,by=0.01))
+> fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01))
 > [1] "optimal model: lambda = 0.01 alpha = 0.02"
 > 
 > fit.mutinom 
