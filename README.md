@@ -450,8 +450,8 @@ $`1`
  lambdaw: 0.003971358
   ```    
 
-The optimal model fit is selected via 5-fold cross-validation. 
-Following heatmap shows all possible candidates. 
+The optimal model fit is selected via 5-fold cross-validation. Following heatmap shows all possible candidates. 
+To determine updated parameter $\lambda$ (`lambdaw`), we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option.  
 Plot functions are re-organized to be suitable for multinomial regression. 
 In `plotResid.enetLTS()`, residuals are turned into the deviances as in binary regression case.  
 `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal 
