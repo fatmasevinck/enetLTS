@@ -125,7 +125,7 @@ In order to provide an example for binary regression, we simulate the data and a
 > install.packages("enetLTS")
 > library(enetLTS)
 > # fit the model for family="binomial"
-> fit.binomial <- enetLTS(Xout,yout,family="binomial",alphas=alphas, lambdas=lambdas)
+> fit.binomial <- enetLTS(Xout, yout, family="binomial", alphas=alphas, lambdas=lambdas)
 > fit.binomial
 enetLTS estimator 
 
@@ -188,7 +188,7 @@ The fuit data set has been well-known in the context of robust discrimination. I
 With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression.
 
 ```R
-> fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01),crit.plot=FALSE)
+> fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE)
 > [1] "optimal model: lambda = 0.01 alpha = 0.02"
 > 
 > fit.mutinom 
