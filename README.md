@@ -129,7 +129,8 @@ In order to provide an example for binary regression, we simulate the data and a
 > fit.binomial
 enetLTS estimator 
 
-Call:  enetLTS(xx = Xout, yy = yout, family = "binomial", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+Call:  enetLTS(xx = Xout, yy = yout, family = "binomial", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
+ hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
 
 
 Coefficients:
