@@ -131,7 +131,7 @@ The combination of the optimal tuning parameters is defined by 5-fold cross-vali
 ![Heatmap for 5-fold cross-validation](paper/JOSSgausHeatMap.png)
 
 
-Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. 
+Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some of them are as follows:
 
 ![residuals (left); diagnostic (right)\label{fig:plotexamples}{width=%110}](paper/JOSSgausNCI60.png)
 
