@@ -178,7 +178,7 @@ D, M, and HA, with group sizes 490, 106, and 500. This data set is available in 
 > fit.mutinom 
 enetLTS estimator 
 
-Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas,      lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE,      hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5,      repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
 
 
 Coefficients:
