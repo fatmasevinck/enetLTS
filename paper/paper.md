@@ -179,8 +179,7 @@ D, M, and HA, with group sizes 490, 106, and 500.
 > grp <- c(rep(1,490),rep(2,106),rep(3,500)) 
 > yy <- factor(grp-1)
 >
-> set.seed(123)
-> fitELTS2 <- enetLTS(xx, yy, family="multinomial",
+> fit.binomial <- enetLTS(xx, yy, family="multinomial",
                     alphas=seq(from=0.01,to=0.1,by=0.01), 
                     lambdas=seq(from=0.01,to=0.1,by=0.01),
                     lambdaw=NULL, intercept=TRUE, hsize=0.75, 
