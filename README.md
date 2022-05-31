@@ -98,10 +98,7 @@ Coefficients:
  lambdaw: 0.07545663
 ```
  
-The main function `enetLTS()` provides option for tuning parameters user supplied alpha sequence for the elastic net penalty, which is the mixing proportion of the ridge and lasso penalties and takes value in $[0,1]$. $\alpha=1$ is the lasso penalty, and $\alpha=0$ the ridge penalty. If not provided a sequence, default is 41 equally spaced values.
-
-
-
+The main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty, which is the mixing proportion of the ridge and lasso penalties and takes value in $[0,1]$. $\alpha=1$ is the lasso penalty, and $\alpha=0$ the ridge penalty. If not provided a sequence, default is 41 equally spaced values. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, user supplied sequence is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$ for linear regression, where lambda0 is determined as in ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)). 
 
 The arguman `hsize` shows a numeric value giving the percentage of the trimming of the penalized objective function of current family with default 0.75. 
 
@@ -165,6 +162,10 @@ Coefficients:
  lambda: 0.0023
  lambdaw: 0.02225821
 ```
+
+The main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty, which is the mixing proportion of the ridge and lasso penalties and takes value in $[0,1]$. $\alpha=1$ is the lasso penalty, and $\alpha=0$ the ridge penalty. If not provided a sequence, default is 41 equally spaced values. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, user supplied sequence is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$ for linear regression, where lambda0 is determined as in ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)). 
+
+-0.025 lambda00 with 0\le\lambda\le lambda000≤λ≤lambda00 for binary logistic regression. lambda0 is determined based on the Pearson correlation between y and the jth predictor variable x_j on winsorized data for linear regression. In lambda00 for logistic regression, the Pearson correlation is replaced by a robustified point-biserial correlation. Default is chosen with steps of size -0.05 from 0.95 to 0.05 for multinomial logistic regression. 
 
 As in `family="gaussian"`, the combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$ for `family="binomial"`. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. 
 To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. `plotCoef.enetLTS()` includes the coefficients. Plot functions are re-organized to be suitable for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances in binary regression case and this plot function produces two plots which are deviances vs index and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are demonstrated as follows.
