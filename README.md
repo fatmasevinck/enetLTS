@@ -91,13 +91,6 @@ Coefficients:
  0.00000000  0.00000000  0.04865659  0.00000000  0.00000000 
 
  number of the nonzero coefficients:
-[1] 21
-
- alpha: 0.725
- lambda: 0.1391
- lambdaw: 0.07936752
-
- number of the nonzero coefficients:
 [1] 29
 
  alpha: 0.6
