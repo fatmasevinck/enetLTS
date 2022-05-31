@@ -158,7 +158,70 @@ Examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
 
 # Example: Robust and Sparse Binary Regression
 
+In order to provide an example for binary regression, we simulate the data and apply the `enetLTS()`function with the option `family="binomial"`.
 
+```R
+> # install and load package
+> install.packages("enetLTS")
+> library(enetLTS)
+> # fit the model for family="binomial"
+> fit.binomial <- enetLTS(Xout, yout, family="binomial", alphas=alphas, lambdas=lambdas)
+> fit.binomial
+enetLTS estimator 
+
+Call:  enetLTS(xx = Xout, yy = yout, family = "binomial", alphas = alphas, 
+lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
+hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, 
+repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+
+
+Coefficients:
+           1            2            3            4            5            6 
+ 0.579930614  0.000000000  0.171183029  0.341955391  0.919454907  0.381003985 
+           7            8            9           10           11           12 
+ 0.718333553  0.501985527  0.290157186  0.212887818  0.005266030  0.000000000 
+          13           14           15           16           17           18 
+ 0.000000000  0.000000000  0.000000000 -0.041072940 -0.031681781  0.000000000 
+          19           20           21           22           23           24 
+ 0.000000000  0.000000000  0.000000000  0.000000000 -0.417059509  0.000000000 
+          25           26           27           28           29           30 
+ 0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000 
+          31           32           33           34           35           36 
+-0.003558941  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000 
+          37           38           39           40           41           42 
+ 0.000000000  0.000000000  0.000000000  0.000000000  0.152370580  0.089238293 
+          43           44           45           46           47           48 
+ 0.000000000  0.507285644  0.000000000  0.143229926  0.000000000  0.000000000 
+          49           50           51           52           53           54 
+ 0.000000000  0.044119614  0.000000000  0.000000000  0.000000000 -0.077125826 
+          55           56           57           58           59           60 
+ 0.000000000  0.000000000  0.000000000  0.000000000  0.086351009  0.084402171 
+          61           62           63           64           65           66 
+ 0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.469576908 
+          67           68           69           70           71           72 
+ 0.000000000  0.000000000  0.000000000  0.277417721  0.000000000  0.000000000 
+          73           74           75           76           77           78 
+ 0.000000000 -0.181325996  0.000000000 -0.182103786 -0.301887232  0.000000000 
+          79           80           81           82           83           84 
+ 0.000000000  0.000000000  0.000000000  0.000000000  0.000000000  0.000000000 
+          85           86           87           88           89           90 
+-0.050008728  0.000000000  0.000000000 -0.009236430  0.000000000  0.634832462 
+          91           92           93           94           95           96 
+ 0.020192954  0.167319544  0.000000000  0.000000000  0.000000000  0.000000000 
+          97           98           99          100          101 
+ 0.000000000  0.000000000 -0.020644080 -0.069398907  0.000000000 
+
+ number of the nonzero coefficients:
+[1] 34
+
+ alpha: 0.65
+ lambda: 0.0023
+ lambdaw: 0.02225821
+> 
+```
+
+As in `family="gaussian"`, the combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$ for `family="binomial"`. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. 
+To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. `plotCoef.enetLTS()` includes the coefficients. Plot functions are re-organized to be suitable for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances in binary regression case and this plot function produces two plots which are deviances vs index and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are demonstrated as follows.
 
 
 # Example: Robust and Sparse Multinomial Regression
