@@ -494,6 +494,9 @@ J. Friedman and T. Hastie and R. Tibshirani and B. Narasimhan and K. Tay and N. 
 glmnet: Lasso and Elastic-Net Regularized Generalized Linear Models. R Foundation for Statistical Computing, Vienna, Austria. R package version 4.1--3 
 (https://CRAN.R-project.org/package=glmnet)
 
+F. S. Kurnaz and I. Hoffmann and P. Filzmoser (2018). Robust and sparse estimation methods for high-dimensional linear and logistic regression. Chemometrics and Intelligent Laboratory Systems, 172, 211-222. DOI
+[10.1016/j.chemolab.2017.11.017"](https://www.sciencedirect.com/science/article/pii/S0169743917301247)
+    
 Reinhold, W. C., Sunshine, M., Liu, H., Varma, S., Kohn, K. W., Morris, J., Doroshow, J., &
 Pommier, Y. (2012). CellMiner: A web-based suite of genomic and pharmacologic tools to
 explore transcript and drug patterns in the NCI-60 cell line set. Cancer Research, 72(14),
