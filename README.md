@@ -97,8 +97,13 @@ Coefficients:
  lambda: 0.1391
  lambdaw: 0.07545663
 ```
+ 
+The main function `enetLTS()` provides option for tuning parameters user supplied alpha sequence for the elastic net penalty, which is the mixing proportion of the ridge and lasso penalties and takes value in $[0,1]$. $\alpha=1$ is the lasso penalty, and $\alpha=0$ the ridge penalty. If not provided a sequence, default is 41 equally spaced values.
 
-Tha arguman `hsize` shows a numeric value giving the percentage of the trimming of the penalized objective function of current family with default 0.75. 
+
+
+
+The arguman `hsize` shows a numeric value giving the percentage of the trimming of the penalized objective function of current family with default 0.75. 
 
 The arguman `nsamp` is a numeric vector giving the number of subsamples which has two entries. The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after the started ncstep C-steps. For those remaining subsets, additional C-steps are performed until convergence. The default is to start with ncstep C-steps on 500 initial subsamples for first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm took the $warm start$ idea, which means the best subset of neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can be determined by users. 
 
