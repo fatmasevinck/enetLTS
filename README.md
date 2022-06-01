@@ -35,7 +35,7 @@ To install the latest (possibly unstable) version from GitHub, you can pull this
 If you already have package `devtools` installed, the first line can be skipped.
 
 
-# Example: Robust and Sparse Linear Regression
+# Example: Robust and Sparse Linear Regression (`family="gaussian"`)
 
 We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data in order to illustrate the functionality of the `enetLTS` model for linear regression. As in package `robustHD` ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)), the response variable is determined by the protein expressions for a specific protein, which is 92th protein, and
 the explanatory variable is determined by the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. This data set is available in package `robustHD`.
@@ -95,7 +95,7 @@ Several plots are available for the results: `plotCoef.enetLTS()` visualizes the
 
 Examples of the residuals plot (left) and the diagnostic plot (right) for output of function `enetLTS()` with the arguman `family="gaussian"`.
 
-# Example: Robust and Sparse Binary Regression 
+# Example: Robust and Sparse Binary Regression (`family="binomial"`)
 
 In order to provide an example for binary regression, we simulate the data and apply the `enetLTS()`function with the option `family="binomial"`.
 
@@ -128,7 +128,7 @@ To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we ha
 
 ![Residuals and Diagnostics](paper/JOSSbinomResidDiagSIM.png)
 
-# Example: Robust and Sparse Multinomial Regression
+# Example: Robust and Sparse Multinomial Regression (`family="multinomial"`)
 
 The fuit data set has been well-known in the context of robust discrimination. It contains spectral information with 256 wavelengths, thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov`.
 
