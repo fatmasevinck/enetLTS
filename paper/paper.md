@@ -134,9 +134,9 @@ Several plots are available for the results: `plotCoef.enetLTS()` visualizes the
 In order to provide an example for binary regression, we simulate the data and apply the `enetLTS()`function with the option `family="binomial"`.
 
 ```R
-> # install and load package
-> install.packages("enetLTS")
-> library(enetLTS)
+>
+>
+>
 > # fit the model for family="binomial"
 > fit.binomial <- enetLTS(Xout, yout, family="binomial")
 > fit.binomial
