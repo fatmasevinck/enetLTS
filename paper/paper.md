@@ -182,7 +182,7 @@ The fuit data set has been well-known in the context of robust discrimination. I
 > grp <- c(rep(1,490),rep(2,106),rep(3,500)) 
 > y <- factor(grp-1)
 ```
-With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression.
+With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression. Here user supplied values of `lambdas` are considered. 
 
 ```R
 > lambdas=seq(from=0.01,to=0.1,by=0.01)
@@ -206,8 +206,7 @@ Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas,
  lambdaw: 0.003971358
   ```    
 
-Similar to previous families, the main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty. If not provided a sequence, default is 41 equally spaced values. For the tuning parameter $\lambda$, user supplied sequence is available. If not provided a sequence, 
-default is chosen with steps of size -0.05 from 0.95 to 0.05 for multinomial regression, see [@Kurnaz22Arx]. 
+The main function `enetLTS()` provides similar options for alpha sequence for the elastic net penalty. As for the tuning parameter $\lambda$, if user does not provided a sequence, default is chosen with steps of size -0.05 from 0.95 to 0.05 for multinomial regression, see [@Kurnaz22Arx]. 
 
 The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. 
 Updated tuning parameter $\lambda$ (`lambdaw`) for reweighting step is done using the `cv.glmnet()` function from package `glmnet` [@Friedman21R] with `family="multinomial"` option. 
