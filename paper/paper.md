@@ -72,7 +72,6 @@ as well as in empirical research e.g. [@Segaert18; @Jensch22].
 
 We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to illustrate the functionality of the `enetLTS` model for linear regression. As in [@Alfons21] the response variable is determined by the protein expressions for a specific protein, which is 92th protein, and
 the explanatory variable is determined by the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. This data set is available in package `robustHD`.
-
 ```R
 > # load data
 > library("robustHD")
@@ -86,7 +85,7 @@ the explanatory variable is determined by the gene expressions of the 100 genes 
 > X <- gene[, keep]
 ```
 
-Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. 
+Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. The default `family` option is `gaussian`.
 
 ```R
 > # install and load package
@@ -99,60 +98,34 @@ Like many other packages, the easy way to use the package `enetLTS` is to instal
 > fit.gaussian
 enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, 
- lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE,
- hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5,     
- repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
-
-Coefficients:
-          1           2           3           4           5           6 
--2.52390658  0.31135509  0.00000000  0.00000000  0.12285091  0.00000000 
-          7           8           9          10          11          12 
- 0.00000000  0.00000000  0.00000000  0.07457828  0.00000000  0.00000000 
-         13          14          15          16          17          18 
- 0.09740240  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000 
-         19          20          21          22          23          24 
- 0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.05946501 
-         25          26          27          28          29          30 
--0.27371935  0.00000000  0.00000000  0.00000000 -0.07528489  0.00000000 
-         31          32          33          34          35          36 
- 0.00000000  0.00000000  0.13028362  0.00000000  0.00000000  0.00000000 
-         37          38          39          40          41          42 
- 0.00000000  0.00000000  0.12902065 -0.02704781  0.00000000  0.00000000 
-         43          44          45          46          47          48 
- 0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000 
-         49          50          51          52          53          54 
- 0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000 
-         55          56          57          58          59          60 
- 0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000 
-         61          62          63          64          65          66 
- 0.00000000  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000 
-         67          68          69          70          71          72 
- 0.06071918  0.00000000  0.10203048  0.00000000  0.00000000  0.00000000 
-         73          74          75          76          77          78 
- 0.09639756  0.00000000  0.00000000  0.00000000  0.00000000  0.00000000 
-         79          80          81          82          83          84 
- 0.00000000  0.00000000 -0.03343054  0.00000000  0.00000000  0.00000000 
-         85          86          87          88          89          90 
- 0.00000000 -0.08272298  0.00000000 -0.09226326  0.00000000  0.00000000 
-         91          92          93          94          95          96 
- 0.00000000  0.17930052  0.00000000  0.00000000  0.09609275 -0.10894526 
-         97          98          99         100         101 
- 0.00000000  0.00000000  0.04865659  0.00000000  0.00000000 
+Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
+ hsize = 0.75, nsamp = 500, nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
 
  number of the nonzero coefficients:
-[1] 21
+[1] 29
 
- alpha: 0.725
+ alpha: 0.6
  lambda: 0.1391
- lambdaw: 0.07936752
+ lambdaw: 0.07545663
 ```
+ The main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty, which is the mixing proportion of the ridge and lasso penalties and takes value in $[0,1]$. $\alpha=1$ is the lasso penalty, and $\alpha=0$ the ridge penalty. If not provided a sequence, default is 41 equally spaced values. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, user supplied sequence is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$lambda0 for linear regression, where lambda0 is determined as in [@Alfons21]. 
+
+The arguman `hsize` shows a numeric value giving the percentage of the trimming of the penalized objective function of current family with default 0.75. 
+
+The arguman `nsamp` is a numeric vector giving the number of subsamples which has two entries. The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after the started ncstep C-steps. For those remaining subsets, additional C-steps are performed until convergence. The default is to start with ncstep C-steps on 500 initial subsamples for first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm took the $warm start$ idea, which means the best subset of neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can be determined by users. 
+
+After computed all candidate best subsets based on certain grids for $\alpha$ and $\lambda$, the combination of the optimal tuning parameters is defined by 5-fold cross-validation. Evaluation criterion for 5-fold cross-validation is summarized by heatmap for users if the arguman is chosen as `crit.plot="TRUE"`. 
+
+![Heatmap for 5-fold cross-validation](paper/JOSSgausHeatMap.png)
+
+To determine updated parameter $\lambda$ (`lambdaw`) in reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` [@Friedman21]. 
 
 Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients, 
 `plotResid.enetLTS()` plots the values of residuals vs fitted values, 
 and `plotDiagnostic.enetLTS()` allows to produce various diagnostic
 plots for the final model fit. 
 Examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
+
 
 ![Examples of plot functions of residuals (left); diagnostic (right)\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
 
