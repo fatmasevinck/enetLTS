@@ -68,7 +68,7 @@ literature e.g. [@Insolia21b; @Insolia21a; @Monti21],
 as well as in empirical research e.g. [@Segaert18; @Jensch22].
 
 
-# Example: Robust and Sparse Linear Regression \\ (`family="gaussian"`)
+# Example: Robust and Sparse Linear Regression \ (`family="gaussian"`)
 
 We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to illustrate the functionality of the `enetLTS` model for linear regression. As in [@Alfons21R] the response variable is determined by the protein expressions for a specific protein, which is 92th protein, and
 the explanatory variable is determined by the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. This data set is available in package `robustHD`.
@@ -126,7 +126,7 @@ Several plots are available for the results: `plotCoef.enetLTS()` visualizes the
 ![Examples of plot functions of residuals (left); diagnostic (right)\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
 
 
-# Example: Robust and Sparse Binary Regression (`family="binomial"`)
+# Example: Robust and Sparse Binary Regression \ (`family="binomial"`)
 
 In order to provide an example for binary regression, we simulate the data and apply the `enetLTS()`function with the option `family="binomial"`.
 
@@ -167,7 +167,7 @@ To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we ha
 Similar plots as in Figure \ref{fig:plotexamplesGuas} are available to visualize the results.
 
 
-# Example: Robust and Sparse Multinomial Regression (`family="multinomial"`)
+# Example: Robust and Sparse Multinomial Regression \ (`family="multinomial"`)
 
 The fuit data set has been well-known in the context of robust discrimination. It contains spectral information with 256 wavelengths, thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov`.
 
