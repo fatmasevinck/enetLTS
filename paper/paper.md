@@ -68,8 +68,7 @@ literature e.g. [@Insolia21b; @Insolia21a; @Monti21],
 as well as in empirical research e.g. [@Segaert18; @Jensch22].
 
 
-# Example: Robust and Sparse Linear Regression 
-  (`family="gaussian"`)
+# Example: Robust and Sparse Linear Regression \\ (`family="gaussian"`)
 
 We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to illustrate the functionality of the `enetLTS` model for linear regression. As in [@Alfons21R] the response variable is determined by the protein expressions for a specific protein, which is 92th protein, and
 the explanatory variable is determined by the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. This data set is available in package `robustHD`.
