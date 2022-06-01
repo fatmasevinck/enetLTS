@@ -134,7 +134,7 @@ In order to provide an example for binary regression, we simulate the data and a
 
 ```R
 >
->
+> !!! I am aware that the outliers are very extremeeeee, I will work on simulated data and ... !!!!!
 >
 > # fit the model for family="binomial"
 > fit.binomial <- enetLTS(Xout, yout, family="binomial")
