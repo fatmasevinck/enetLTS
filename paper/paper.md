@@ -110,11 +110,10 @@ Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas,
  lambda: 0.1391
  lambdaw: 0.07545663
 ```
-The main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty, which is the mixing proportion of the ridge and lasso penalties and takes value in $[0,1]$. $\alpha=1$ is the lasso penalty, and $\alpha=0$ the ridge penalty. If not provided a sequence, default is 41 equally spaced values. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, user supplied sequence is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$lambda0 for linear regression, where lambda0 is determined as in [@Alfons21R]. 
 
+The main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty. If not provided a sequence, default is 41 equally spaced values. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, user supplied sequence is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$lambda0 for linear regression, where lambda0 is determined as in [@Alfons21R]. 
 The arguman `hsize` shows a numeric value giving the percentage of the trimming of the penalized objective function of current family with default 0.75. 
-
-The arguman `nsamp` is a numeric vector giving the number of subsamples which has two entries. The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after the started ncstep C-steps. For those remaining subsets, additional C-steps are performed until convergence. The default is to start with ncstep C-steps on 500 initial subsamples for first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm took the $warm start$ idea, which means the best subset of neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can be determined by users. 
+The arguman `nsamp` is a numeric vector giving the number of subsamples which has two entries. The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after the started ncstep C-steps. For those remaining subsets, additional C-steps are performed until convergence. The default is to start with ncstep C-steps on 500 initial subsamples for first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm took the $warm start$ idea, which means the best subset of neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can also supplied by users. 
 
 After computed all candidate best subsets based on certain grids for $\alpha$ and $\lambda$, the combination of the optimal tuning parameters is defined by 5-fold cross-validation. Evaluation criterion for 5-fold cross-validation is summarized by heatmap for users if the arguman is chosen as `crit.plot="TRUE"`. 
 
@@ -128,8 +127,8 @@ and `plotDiagnostic.enetLTS()` allows to produce various diagnostic
 plots for the final model fit. 
 Examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
 
-
 ![Examples of plot functions of residuals (left); diagnostic (right)\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
+
 
 # Example: Robust and Sparse Binary Regression
 
@@ -174,10 +173,7 @@ Similar plots as in Figure \ref{fig:plotexamplesGuas} are available to visualize
 
 # Example: Robust and Sparse Multinomial Regression
 
-The fuit data set has been well-known in the context of robust discrimination. 
-It contains spectral information with 256 wavelengths,
-thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named
-D, M, and HA, with group sizes 490, 106, and 500. 
+The fuit data set has been well-known in the context of robust discrimination. It contains spectral information with 256 wavelengths, thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov`.
 
 ```R
 > # load data
@@ -185,18 +181,40 @@ D, M, and HA, with group sizes 490, 106, and 500.
 > data(fruit)
 > 
 > d <- fruit[,-1]  # first column includes the fruid names 
-> xx <- as.matrix(d)
+> X <- as.matrix(d)
 > # define response variable
 > grp <- c(rep(1,490),rep(2,106),rep(3,500)) 
-> yy <- factor(grp-1)
->
-> fit.binomial <- enetLTS(xx, yy, family="multinomial",
-                    alphas=seq(from=0.01,to=0.1,by=0.01), 
-                    lambdas=seq(from=0.01,to=0.1,by=0.01),
-                    lambdaw=NULL, intercept=TRUE, hsize=0.75, 
-                    nsamp=c(500,10), nCsteps=20, nfold=5, repl=1, ncores=1, 
-                    tol=-1e6, scal=TRUE, seed=NULL, crit.plot=TRUE)
- ```                
+> y <- factor(grp-1)
+```
+With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression.
+
+```R
+> fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE)
+> [1] "optimal model: lambda = 0.01 alpha = 0.02"
+> 
+> fit.mutinom 
+enetLTS estimator 
+
+Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = FALSE) 
+
+ number of the nonzero coefficients:
+[1] 704
+
+ alpha: 0.02
+ lambda: 0.01
+ lambdaw: 0.003971358
+  ```    
+
+Similar to previous families, the main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty. If not provided a sequence, default is 41 equally spaced values. For the tuning parameter $\lambda$, user supplied sequence is available. If not provided a sequence, 
+default is chosen with steps of size -0.05 from 0.95 to 0.05 for multinomial regression, see [@Kurnaz22]. 
+
+The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from package `glmnet` [@Friedman21R] for current `family` option. `plotCoef.enetLTS()` includes group information for multinomial regression. Plot functions are re-organized to be suitable for multinomial regression. In `plotResid.enetLTS()`, residuals are turned into the deviances as in binary regression case. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components, explaining nearly all of the variability. These plots are demonstrated as follows.
+
+
+![Coefficients](JOSSmultinomCoef.png)
+ 
+ 
+ ![Residuals and diagnostic plots](JOSSmultinomResidDiag.png)
 
 
 # Related Software
