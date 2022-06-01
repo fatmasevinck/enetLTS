@@ -189,13 +189,18 @@ The fuit data set has been well-known in the context of robust discrimination. I
 With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression.
 
 ```R
-> fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE)
+> lambdas=seq(from=0.01,to=0.1,by=0.01)
+> fit.multinom <- enetLTS(X, y, family="multinomial", 
+  lambdas=lambdas, crit.plot=FALSE)
 > [1] "optimal model: lambda = 0.01 alpha = 0.02"
 > 
 > fit.mutinom 
 enetLTS estimator 
 
-Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = FALSE) 
+Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, 
+ lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
+ hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, 
+ ncores = 1, tol = -1e+06, seed = NULL, crit.plot = FALSE) 
 
  number of the nonzero coefficients:
 [1] 704
