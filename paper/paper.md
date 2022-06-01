@@ -116,7 +116,7 @@ The arguman `nsamp` is a numeric vector giving the number of subsamples which ha
 
 After computed all candidate best subsets based on certain grids for $\alpha$ and $\lambda$, the combination of the optimal tuning parameters is defined by 5-fold cross-validation. Evaluation criterion for 5-fold cross-validation is summarized by heatmap for users if the arguman is chosen as `crit.plot="TRUE"`. 
 
-![Heatmap for 5-fold cross-validation](paper/JOSSgausHeatMap.png)
+![Heatmap for 5-fold cross-validation \label{}fig:hatmapGauss](paper/JOSSgausHeatMap.png)
 
 To determine updated parameter $\lambda$ (`lambdaw`) in reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` [@Friedman21]. 
 
