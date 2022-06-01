@@ -111,8 +111,7 @@ Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas,
  lambdaw: 0.07545663
 ```
 
-The arguman `hsize` shows a numeric value giving the percentage of the trimming of the penalized objective function. The default value is 0.75.  
-The arguman `nsamp` is a numeric vector giving the number of subsamples which has two entries. The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after the started ncstep C-steps. For those remaining subsets, additional C-steps are performed until convergence. The default is to start with ncstep C-steps on 500 initial subsamples for first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm took the $warm start$ idea, which means the best subset of neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can also supplied by users. `hsize` and `nsamp` are the same default values for all family options `family=c("gaussian","binomial","multinomial")`.
+The arguman `hsize` shows a numeric value giving the percentage of the trimming of the penalized objective function. The default value is 0.75. The arguman `nsamp` is a numeric vector giving the number of subsamples which has two entries. The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after the started ncstep C-steps. For those remaining subsets, additional C-steps are performed until convergence. The default is to start with ncstep C-steps on 500 initial subsamples for first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm took the $warm start$ idea, which means the best subset of neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can also supplied by users. These argumans are the same for the other family options.  
 
 The main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty. If not provided a sequence, default is 41 equally spaced values. 
 For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, user supplied sequence is available. If not provided a sequence, the default for `family="gaussian"` is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$lambda0, where lambda0 is determined as in [@Alfons21R]. 
@@ -124,7 +123,7 @@ After computed all candidate best subsets based on certain grids for $\alpha$ an
 
 To determine updated parameter $\lambda$ (`lambdaw`) in reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` [@Friedman21R]. 
 
-Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
+Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients where the sparsity can be shown clearly, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
 
 ![Examples of plot functions of residuals (left); diagnostic (right)\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
 
@@ -156,6 +155,9 @@ Call:  enetLTS(xx = Xout, yy = yout, family = "binomial", alphas = alphas,
 ```
 
 Similarly, in binary case, the main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty. If not provided a sequence, default is 41 equally spaced values. For the tuning parameter $\lambda$, user supplied sequence is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$lambda00 for binary regression. lambda0 is determined based on the Pearson correlation between y and the jth predictor variable x_j on winsorized data for linear regression. In lambda00 for logistic regression, the Pearson correlation is replaced by a robustified point-biserial correlation, see [@Kurnaz18]. 
+
+
+
 
 As in `family="gaussian"`, the combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$ for `family="binomial"`. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. 
 To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. `plotCoef.enetLTS()` includes the coefficients. Plot functions are re-organized to be suitable for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances in binary regression case and this plot function produces two plots which are deviances vs index and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are demonstrated as follows.
