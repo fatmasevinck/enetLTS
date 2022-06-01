@@ -98,8 +98,10 @@ Like many other packages, the easy way to use the package `enetLTS` is to instal
 > fit.gaussian
 enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
- hsize = 0.75, nsamp = 500, nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, 
+ lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
+ hsize = 0.75, nsamp = 500, nCsteps = 20, nfold = 5, repl = 1, 
+ ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
 
  number of the nonzero coefficients:
 [1] 29
@@ -118,7 +120,7 @@ After computed all candidate best subsets based on certain grids for $\alpha$ an
 
 ![Heatmap for 5-fold cross-validation \label{fig:hatmapGauss}](JOSSgausHeatMap.png)
 
-To determine updated parameter $\lambda$ (`lambdaw`) in reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` [@Friedman21]. 
+To determine updated parameter $\lambda$ (`lambdaw`) in reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` [@Friedman21R]. 
 
 Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients, 
 `plotResid.enetLTS()` plots the values of residuals vs fitted values, 
