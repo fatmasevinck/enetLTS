@@ -1,26 +1,29 @@
 
 plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
-
+  
   vers   <- match.arg(vers)
   family <- object$inputs$family
-
-
+  
+  
+ 
+  x <- object$inputs$xx
+  y <- object$inputs$yy
+  
+  coefficients     <- object$coefficients
+  raw.coefficients <- object$raw.coefficients
+  
   if (family=="multinomial"){
     y.factor <- object$inputs$y_factor
   }
-
-  x <- object$inputs$xx
-  y <- object$inputs$yy
-
-  coefficients     <- object$coefficients
-  raw.coefficients <- object$raw.coefficients
-
+  
+  
+  
   if (family=="multinomial"){
     if (vers=="reweighted"){
       mainfit          <- paste("Deviances vs Index for Multinomial Logistic Regression")
       xlab             <- "Index"
       ylab             <- "Deviances"
-      lab.val          <- c("regular observation","outliers")
+      lab.val          <- c("regular","outliers")
       classification   <- factor(as.numeric(!object$raw.wt==0))
       ind              <- factor(as.numeric(object$raw.wt==0))
       yhat             <- x %*% coefficients
@@ -34,7 +37,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       mainfit          <- paste("Raw Deviances vs Index for Multinomial Logistic Regression")
       xlab             <- "Index"
       ylab             <- "Raw deviances"
-      lab.val          <- c("regular observation","outliers")
+      lab.val          <- c("best subset","outliers")
       yhat             <- x %*% raw.coefficients
       probs            <- exp(yhat)/apply(exp(yhat),1,sum)
       residuals        <- (-apply(y*log(probs),1,sum))
@@ -59,7 +62,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
             legend.text  = element_text(size = 13),
             legend.title = element_text(size = 13),
             legend.position = "bottom")+
-      guides(color=guide_legend(nrow=2, byrow=TRUE)) +
+      guides(color=guide_legend(ncol=2, byrow=TRUE)) +
       scale_colour_discrete(name= "Groups") +
       # scale_shape_discrete(name = "Diagnostics", breaks=c("0", "1"), labels = lab.val)
       scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val)
@@ -69,7 +72,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       mainfit          <- paste("Deviances vs Index for Binary Logistic Regression")
       xlab             <- "Index"
       ylab             <- "Deviances"
-      lab.val          <- c("regular observation","outliers")
+      lab.val          <- c("regular","outliers")
       classification   <- factor(as.numeric(!object$raw.wt==0))
       ind              <- factor(as.numeric(object$raw.wt==0))
       residuals        <- -(y * x %*% coefficients) + log(1+exp(x %*% coefficients))
@@ -92,7 +95,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
     }
     plot <- ggplot(residuals, aes(x=Index,
                                   y=residuals,
-                                  color=classification,
+                                  color=factor(y),
                                   shape=ind)) +
       geom_point(size=2) +
       geom_hline(yintercept=0, linetype="dashed",color="gray") +
@@ -104,7 +107,8 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
             legend.text  = element_text(size = 13),
             legend.title = element_text(size = 13),
             legend.position = "bottom") +
-      scale_colour_discrete(name="Diagnostics",breaks=c("1", "0"),labels=lab.val) +
+      guides(color=guide_legend(nrow=2, byrow=TRUE)) +
+      scale_colour_discrete(name= "Groups") +
       # scale_shape_discrete(name="Diagnostics",breaks=c("0", "1"),labels=lab.val)
       scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val)
     print(plot)
@@ -113,7 +117,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       mainfit          <- paste("Standardized Residuals vs Index for Regression")
       xlab             <- "Index"
       ylab             <- "Standardized residuals"
-      lab.val          <- c("regular observation","outliers")
+      lab.val          <- c("regular","outliers")
       classification   <- factor(as.numeric(!object$raw.wt==0))
       ind              <- factor(as.numeric(object$raw.wt==0))
       residuals        <- y - x %*% coefficients
@@ -157,15 +161,15 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val)
     print(plot)
   }
-
-
+  
+  
   if (family=="binomial" | family=="gaussian"){
     if (family=="binomial"){
       if (vers=="reweighted"){
         mainfit          <- expression(paste("Deviances vs ", X*hat(beta), " for Binary Logistic Regression"))
         xlab             <- expression(X*hat(beta))
         ylab             <- "Deviances"
-        lab.val          <- c("regular observation","outliers")
+        lab.val          <- c("regular","outliers")
         classification   <- factor(as.numeric(!object$raw.wt==0))
         ind              <- factor(as.numeric(object$raw.wt==0))
         residuals        <- -(y * x %*% coefficients) + log(1+exp(x %*% coefficients))
@@ -188,7 +192,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       }
       plot <- ggplot(residuals, aes(x=fitted.values,
                                     y=residuals,
-                                    color=classification,
+                                    color=factor(y),
                                     shape=ind)) +
         geom_point(size=2) +
         geom_hline(yintercept=0, linetype="dashed",color="gray") +
@@ -200,16 +204,18 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
               legend.text  = element_text(size = 13),
               legend.title = element_text(size = 13),
               legend.position = "bottom") +
-        scale_colour_discrete(name="Diagnostics",breaks=c("1", "0"),labels=lab.val) +
+        guides(color=guide_legend(nrow=2, byrow=TRUE)) +
+        scale_colour_discrete(name= "Groups") +
+        # scale_colour_discrete(name="Diagnostics",breaks=c("1", "0"),labels=lab.val) +
         scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val)
       print(plot)
-
+      
     } else if (family=="gaussian"){
       if (vers=="reweighted"){
         mainfit          <- expression(paste("Standardized Residuals vs ", X*hat(beta), " for Linear Regression"))
         xlab             <- expression(X*hat(beta))
         ylab             <- "Standardized residuals"
-        lab.val          <- c("regular observation","outliers")
+        lab.val          <- c("regular","outliers")
         classification   <- factor(as.numeric(!object$raw.wt==0))
         ind              <- factor(as.numeric(object$raw.wt==0))
         residuals        <- y - x %*% coefficients
@@ -253,7 +259,6 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
         scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val)
       print(plot)
     }
-
+    
   }
 }
-
