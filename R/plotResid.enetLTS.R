@@ -3,9 +3,7 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
   
   vers   <- match.arg(vers)
   family <- object$inputs$family
-  
-  
- 
+
   x <- object$inputs$xx
   y <- object$inputs$yy
   
@@ -15,8 +13,6 @@ plotResid.enetLTS <- function(object,vers=c("reweighted","raw"),...){
   if (family=="multinomial"){
     y.factor <- object$inputs$y_factor
   }
-  
-  
   
   if (family=="multinomial"){
     if (vers=="reweighted"){
