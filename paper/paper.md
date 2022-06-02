@@ -107,7 +107,7 @@ In order to provide an example for binary regression, a data set is simulated wh
 > m1 <- 10  # the number of nonzero coefficients 
 > rho1 <- 0.9  # high correlation 
 > V1 <- matrix(0,p,p)
-> for(i in 1:p){for (j in 1:p){ V1[i,j] <- rho1^abs(i-j)}}   # highly correlated
+> for(i in 1:p){for (j in 1:p){ V1[i,j] <- rho1^abs(i-j)}} 
 > beta <- rep(0,p); beta[1:m1] <- 1 
 > X <- mvrnorm(n,rep(0,p),V1)
 > e <- rnorm(n,0,1)
