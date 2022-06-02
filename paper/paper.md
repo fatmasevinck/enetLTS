@@ -142,7 +142,7 @@ Call:  enetLTS(xx = Xout, yy = yout, family = "binomial", alphas = alphas,
  lambdaw: 0.02225821
 ```
 
-Similarly, the main function `enetLTS()` provides user supplied option for alpha sequence of the elastic net penalty. If not provided a sequence, default is 41 equally spaced values. For the tuning parameter $\lambda$, user supplied sequence option is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see [@Kurnaz18].
+The main function `enetLTS()` provides similar options for alpha sequence of the elastic net penalty. For the tuning parameter $\lambda$, user supplied sequence option is available, as well. If not provided a sequence, default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see [@Kurnaz18].
 
 The evaluation criterion results belong to the candidates of tuning parameters is avaliable in a heatmap if the arguman `crit.plot` is assigned to `"TRUE"` (which is omitted here). To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. 
 
@@ -192,7 +192,7 @@ Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas,
  lambdaw: 0.003971358
   ```    
 
-The main function `enetLTS()` provides similar options for alpha sequence for the elastic net penalty. As for the tuning parameter $\lambda$, if user does not provided a sequence, default is chosen with steps of size -0.05 from 0.95 to 0.05 for multinomial regression, see [@Kurnaz22Arx]. 
+The main function `enetLTS()` provides similar options for alpha sequence of the elastic net penalty. As for the tuning parameter $\lambda$, if user does not provided a sequence, default is chosen with steps of size -0.05 from 0.95 to 0.05 for multinomial regression, see [@Kurnaz22Arx]. 
 
 The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. 
 Updated tuning parameter $\lambda$ (`lambdaw`) for reweighting step is done using the `cv.glmnet()` function from package `glmnet` [@Friedman21R] with `family="multinomial"` option. 
