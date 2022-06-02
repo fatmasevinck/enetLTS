@@ -108,19 +108,15 @@ In order to provide an example for binary regression, a data set is simulated wh
 > rho1 <- 0.9  # high correlation 
 > V1 <- matrix(0,p,p)
 > for(i in 1:p){for (j in 1:p){ V1[i,j] <- rho1^abs(i-j)}}   # highly correlated
->
 > beta <- rep(0,p); beta[1:m1] <- 1 
 > X <- mvrnorm(n,rep(0,p),V1)
 > e <- rnorm(n,0,1)
-> 
 > ycond <- 1 + X %*% beta + e
 > y <- ifelse(ycond <= 0,0,1)
-> 
 > eps <-0.05  # %10 contamination to only class 0
 > m <- ceiling(eps*n)
 > Xout <- X   
 > Xout[y==0,][1:(m),] <- rnorm(m*p,5,1);  # class 0
-> 
 > ycond <- 1 + Xout %*% beta + e
 > yout <- ifelse(ycond <= 0,0,1)
 > yout[y==0][1:m] <- 1- yout[y==0][1:m]
@@ -146,10 +142,9 @@ Call:  enetLTS(xx = Xout, yy = yout, family = "binomial", alphas = alphas,
  lambdaw: 0.02225821
 ```
 
-Similarly, in binary case, the main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty. If not provided a sequence, default is 41 equally spaced values. For the tuning parameter $\lambda$, user supplied sequence is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$lambda00 for binary regression, where lambda00 is determined based on the robustified point-biserial correlation, see [@Kurnaz18].
+Similarly, the main function `enetLTS()` provides user supplied option for alpha sequence of the elastic net penalty. If not provided a sequence, default is 41 equally spaced values. For the tuning parameter $\lambda$, user supplied sequence option is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see [@Kurnaz18].
 
-As in `family="gaussian"`, the combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$ for `family="binomial"`. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. 
-To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. 
+The evaluation criterion results belong to the candidates of tuning parameters is avaliable in a heatmap if the arguman `crit.plot` is assigned to `"TRUE"`. To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. 
 
 Plot functions are re-organized to be suitable for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances and this plot function produces two plots which are deviances vs index and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are demonstrated in Figure \ref{fig:coefbinom} and \ref{fig:ResidDiagbinom}.
 
