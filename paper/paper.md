@@ -155,7 +155,7 @@ Plot functions are re-organized to be suitable for binary regression. In `plotRe
 
 # Example: Robust and Sparse Multinomial Regression \ (`family="multinomial"`)
 
-The fuit data set has been well-known in the context of robust discrimination. It contains spectral information with 256 wavelengths, thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov` and it is taken into consideration to illustrate the functionality of the `enetLTS` model for multinomial regression.
+The fuit data set has been well-known in the context of robust discrimination studies. It contains spectral information with 256 wavelengths, thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov` and it is taken into consideration to illustrate the functionality of the `enetLTS` model for multinomial regression.
 
 ```R
 > # load data
