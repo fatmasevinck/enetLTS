@@ -144,7 +144,7 @@ Call:  enetLTS(xx = Xout, yy = yout, family = "binomial", alphas = alphas,
 
 Similarly, the main function `enetLTS()` provides user supplied option for alpha sequence of the elastic net penalty. If not provided a sequence, default is 41 equally spaced values. For the tuning parameter $\lambda$, user supplied sequence option is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see [@Kurnaz18].
 
-The evaluation criterion results belong to the candidates of tuning parameters is avaliable in a heatmap if the arguman `crit.plot` is assigned to `"TRUE"`. To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. 
+The evaluation criterion results belong to the candidates of tuning parameters is avaliable in a heatmap if the arguman `crit.plot` is assigned to `"TRUE"` (which is omitted here). To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. 
 
 Plot functions are re-organized to be suitable for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances and this plot function produces two plots which are deviances vs index and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are demonstrated in Figure \ref{fig:coefbinom} and \ref{fig:ResidDiagbinom}.
 
