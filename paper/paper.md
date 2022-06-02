@@ -31,6 +31,9 @@ bibliography: paper.bib
 
 # State of the field
 
+This part could added or skipped ?
+
+
 # Statement of need
 
 A number of new robust linear regression methods have been developed during the last decade to improve the calculation for high dimensional linear regression, such as [@Alfons21R; @Keplinger21R]. However, to the best of our knowledge, the robust logistic (both binary and multinomial) regression for high dimensional data is not available in elsewhere. Package `enetLTS` therefore provides researchers with access to robust solutions and variable selection at the same time with high-dimensional linear and logistic regression data. It has been used in many benchmarking studies in the statistical literature e.g. [@Insolia21b; @Insolia21a; @Monti21], as well as in empirical research e.g. [@Segaert18; @Jensch22].
@@ -53,7 +56,7 @@ We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/c
 > X <- gene[, keep]
 ```
 
-Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. The default `family` option is `gaussian`.
+Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. The default `family` option is `gaussian`, which corresponds to linear regression.
 
 ```R
 > # install and load package
@@ -90,7 +93,7 @@ After computed all candidate best subsets based on certain grids of $\alpha$ and
 
 To determine updated parameter $\lambda$ (`lambdaw`) in reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` [@Friedman21R]. 
 
-Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients where the sparsity can be shown clearly, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
+Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients where the coefficinets which set to zeros are shown clearly, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
 
 ![Examples of plot functions of residuals (left); diagnostic (right)\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
 
