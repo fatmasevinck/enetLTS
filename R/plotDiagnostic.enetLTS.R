@@ -1,19 +1,19 @@
 
 plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
-
+  
   vers <- match.arg(vers)
   family <- object$inputs$family
-
+  
   if (family=="multinomial"){
     y <- object$inputs$y_factor
   } else {
     y <- object$inputs$yy
   }
   x <- object$inputs$xx
-
+  
   coefficients     <- object$coefficients
   raw.coefficients <- object$raw.coefficients
-
+  
   if (family=="multinomial"){
     if (vers=="reweighted"){
       mainfit           <- paste("First two components of estimated scores for multinomial logistic regression (reweighted)")
@@ -36,7 +36,7 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       pc.scores         <- princomp(zj)$sco
       pc.scores         <- as.data.frame(pc.scores[,1:2])
     }
-
+    
     plot <- ggplot() +
       geom_point(data = pc.scores, aes(x=Comp.1, y=Comp.2, colour = factor(y),
                                        shape=classification), size=2) +
@@ -48,12 +48,12 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
             legend.text  = element_text(size = 13),
             legend.title = element_text(size = 13),
             legend.position = "bottom") +
-      guides(color=guide_legend(nrow=2, byrow=TRUE)) +
+      guides(color=guide_legend(ncol=2, byrow=TRUE)) +
       scale_colour_discrete(name= "Groups") +
       scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val)
     print(plot)
   }
-
+  
   if (family=="binomial"){
     if (vers=="reweighted"){
       mainfit              <- expression(paste("y vs ", X*hat(beta), " for Binary Logistic Regression"))
@@ -86,7 +86,7 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
     }
     plot <- ggplot(plotfitted.values, aes(x=fitted.values,
                                           y=y,
-                                          color=classification,
+                                          color=factor(y),
                                           shape=ind)) +
       geom_point(size=2) +
       geom_line(aes(y=probs,x=fitted.values), linetype="dotted", color="black") +
@@ -100,13 +100,15 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
             legend.text  = element_text(size = 13),
             legend.title = element_text(size = 13),
             legend.position = "bottom") +
-      scale_colour_discrete(name = "Diagnostics", breaks = c("1", "0"), labels = lab.val) +
+      guides(color=guide_legend(nrow=2, byrow=TRUE)) +
+      scale_colour_discrete(name= "Groups") +
+      # scale_colour_discrete(name = "Diagnostics", breaks = c("1", "0"), labels = lab.val) +
       scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val); options(warn = - 1)
     print(plot)
-
+    
   } else if (family=="gaussian"){
     if (vers=="reweighted"){
-
+      
       mainfit              <- expression(paste("y vs ", X*hat(beta), " for Linear Regression"))
       xlab                 <- expression(X*hat(beta))
       ylab                 <- "y"
@@ -152,5 +154,5 @@ plotDiagnostic.enetLTS <- function(object,vers=c("reweighted","raw"),...){
       scale_shape_manual(values=c(4, 17),name="Diagnostics",breaks=c("0", "1"), labels=lab.val)
     print(plot)
   }
-
+  
 }
