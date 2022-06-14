@@ -94,7 +94,7 @@ To determine updated parameter $\lambda$ (`lambdaw`) in reweighting step, we hav
 
 Several plots are available for the results. `plotCoef.enetLTS()` visualizes the coefficients where the coefficinets which set to zeros are shown clearly, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
 
-![Examples of plot functions of residuals (left); diagnostic (right)\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
+![Examples of plot functions of residuals (left); diagnostic (right) for linear regression\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
 
 
 # Example: Robust and Sparse Binary Regression \ (`family="binomial"`)
@@ -148,7 +148,7 @@ The evaluation criterion results belong to the candidates of tuning parameters i
 
 Plot functions are re-organized to be suitable for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances and this plot function produces two plots which are deviances vs index and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are demonstrated in Figure \ref{fig:ResidDiagbinom}.
 
-![Residuals and Diagnostics \label{fig:ResidDiagbinom}](JOSSbinomResidDiagNCI60.png)
+![Examples of plot functions of residuals (left); diagnostic (right) for binary regression\label{fig:ResidDiagbinom}](JOSSbinomResidDiagNCI60.png)
 
 
 # Example: Robust and Sparse Multinomial Regression \ (`family="multinomial"`)
