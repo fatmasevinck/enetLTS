@@ -148,7 +148,7 @@ The evaluation criterion results belong to the candidates of tuning parameters i
 
 Plot functions are re-organized to be suitable for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances and this plot function produces two plots which are deviances vs index and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are demonstrated in Figure \ref{fig:ResidDiagbinom}.
 
-![Examples of plot functions of residuals (left); diagnostic (right) for binary regression\label{fig:ResidDiagbinom}](JOSSbinomResidDiagNCI60.png)
+![Examples of plot functions of deviances (left); diagnostic (right) for binary regression\label{fig:ResidDiagbinom}](JOSSbinomResidDiagNCI60.png)
 
 
 # Example: Robust and Sparse Multinomial Regression \ (`family="multinomial"`)
