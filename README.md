@@ -123,9 +123,9 @@ Similarly, in binary case, the main function `enetLTS()` provides user supplied 
 As in `family="gaussian"`, the combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$ for `family="binomial"`. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. 
 To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. `plotCoef.enetLTS()` includes the coefficients. Plot functions are re-organized to be suitable for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances in binary regression case and this plot function produces two plots which are deviances vs index and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are demonstrated as follows.
 
-![Coefficients](paper/JOSSbinomPlotCoefSIM.png)
+![Coefficients](paper/JOSSbinomPlotCoefNCI60.png)
 
-![Residuals and Diagnostics](paper/JOSSbinomResidDiagSIM.png)
+![Residuals and Diagnostics](paper/JOSSbinomResidDiagNCI60.png)
 
 # Example: Robust and Sparse Multinomial Regression (`family="multinomial"`)
 
