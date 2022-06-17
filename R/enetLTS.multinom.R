@@ -230,6 +230,8 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
      apply(raw.probs,1,which.max)
    } else if (type.response=="response"){
      raw.probs
+     colnames(raw.probs) <- paste0("class", 1:(classize)) 
+     rownames(raw.probs) <- 1:nrow(xx)
    }
    
    fitted.values     <- if (type.response=="link"){
@@ -238,6 +240,8 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
      apply(probs,1,which.max)
    } else if (type.response=="response"){
      probs
+     colnames(probs) <- paste0("class", 1:(classize)) 
+     rownames(probs) <- 1:nrow(xx)
    }
    
    # raw.rmse <- sqrt(mean((yy - raw.yhat)^2))
@@ -276,7 +280,5 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
    class(outlist) <- "multinomial"
    return(outlist)
 }
-
-
 
 
