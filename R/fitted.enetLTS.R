@@ -36,8 +36,8 @@ fitted.enetLTS <-
           colnames(fitted.values) <- paste0("class", 1:(length(object$classize))) 
           rownames(fitted.values) <- 1:nrow(xx)
         }
-        nfit <- fitted.values
       } 
+       nfit <- fitted.values
     } else if (object$inputs$family=="binomial"){
         if (vers=="reweighted"){
           u <- xx %*% reweighted.coefficients
@@ -53,8 +53,8 @@ fitted.enetLTS <-
           } else if (type=="response"){
             fitted.values <-  1/(1+exp(-uu))
           }
-          nfit <- fitted.values
         } 
+        nfit <- fitted.values
       } else if (object$inputs$family=="gaussian"){
         if (vers=="reweighted"){
           res=as.matrix(xx %*% reweighted.coefficients)
