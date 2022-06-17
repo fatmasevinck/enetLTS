@@ -1,4 +1,3 @@
-
 enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept, 
                              nsamp, s1, nfold, repl, scal, ncores, nCsteps, tol, seed, plot, typegrouped,
                              type.response){
@@ -276,5 +275,8 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
    class(outlist) <- "multinomial"
    return(outlist)
 }
+
+
+
 
 
