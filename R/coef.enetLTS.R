@@ -1,4 +1,5 @@
 
+
 coef.enetLTS <-
   function(object ,vers=c("reweighted","raw"), zeros=TRUE,...)
   {
@@ -16,7 +17,14 @@ coef.enetLTS <-
       # nbeta <- nbeta[nbeta != 0]
       # names(nbeta) <- namesbeta
     }
+    if (object$inputs$family=="multinomial") {
+      nbeta <- matrix(unlist(nbeta),ncol=length(object$classize))
+      colnames(nbeta) <- paste0("class", 1:(length(object$classize))) 
+      rownames(nbeta) <- 1:nrow(nbeta)
+    }
     return(nbeta)
   }
+
+
 
 
