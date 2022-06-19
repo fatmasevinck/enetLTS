@@ -124,15 +124,19 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
 
    intercept <- isTRUE(intercept)
    if(intercept) xx <- addIntercept(xx)
-
+ 
    if (intercept){
-      coefficients     <- c(a0,coefficients)
-      raw.coefficients <- c(a00,raw.coefficients)
+      coefficients            <- c(a0,coefficients)
+      names(coefficients)     <- 1:length(coefficients)
+      raw.coefficients        <- c(a00,raw.coefficients)
+      names(raw.coefficients) <- 1:length(raw.coefficients)
    } else {
-      coefficients     <- coefficients
-      raw.coefficients <- raw.coefficients
+      coefficients            <- coefficients
+      names(coefficients)     <- 1:length(coefficients)
+      raw.coefficients        <- raw.coefficients
+      names(raw.coefficients) <- 1:length(raw.coefficients)
    }
-
+  
    raw.yhat <- xx %*% raw.coefficients
    raw.probs <- 1/(1+exp(-raw.yhat))
 
