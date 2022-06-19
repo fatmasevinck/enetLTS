@@ -1,4 +1,5 @@
 
+
 enetLTS.gaus <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept, nsamp, 
                          s1, nfold, repl, scal, ncores, nCsteps, tol, seed, del, plot,
                          type.response){
@@ -103,21 +104,25 @@ enetLTS.gaus <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars
    if(intercept) xx <- addIntercept(xx)
    
    if (intercept){
-      coefficients     <- c(a0,coefficients)
-      raw.coefficients <- c(a00,raw.coefficients)
+      coefficients            <- c(a0,coefficients)
+      names(coefficients)     <- 1:length(coefficients)
+      raw.coefficients        <- c(a00,raw.coefficients)
+      names(raw.coefficients) <- 1:length(raw.coefficients)
    } else {
-      coefficients     <- coefficients
-      raw.coefficients <- raw.coefficients
+      coefficients            <- coefficients
+      names(coefficients)     <- 1:length(coefficients)
+      raw.coefficients        <- raw.coefficients
+      names(raw.coefficients) <- 1:length(raw.coefficients)
    }
    
    raw.yhat <- xx %*% raw.coefficients
    yhat     <- xx %*% coefficients
    
-   raw.fitted.values <-  if (type.response=="link" | type.response=="response"){
+   raw.fitted.values <- if (type.response=="link" | type.response=="response"){
      raw.yhat
    } 
    
-   fitted.values     <-  if (type.response=="link" | type.response=="response"){
+   fitted.values     <- if (type.response=="link" | type.response=="response"){
      yhat
    }
    
