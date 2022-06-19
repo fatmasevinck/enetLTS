@@ -76,7 +76,7 @@ Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, lambdas = l
  lambdaw: 0.07545663
 ```
  
-The main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty, which is the mixing proportion of the ridge and lasso penalties and takes value in $[0,1]$. $\alpha=1$ is the lasso penalty, and $\alpha=0$ the ridge penalty. If not provided a sequence, default is 41 equally spaced values. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, user supplied sequence is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$lambda0 for linear regression, where lambda0 is determined as in ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)). 
+The main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty, which is the mixing proportion of the ridge and lasso penalties and takes value in $[0,1]$. $\alpha=1$ is the lasso penalty, and $\alpha=0$ the ridge penalty. If not provided a sequence, default is 41 equally spaced values. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, user supplied sequence is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le lambda0$ for linear regression, where lambda0 is determined as in ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)). 
 
 The arguman `hsize` shows a numeric value giving the percentage of the trimming of the penalized objective function of current family with default 0.75. 
 
