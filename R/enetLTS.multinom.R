@@ -225,28 +225,28 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
    raw.deviances <- (-apply(yy*log(raw.probs),1,sum))
    raw.deviances[is.nan(raw.deviances)] <- 0
    
-   raw.fitted.values <- if (type.response=="link"){
-     raw.yhat
-     colnames(raw.yhat) <- paste0("class", 1:(length(classize))) 
-     rownames(raw.yhat) <- 1:nrow(xx)
+    if (type.response=="link"){
+      raw.fitted.values <- raw.yhat
+     colnames(raw.fitted.values) <- paste0("class", 1:(length(classize))) 
+     rownames(raw.fitted.values) <- 1:nrow(xx)
    } else if (type.response=="class"){
-     apply(raw.probs,1,which.max)
+     raw.fitted.values <- apply(raw.probs,1,which.max)
    } else if (type.response=="response"){
-     raw.probs
-     colnames(raw.probs) <- paste0("class", 1:(length(classize))) 
-     rownames(raw.probs) <- 1:nrow(xx)
+     raw.fitted.values <- raw.probs
+     colnames(raw.fitted.values) <- paste0("class", 1:(length(classize))) 
+     rownames(raw.fitted.values) <- 1:nrow(xx)
    }
    
-   fitted.values     <- if (type.response=="link"){
-     yhat
-     colnames(yhat) <- paste0("class", 1:(length(classize))) 
-     rownames(yhat) <- 1:nrow(xx)
+   if (type.response=="link"){
+     fitted.values <- yhat
+     colnames(fitted.values) <- paste0("class", 1:(length(classize))) 
+     rownames(fitted.values) <- 1:nrow(xx)
    } else if (type.response=="class"){
-     apply(probs,1,which.max)
+     fitted.values <- apply(probs,1,which.max)
    } else if (type.response=="response"){
-     probs
-     colnames(probs) <- paste0("class", 1:(length(classize))) 
-     rownames(probs) <- 1:nrow(xx)
+     fitted.values <- probs
+     colnames(fitted.values) <- paste0("class", 1:(length(classize))) 
+     rownames(fitted.values) <- 1:nrow(xx)
    }
    
    # raw.rmse <- sqrt(mean((yy - raw.yhat)^2))
@@ -285,6 +285,7 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
    class(outlist) <- "multinomial"
    return(outlist)
 }
+
 
 
 
