@@ -206,10 +206,18 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
    
    if (intercept){
      raw.coefficients <- rbind(a00,raw.coefficients)
+     colnames(raw.coefficients) <- paste0("class", 1:(length(classize))) 
+     rownames(raw.coefficients) <- 1:length(raw.coefficients)
      coefficients     <- rbind(a0,coefficients)
+     colnames(coefficients) <- paste0("class", 1:(length(classize))) 
+     rownames(coefficients) <- 1:length(coefficients)
    } else {
      coefficients     <- coefficients
+     colnames(coefficients) <- paste0("class", 1:(length(classize))) 
+     rownames(coefficients) <- 1:length(coefficients)
      raw.coefficients <- raw.coefficients
+     colnames(raw.coefficients) <- paste0("class", 1:(length(classize))) 
+     rownames(raw.coefficients) <- 1:length(raw.coefficients)
    }
    
    # add fitted values 
