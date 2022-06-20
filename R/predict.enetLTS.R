@@ -1,7 +1,4 @@
 
-### can we add link to type ???????
-
-
 predict.enetLTS <-
   function(object,newX,vers=c("reweighted","raw"),
            type=c("link","response","coefficients","nonzero","class"),...)
