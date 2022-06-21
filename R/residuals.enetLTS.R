@@ -18,7 +18,7 @@ residuals.enetLTS <-
       } else if (object$inputs$family=="gaussian"){
         residuals <- object$inputs$y - object$inputs$x %*% object$coefficients
       }
-      return(residuals)
+      return(drop(residuals))
     }  
     if (vers=="raw"){
       if (object$inputs$family=="multinomial"){
@@ -33,6 +33,6 @@ residuals.enetLTS <-
       } else if (object$inputs$family=="gaussian"){
         raw.residuals <- object$inputs$y - object$inputs$x %*% object$raw.coefficients
       }
-      return(raw.residuals)
+      return(drop(raw.residuals))
     } 
   }
