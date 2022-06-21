@@ -1,5 +1,4 @@
 
-
 residuals.enetLTS <-
   function(object,vers=c("reweighted","raw"),...){
     
@@ -7,9 +6,9 @@ residuals.enetLTS <-
     
     if (vers=="reweighted"){
       if (object$inputs$family=="multinomial"){
-        yhat      <- object$inputs$x %*% object$coefficients
+        yhat      <- object$inputs$xx %*% object$coefficients
         probs     <- exp(yhat)/apply(exp(yhat),1,sum)
-        deviances <- (-apply(object$inputs$y*log(probs),1,sum))
+        deviances <- (-apply(object$inputs$yy*log(probs),1,sum))
         deviances[is.nan(deviances)] <- 0
         residuals <- deviances
       } else if (object$inputs$family=="binomial"){
@@ -36,3 +35,4 @@ residuals.enetLTS <-
       return(drop(raw.residuals))
     } 
   }
+
