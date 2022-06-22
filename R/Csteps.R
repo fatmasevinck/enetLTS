@@ -21,8 +21,6 @@ CStep.multinom <-
       zj <- drop(predict(fit,newx=xs,type="link"))
       zj.svd <- svd(scale(zj,TRUE,FALSE))
       svdrank <- sum(zj.svd$d>1e-4)
-      # buraya svdrank hakkinda bir uyari eklenebilir. paket icin uyari olarak. 
-      # cunku bunun full rank saglandigindan cok da emin degil.  
       if (svdrank<k-1){
         return(list(object=-Inf,index=indx,md=md,beta=beta))
       }
@@ -46,7 +44,6 @@ CStep.multinom <-
       
       fit <- glmnet(x[indx,], y[indx,], family="multinomial", alpha=alpha, lambda=lambda, 
                     standardize=FALSE, intercept=FALSE)
-      ###                  standardize=FALSE, intercept=FALSE,type.multinomial="grouped")
       beta <- matrix(do.call(rbind,lapply(fit$beta,matrix)),ncol=k) # to convert a matrix 
       md <- rep(NA,nrow(x))
       zj <- drop(predict(fit,newx=x,type="link"))
