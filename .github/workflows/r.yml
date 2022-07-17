@@ -35,5 +35,5 @@ jobs:
           install.packages(c("devtools"))
         shell: Rscript {0}
       - name: Check
-        run: devtools::test()
+        run: devtools::install(dependencies=TRUE, upgrade=FALSE); devtools::test()
         shell: Rscript {0}
