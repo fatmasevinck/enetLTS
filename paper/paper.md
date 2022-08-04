@@ -103,7 +103,7 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 
 ## Example: Robust and Sparse Binary Regression \ (`family="binomial"`)
 
-In order to provide an example for binary regression, 
+In order to provide an example for binary regression, the response variable is re-organized. If `mean(y)` is bigger than `0.5`, the response will be assigned to `1`, otherwise, the response will be assigned to `0`. 
 
 ```R
 > y <- protein[, 92]
