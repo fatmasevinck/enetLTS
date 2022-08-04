@@ -102,34 +102,19 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 In order to provide an example for binary regression, a data set is simulated which has high correlation among the explanatory variables. Sparsity is included using informative and uninformative blocks structure. Data set is contaminated with vertical outliers and leverage points. Following command lines show how to generate this data set.
 
 ```R
-> library(MASS)
-> n <- 50; p <- 100
-> m1 <- 10  # the number of nonzero coefficients 
-> rho1 <- 0.9  # high correlation 
-> V1 <- matrix(0,p,p)
-> for(i in 1:p){for (j in 1:p){ V1[i,j] <- rho1^abs(i-j)}} 
-> beta <- rep(0,p); beta[1:m1] <- 1 
-> X <- mvrnorm(n,rep(0,p),V1)
-> e <- rnorm(n,0,1)
-> ycond <- 1 + X %*% beta + e
-> y <- ifelse(ycond <= 0,0,1)
-> eps <-0.05  # %10 contamination to only class 0
-> m <- ceiling(eps*n)
-> Xout <- X   
-> Xout[y==0,][1:(m),] <- rnorm(m*p,5,1);  # class 0
-> ycond <- 1 + Xout %*% beta + e
-> yout <- ifelse(ycond <= 0,0,1)
-> yout[y==0][1:m] <- 1- yout[y==0][1:m]
+> y <- protein[, 92]
+> # for binary class 
+> y.binom <- ifelse(y <= mean(y),0,1)
 ```
 For the binary regression, the `family` arguman of `enetLTS()`function should be assigned to `"binomial"`.
 
 ```R
 > # fit the model for family="binomial"
-> fit.binomial <- enetLTS(Xout, yout, family="binomial")
+> fit.binomial <- enetLTS(X, y.binom, family="binomial")
 > fit.binomial
 enetLTS estimator 
 
-Call:  enetLTS(xx = Xout, yy = yout, family = "binomial", alphas = alphas, 
+Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, 
  lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
  hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, 
  ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
