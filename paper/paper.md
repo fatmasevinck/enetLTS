@@ -39,9 +39,13 @@ This part could added or skipped ?
 A number of new robust linear regression methods have been developed during the last decade to improve the calculation for high dimensional linear regression, such as [@Alfons21R; @Keplinger21R]. However, to the best of our knowledge, the robust logistic (both binary and multinomial) regression for high dimensional data is not available in elsewhere. Package `enetLTS` therefore provides researchers with access to robust solutions and variable selection at the same time with high-dimensional linear and logistic regression data. It has been used in many benchmarking studies in the statistical literature e.g. [@Insolia21b; @Insolia21a; @Monti21], as well as in empirical research e.g. [@Segaert18; @Jensch22].
 
 
-# Example: Robust and Sparse Linear Regression (`family="gaussian"`)
+# Examples
 
-We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to illustrate the functionality of the `enetLTS` model for linear regression. As in [@Alfons21R] the response variable is determined by the protein expressions for a specific protein, which is 92th protein, and the explanatory variable is determined by the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. This data set is available in package `robustHD`. 
+We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to illustrate the functionality of the `enetLTS` model. This data set is available in package `robustHD`. 
+
+## Example: Robust and Sparse Linear Regression (`family="gaussian"`)
+
+As in [@Alfons21R] the response variable is determined by the protein expressions for a specific protein, which is 92th protein, and the explanatory variable is determined by the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable.
 
 ```R
 > # load data
@@ -97,9 +101,9 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 ![Examples of plot functions of residuals (left); diagnostic (right) for linear regression\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
 
 
-# Example: Robust and Sparse Binary Regression \ (`family="binomial"`)
+## Example: Robust and Sparse Binary Regression \ (`family="binomial"`)
 
-In order to provide an example for binary regression, a data set is simulated which has high correlation among the explanatory variables. Sparsity is included using informative and uninformative blocks structure. Data set is contaminated with vertical outliers and leverage points. Following command lines show how to generate this data set.
+In order to provide an example for binary regression, 
 
 ```R
 > y <- protein[, 92]
@@ -136,7 +140,7 @@ Plot functions are re-organized to be suitable for binary regression. In `plotRe
 ![Examples of plot functions of deviances (left); diagnostic (right) for binary regression\label{fig:ResidDiagbinom}](JOSSbinomResidDiagNCI60.png)
 
 
-# Example: Robust and Sparse Multinomial Regression \ (`family="multinomial"`)
+## Example: Robust and Sparse Multinomial Regression \ (`family="multinomial"`)
 
 The fuit data set has been well-known in the context of robust discrimination studies. It contains spectral information with 256 wavelengths, thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov` and it is taken into consideration to illustrate the functionality of the `enetLTS` model for multinomial regression.
 
