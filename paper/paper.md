@@ -51,7 +51,7 @@ As in [@Alfons21R] the response variable is determined by the protein expression
 > # load data
 > library("robustHD")
 > data("nci60")  # contains matrices 'protein' and 'gene'
-
+>
 > # define response variable
 > y <- protein[, 92]
 > # screen most correlated predictor variables
