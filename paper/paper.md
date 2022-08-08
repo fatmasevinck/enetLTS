@@ -38,8 +38,7 @@ A number of new robust linear regression methods have been developed during the 
 
 We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to provide an example for `enetLTS` model. NCI-60 data includes 60 human cancer cell lines with nine cancer types, which are breast, central nervous system, colon, leukemia, lung, melanoma, ovearian, prostate and renal cancers. In this example, protein expression is regressed on gene expression data. Using the Affymetrix HG-U133A chip and normalizinf with the GCRMA method, the number of predictors is obtained as 22,283. Since one observation has all missing values, it is omitted and the number of observations is decreased to 59. This data set is available in package `robustHD`.
 
-## Example: Robust and Sparse Linear Regression 
-## (`family="gaussian"`)
+## Example: Robust and Sparse Linear Regression (`family="gaussian"`)
 
 As in [@Alfons21R] we determine the response variable with one of the protein expressions which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. The code lines for loading and re-organizing response variable and predictors are follows: 
 
@@ -100,7 +99,7 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 ![Examples of plot functions of residuals (left); diagnostic (right) for linear regression\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
 
 
-## Example: Robust and Sparse Binary Regression \\ (`family="binomial"`)
+## Example: Robust and Sparse Binary Regression (`family="binomial"`)
 
 In order to provide an example for binary regression, the response variable is re-organized in this data, and the predictors are the same. If `mean(y)` is bigger than `0.5`, the response will be assigned to `1`, otherwise, the response will be assigned to `0`.
 
@@ -139,7 +138,7 @@ Similarly, `plotCoef.enetLTS()` visualizes the coefficients. The other plot func
 ![Examples of plot functions of deviances (left); diagnostic (right) for binary regression\label{fig:ResidDiagbinom}](JOSSbinomResidDiagNCI60.png)
 
 
-## Example: Robust and Sparse Multinomial Regression \ (`family="multinomial"`)
+## Example: Robust and Sparse Multinomial Regression (`family="multinomial"`)
 
 The fuit data set has been well-known in the context of robust discrimination studies. Therefore, we have considered the fruit data set in order to illustrate the multinomial regression. It contains spectral information with 256 wavelengths for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov` and it is taken into consideration to illustrate the `enetLTS` model for multinomial regression.
 
