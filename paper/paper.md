@@ -138,9 +138,10 @@ Similarly, `plotCoef.enetLTS()` visualizes the coefficients. The other plot func
 ![Examples of plot functions of deviances (left); diagnostic (right) for binary regression\label{fig:ResidDiagbinom}](JOSSbinomResidDiagNCI60.png)
 
 
+
 ## Example: Robust and Sparse Multinomial Regression \ (`family="multinomial"`)
 
-The fuit data set has been well-known in the context of robust discrimination studies. It contains spectral information with 256 wavelengths, thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov` and it is taken into consideration to illustrate the functionality of the `enetLTS` model for multinomial regression.
+The fuit data set has been well-known in the context of robust discrimination studies. It contains spectral information with 256 wavelengths, thus is high-dimensional, for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov` and it is taken into consideration to illustrate the `enetLTS` model for multinomial regression.
 
 ```R
 > # load data
@@ -177,10 +178,11 @@ Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas,
  lambdaw: 0.003971358
   ```    
 
-The main function `enetLTS()` provides similar options for alpha sequence of the elastic net penalty. As for the tuning parameter $\lambda$, if user does not provided a sequence, default is chosen with steps of size -0.05 from 0.95 to 0.05 for multinomial regression, see [@Kurnaz22Arx]. 
+The main function `enetLTS()` provides similar options for alpha sequence of the elastic net penalty. As for the tuning parameter $\lambda$, if user does not provide a sequence, as a default algorithm determines the sequence with steps of size -0.05 from 0.95 to 0.05 for multinomial regression, see [@Kurnaz22Arx]. 
 
 The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. 
 Updated tuning parameter $\lambda$ (`lambdaw`) for reweighting step is done using the `cv.glmnet()` function from package `glmnet` [@Friedman21R] with `family="multinomial"` option. 
+
 Plot functions are re-organized to be suitable for multinomial regression. `plotCoef.enetLTS()` includes group information for multinomial regression. In `plotResid.enetLTS()`, residuals are turned into the deviances as in binary regression case. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components, explaining nearly all of the variability. 
 
 
