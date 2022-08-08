@@ -112,12 +112,12 @@ enetLTS(
   If "TRUE" then a grouped lasso penalty is used on the multinomial coefficients for a variable.
   The default is FALSE.}
 
-\item{type.response}{type of prediction required. \code{type="link"} gives the linear predictors.
-  \code{type="response"} gives the
-  fitted probabilities for \code{family="multinomial"} and \code{family="binomial"} and
-  gives the fitted values for \code{family="gaussian"}.
-  \code{type="class"} is available only for \code{family="binomial"} and \code{family="multinomial"},
-  and produces the class label corresponding to the maximum probability.}
+\item{type.response}{type of prediction required. \code{type.response="link"} gives the linear predictors.
+  \code{type.response="response"} gives the fitted probabilities for \code{family="multinomial"} and 
+  \code{family="binomial"} and gives the fitted values for \code{family="gaussian"}. 
+  \code{type.response="class"} is available only for \code{family="binomial"} and \code{family="multinomial"},
+  and produces the class label corresponding to the maximum probability. 
+  The default is \code{type.response="link"}.}
 }
 %-------------------------------------------------
 \details{
