@@ -164,7 +164,7 @@ With `family="multinomial"`, the model `enetLTS()` produces the results of multi
 > fit.mutinom 
 enetLTS estimator 
 
-Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, 
+Call:  enetLTS(xx = X, yy = y, family = "multinomial", alphas = alphas, 
  lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
  hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, 
  ncores = 1, tol = -1e+06, seed = NULL, crit.plot = FALSE) 
