@@ -88,7 +88,7 @@ The arguman `hsize` shows a numeric value giving the percentage of the trimming 
 
 The main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty. If not provided a sequence, default is 41 equally spaced values. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, user supplied sequence is available. If not provided a sequence, the default for `family="gaussian"` is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$lambda0, where lambda0 is determined as in [@Alfons21R]. 
 
-After computed all candidate best subsets based on certain grids of $\alpha$ and $\lambda$, the combination of the optimal tuning parameters is defined by 5-fold cross-validation. Evaluation criterion for 5-fold cross-validation is summarized by heatmap, see Figure \ref{fig:hatmapGauss}, for users if the arguman crit.plot` is assigned to `"TRUE"`. 
+After computed all candidate best subsets based on certain grids of $\alpha$ and $\lambda$, the combination of the optimal tuning parameters is defined by 5-fold cross-validation. Evaluation criterion for 5-fold cross-validation is summarized by heatmap, see Figure \ref{fig:hatmapGauss}, for users if the arguman `crit.plot` is assigned to `"TRUE"`. 
 
 ![Heatmap for 5-fold cross-validation \label{fig:hatmapGauss}](JOSSgausHeatMap.png)
 
@@ -101,7 +101,7 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 
 ## Example: Robust and Sparse Binary Regression \ (`family="binomial"`)
 
-In order to provide an example for binary regression, the response variable is re-organized. If `mean(y)` is bigger than `0.5`, the response will be assigned to `1`, otherwise, the response will be assigned to `0`. 
+In order to provide an example for binary regression, the response variable is re-organized in this data, and the predictors are the same. If `mean(y)` is bigger than `0.5`, the response will be assigned to `1`, otherwise, the response will be assigned to `0`.
 
 ```R
 > y <- protein[, 92]
@@ -133,7 +133,7 @@ The main function `enetLTS()` provides similar options for alpha sequence of the
 
 The evaluation criterion results belong to the candidates of tuning parameters is avaliable in a heatmap if the arguman `crit.plot` is assigned to `"TRUE"` (which is omitted here). To determine updated parameter $\lambda$ (`lambdaw`) for reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` package for current `family` option. 
 
-Plot functions are re-organized to be suitable for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances and this plot function produces two plots which are deviances vs index and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are demonstrated in Figure \ref{fig:ResidDiagbinom}.
+Similarly, `plotCoef.enetLTS()` visualizes the coefficients. The other plot functions are re-organized for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances and this plot function produces two plots which are deviances vs index and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are demonstrated in Figure \ref{fig:ResidDiagbinom}.
 
 ![Examples of plot functions of deviances (left); diagnostic (right) for binary regression\label{fig:ResidDiagbinom}](JOSSbinomResidDiagNCI60.png)
 
