@@ -34,11 +34,9 @@ bibliography: paper.bib
 A number of new robust linear regression methods have been developed during the last decade to improve the calculation for high dimensional linear regression, such as [@Alfons21R; @Keplinger21R]. However, to the best of our knowledge, the robust logistic (both binary and multinomial) regression for high dimensional data is not available in elsewhere. Package `enetLTS` therefore provides researchers with access to robust solutions and variable selection at the same time with high-dimensional linear and logistic regression data. It has been used in many benchmarking studies in the statistical literature e.g. [@Insolia21b; @Insolia21a; @Monti21], as well as in empirical research e.g. [@Segaert18; @Jensch22].
 
 
-# Examples
+# Example: Robust and Sparse Linear Regression (`family="gaussian"`)
 
 We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to provide an example for `enetLTS` model. NCI-60 data includes 60 human cancer cell lines with nine cancer types, which are breast, central nervous system, colon, leukemia, lung, melanoma, ovearian, prostate and renal cancers. In this example, protein expression is regressed on gene expression data. Using the Affymetrix HG-U133A chip and normalizinf with the GCRMA method, the number of predictors is obtained as 22,283. Since one observation has all missing values, it is omitted and the number of observations is decreased to 59. This data set is available in package `robustHD`.
-
-## Example: Robust and Sparse Linear Regression (`family="gaussian"`)
 
 As in [@Alfons21R] we determine the response variable with one of the protein expressions which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. The code lines for loading and re-organizing response variable and predictors are follows: 
 
@@ -99,9 +97,9 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 ![Examples of plot functions of residuals (left); diagnostic (right) for linear regression\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
 
 
-## Example: Robust and Sparse Binary Regression (`family="binomial"`)
+# Example: Robust and Sparse Binary Regression (`family="binomial"`)
 
-In order to provide an example for binary regression, the response variable is re-organized in this data, and the predictors are the same. If `mean(y)` is bigger than `0.5`, the response will be assigned to `1`, otherwise, the response will be assigned to `0`.
+For binary regression, we have considered the same NCI-60 data with some regularizations. In order to provide an example for binary regression, the response variable is re-organized. If `mean(y)` is bigger than `0.5`, the response will be assigned to `1`, otherwise, the response will be assigned to `0`. The predictors are the same as previous section.
 
 ```R
 > y <- protein[, 92]
