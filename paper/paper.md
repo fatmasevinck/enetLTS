@@ -99,7 +99,7 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 ![Examples of plot functions of residuals (left); diagnostic (right) for linear regression\label{fig:plotexamplesGuas}](JOSSgausNCI60.png)
 
 
-## Example: Robust and Sparse Binary Regression \ (`family="binomial"`)
+## Example: Robust and Sparse Binary Regression \\ (`family="binomial"`)
 
 In order to provide an example for binary regression, the response variable is re-organized in this data, and the predictors are the same. If `mean(y)` is bigger than `0.5`, the response will be assigned to `1`, otherwise, the response will be assigned to `0`.
 
