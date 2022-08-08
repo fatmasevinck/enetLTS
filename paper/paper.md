@@ -36,7 +36,7 @@ A number of new robust linear regression methods have been developed during the 
 
 # Examples
 
-We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to illustrate the functionality of the `enetLTS` model. This data set is available in package `robustHD`. 
+We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to provide an example for `enetLTS` model. This data set is available in package `robustHD`. 
 
 ## Example: Robust and Sparse Linear Regression (`family="gaussian"`)
 
