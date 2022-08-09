@@ -99,7 +99,7 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 
 # Example: Robust and Sparse Binary Regression (`family="binomial"`)
 
-For binary regression, we have considered the same NCI-60 data with some regularizations. In order to provide an example for binary regression, the response variable is re-organized. If `mean(y)` is bigger than `0.5`, the response will be assigned to `1`, otherwise, the response will be assigned to `0`. The predictors are the same as previous section.
+For binary regression, we have considered the same NCI-60 data with some regularizations. In order to provide an example for binary regression, the response variable is re-organized. If `mean(y)` is bigger than 0.5, the response will be assigned to 1, otherwise, the response will be assigned to 0. The predictors are the same as previous section.
 
 ```R
 > y <- protein[, 92]
@@ -185,8 +185,7 @@ Plot functions are re-organized for multinomial regression. `plotCoef.enetLTS()`
 
 # Related Software
 
-Package `robustHD` provides the sparseLTS estimator for linear regression based on the trimming idea for high dimensional linear regression [@Alfons21R]. Package `pense` provides implementations of robust S- and MM-type estimators using elastic net
-regularization for linear regression [@Keplinger21R]. Package `glmnet` implements the elastic net estimator for generalized linear regression models [@Friedman21R]. Moreover, the procedure of the R package `enetLTS` [@Kurnaz22Rcran] is implemented using internally the R package `glmnet` [@Friedman21R].  
+Package `robustHD` provides the sparseLTS estimator for linear regression based on the trimming idea for high dimensional linear regression [@Alfons21R]. Package `pense` provides implementations of robust S- and MM-type estimators using elastic net regularization for linear regression [@Keplinger21R]. Package `glmnet` implements the elastic net estimator for generalized linear regression models [@Friedman21R]. Moreover, the procedure of the R package `enetLTS` [@Kurnaz22Rcran] is implemented using internally the R package `glmnet` [@Friedman21R].  
 
 
 # Acknowledgements
