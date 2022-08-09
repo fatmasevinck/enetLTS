@@ -177,7 +177,7 @@ Call:  enetLTS(xx = X, yy = y, family = "multinomial", alphas = alphas,
 
 The main function `enetLTS()` provides similar options for alpha sequence of the elastic net penalty. As for the tuning parameter $\lambda$, if user does not provide a sequence, as a default algorithm determines the sequence with steps of size -0.05 from 0.95 to 0.05 for multinomial regression, see [@Kurnaz22Arx]. 
 
-The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. In order to show evaluation criterion for 5-fold cross-validation via heatmap, the arguman `crit.plot` should be assigned to `"TRUE"`. Updated tuning parameter $\lambda$ (`lambdaw`) for reweighting step is done using the `cv.glmnet()` function from package `glmnet` [@Friedman21R] with `family="multinomial"` option. 
+The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. A heatmap plot is available for evaluation criterion via 5-fold cross-validation, if the arguman `crit.plot` is assigned to `"TRUE"`. Updated tuning parameter $\lambda$ (`lambdaw`) for reweighting step is done using the `cv.glmnet()` function from package `glmnet` [@Friedman21R] with `family="multinomial"` option. 
 
 Plot functions are re-organized for multinomial regression. `plotCoef.enetLTS()` gives the coefficients plots which includes group information. In `plotResid.enetLTS()`, residuals are turned into the deviances, as in binary regression case, with group information. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components, explaining nearly all of the variability. 
 
