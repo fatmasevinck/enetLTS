@@ -11,7 +11,7 @@ correspond to deviances if \code{family="multinomial"} and \code{family="binomia
 }
 %-------------------------------------------------
 \usage{
-\method{residuals}{enetLTS}(object,vers=c("reweighted","raw","both"),...)
+\method{residuals}{enetLTS}(object,vers=c("reweighted","raw"),...)
 }
 %-------------------------------------------------
 \arguments{
