@@ -138,7 +138,7 @@ predict.enetLTS <-
           raw.class <- apply(raw.probs,1,which.max)
           class     <- raw.class
         } 
-        return(fit.class)
+        return(class)
       } else if (object$inputs$family=="binomial"){
         if (vers=="reweighted"){
           res              <- newX %*% coefficients
