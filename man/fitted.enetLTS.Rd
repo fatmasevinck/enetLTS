@@ -10,7 +10,7 @@
 }
 %-------------------------------------------------
 \usage{
-  \method{fitted}{enetLTS}(object,vers=c("reweighted","raw","both"),type=c("response","class"),...)
+  \method{fitted}{enetLTS}(object,vers=c("reweighted","raw"),type=c("response","class"),...)
 }
 %-------------------------------------------------
 \arguments{
