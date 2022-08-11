@@ -91,7 +91,8 @@ After computed all candidate best subsets based on certain grids for $\alpha$ an
 
 To determine updated parameter $\lambda$ (`lambdaw`) in reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` [(Friedman et al., 2021)](https://CRAN.R-project.org/package=glmnet). 
 
-Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some of them are as follows:
+Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients where the coefficinets which set to zeros are shown clearly, `plotResid.enetLTS()` plots shows the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}. 
+
 
 ![residuals (left); diagnostic (right)\label{fig:plotexamples}{width=%110}](paper/JOSSgausNCI60.png)
 
