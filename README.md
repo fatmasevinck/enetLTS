@@ -55,7 +55,7 @@ As in package `robustHD` ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/
 > X <- gene[, keep]
 ```
 
-Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN`. The default `family` option is `gaussian`.
+Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN` (or install directly from Github). The default `family` option is `gaussian`.
 
 ```R
 > # install and load package
