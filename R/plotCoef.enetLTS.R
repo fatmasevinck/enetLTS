@@ -19,9 +19,10 @@ plotCoef.enetLTS <- function(object,vers=c("reweighted","raw"),
 
     if (family=="multinomial") {
       if (vers=="reweighted") {
+        Groups = as.character(rep(1:ncol(coefficients),each=nrow(coefficients)))
         main <- "enetLTS coefficients for multinomial logistic regression"
         plotcoefs <- data.frame(Wavelength = rep(1:nrow(coefficients),ncol(coefficients)),
-                                Groups = as.character(rep(1:ncol(coefficients),each=nrow(coefficients))),
+                                Groups = Groups,
                                 coefficients = as.vector(coefficients))
         plot <- ggplot(data = plotcoefs, aes(x = Wavelength,
                                              y = coefficients,
@@ -38,9 +39,10 @@ plotCoef.enetLTS <- function(object,vers=c("reweighted","raw"),
                              breaks = 1:nrow(coefficients))
         print(plot)
       } else if (vers=="raw"){
+        Groups = as.character(rep(1:ncol(raw.coefficients),each=nrow(raw.coefficients)))
         main <- "enetLTS raw coefficients for multinomial logistic regression"
         raw.plotcoefs <- data.frame(Wavelength = rep(1:nrow(raw.coefficients),ncol(raw.coefficients)),
-                                    Groups = as.character(rep(1:ncol(raw.coefficients),each=nrow(raw.coefficients))),
+                                    Groups = Groups,
                                     raw.coefficients = as.vector(raw.coefficients))
         raw.plot <- ggplot(data = raw.plotcoefs, aes(x = Wavelength,
                                                      y = raw.coefficients,
