@@ -19,8 +19,7 @@
 \item{vers}{a character string specifying for which fit to make
   predictions. Possible values are \code{"reweighted"} (the default) for
   predicting values from the reweighted fit, \code{"raw"} for predicting
-  values from the raw fit, or \code{"both"} for predicting values from both
-  fits.}
+  values from the raw fit.}
 
 \item{type}{type of prediction required. \code{type="response"} gives the
   fitted probabilities for \code{"multinomial"} and \code{"binomial"} and gives the fitted values
@@ -59,7 +58,6 @@ xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
 fit1 <- enetLTS(xout,yout,crit.plot=FALSE)
 fitted(fit1)
 fitted(fit1,vers="raw")
-fitted(fit1,vers="both")
 fitted(fit1,vers="reweighted",type="response")
 }
 
@@ -76,8 +74,6 @@ yout <- y                                      # wrong classification for vertic
 fit2 <- enetLTS(xout,yout,family="binomial")
 fitted(fit2)
 fitted(fit2,vers="raw")
-fitted(fit2,vers="both",type="class")
-fitted(fit2,vers="both")
 fitted(fit2,vers="reweighted",type="class")
 }
 
@@ -103,8 +99,6 @@ yout <- y
 fit3 <- enetLTS(xout,yout,family="multinomial")
 fitted(fit3)
 fitted(fit3,vers="raw")
-fitted(fit3,vers="both",type="class")
-fitted(fit3,vers="both")
 fitted(fit3,vers="reweighted",type="class")
 }
 }
