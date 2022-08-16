@@ -82,7 +82,7 @@ fitted(fit2,vers="reweighted",type="class")
 ## for multinomial
 
 n <- 120; p <- 15
-NC <- 3
+NC <- 3 
 X <- matrix(rnorm(n * p), n, p)
 betas <- matrix(1:NC, ncol=NC, nrow=p, byrow=TRUE)
 betas[(p-5):p,]=0; betas <- rbind(rep(0,NC),betas)
