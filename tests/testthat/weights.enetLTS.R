@@ -1,3 +1,6 @@
+library(testthat)  
+library(enetLTS)
+
 test_that("weights functions works", {
   ## for gaussian
   set.seed(86)
