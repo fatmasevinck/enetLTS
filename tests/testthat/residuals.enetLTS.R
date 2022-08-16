@@ -1,3 +1,5 @@
+library(testthat)  
+library(enetLTS)
 
 test_that("residuals functions works", {
   ## for gaussian
