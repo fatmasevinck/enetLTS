@@ -1,4 +1,5 @@
-
+library(testthat)  
+library(enetLTS)
 
 test_that("lambda00 works", {
   set.seed(86)
