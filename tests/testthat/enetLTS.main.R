@@ -1,3 +1,5 @@
+library(testthat)  
+library(enetLTS)
 
 test_that("enetLTS works", {
   ## for gaussian
