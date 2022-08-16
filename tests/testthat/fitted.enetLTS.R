@@ -26,23 +26,6 @@ test_that("fitted functions works", {
   fit2 <- enetLTS(xout,yout,family="binomial",crit.plot=FALSE,type.response="response")
   fitted.fit2 <- fitted(fit2)
   expect_equal(fitted.fit2,fit2$fitted.values)
-  ## for multinomial
-  n <- 120; p <- 15 
-  NC <- 3                                        # number of groups
-  X <- matrix(rnorm(n * p), n, p)               
-  betas <- matrix(1:NC, ncol=NC, nrow=p, byrow=TRUE)
-  betas[(p-5):p,]=0; betas <- rbind(rep(0,NC),betas)
-  lv <- cbind(1,X)%*%betas                      
-  probs <- exp(lv)/apply(exp(lv),1,sum)         
-  y <- apply(probs,1,function(prob){sample(1:NC, 1, TRUE, prob)})
-  xout <- X                                     
-  eps <-0.05                                    # \%10 contamination to only class 0
-  m <- ceiling(eps*n)                           
-  xout[1:m,] <- xout[1:m,] + 10                 # bad leverage points
-  yout <- y 
-  fit3 <- enetLTS(xout,yout,family="multinomial",type.response="response")
-  fitted.fit3 <- fitted(fit3)
-  expect_equal(fitted.fit3,fit3$fitted.values)
 })
 
 
