@@ -20,8 +20,7 @@ correspond to deviances if \code{family="multinomial"} and \code{family="binomia
 \item{vers}{a character string specifying for which estimator to extract
 outlier weights. Possible values are \code{"reweighted"} (the default) for
 weights indicating outliers from the reweighted fit, \code{"raw"} for
-weights indicating outliers from the raw fit, or \code{"both"} for the
-outlier weights from both estimators.}
+weights indicating outliers from the raw fit.}
 
 \item{\dots}{additional arguments from the enetLTS object.}
 }
@@ -57,7 +56,7 @@ xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
 fit1 <- enetLTS(xout,yout)
 residuals(fit1)
 residuals(fit1,vers="raw")
-residuals(fit1,vers="both")}
+}
 
 
 ## for binomial
@@ -74,7 +73,7 @@ yout <- y                                     # wrong classification for vertica
 fit2 <- enetLTS(xout,yout,family="binomial")
 residuals(fit2)
 residuals(fit2,vers="raw")
-residuals(fit2,vers="both")}
+}
 
 
 
@@ -98,7 +97,7 @@ yout <- y
 fit3    <- enetLTS(xout,yout,family="multinomial")
 residuals(fit3)
 residuals(fit3,vers="raw")
-residuals(fit3,vers="both")
+
 }
 }
 %-------------------------------------------------
