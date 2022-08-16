@@ -58,10 +58,10 @@ fitted.enetLTS <-
       } else if (object$inputs$family=="gaussian"){
         if (vers=="reweighted"){
           res=as.matrix(xx %*% reweighted.coefficients)
-          fitted.values <- res
+          fitted.values <- drop(res)
         } else if (vers=="raw"){
           res=as.matrix(xx %*% raw.coefficients)
-          fitted.values <- res
+          fitted.values <- drop(res)
         } 
         nfit <- fitted.values
       }
