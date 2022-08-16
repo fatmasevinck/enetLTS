@@ -29,7 +29,7 @@ test_that("coef functions works", {
   set.seed(86)
   fit2 <- enetLTS(xout,yout,family="binomial",crit.plot=FALSE)
   coef.fit2 <- coef(fit2)
-  expect_length(coef.fit2, 26)
+  expect_length(coef.fit2, 26) 
   expect_equal(coef.fit2,fit2$coefficients)
   ## for multinomial
   n <- 120; p <- 15 
