@@ -17,7 +17,7 @@ test_that("coef functions works", {
   set.seed(86)
   fit1 <- enetLTS(xout,yout,crit.plot=FALSE)
   coef.fit1 <- coef(fit1)
-  expect_length(coef.fit1, 26)
+  expect_length(coef.fit1, 26) 
   expect_equal(coef.fit1,fit1$coefficients)
   ## for binomial
   eps <-0.05                                     # \%10 contamination to only class 0
