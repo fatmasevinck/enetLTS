@@ -21,7 +21,7 @@ residuals.enetLTS <-
     }  
     if (vers=="raw"){
       if (object$inputs$family=="multinomial"){
-        raw.yhat      <- object$inputs$x %*% object$raw.coefficients
+        raw.yhat      <- object$inputs$xx %*% object$raw.coefficients
         raw.probs     <- exp(raw.yhat)/apply(exp(raw.yhat),1,sum)
         raw.deviances <- (-apply(object$inputs$y*log(raw.probs),1,sum))
         raw.deviances[is.nan(raw.deviances)] <- 0
