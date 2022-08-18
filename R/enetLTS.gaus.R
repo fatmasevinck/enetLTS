@@ -7,7 +7,7 @@ enetLTS.gaus <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars
    family <- "gaussian"
 
    if (is.null(lambdas)){
-     l0 <- robustHD::lambda0(xx, yy, normalize=scal, intercept=intercept)
+     l0 <- lambda0(xx, yy, normalize=scal, intercept=intercept)
      lambdas <- seq(l0, 0, by=-0.025*l0)
    }
    
