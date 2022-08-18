@@ -12,10 +12,10 @@ residuals.enetLTS <-
         deviances[is.nan(deviances)] <- 0
         residuals <- deviances
       } else if (object$inputs$family=="binomial"){
-        residuals <-  -(object$inputs$y * object$inputs$x %*% object$coefficients) +
-          log(1+exp(object$inputs$x %*% c(object$a0,object$coefficients)))
+        residuals <-  -(object$inputs$yy * object$inputs$xx %*% object$coefficients) +
+          log(1+exp(object$inputs$xx %*% c(object$a0,object$coefficients)))
       } else if (object$inputs$family=="gaussian"){
-        residuals <- object$inputs$y - object$inputs$x %*% object$coefficients
+        residuals <- object$inputs$yy - object$inputs$xx %*% object$coefficients
       }
       return(drop(residuals))
     }  
@@ -23,14 +23,14 @@ residuals.enetLTS <-
       if (object$inputs$family=="multinomial"){
         raw.yhat      <- object$inputs$xx %*% object$raw.coefficients
         raw.probs     <- exp(raw.yhat)/apply(exp(raw.yhat),1,sum)
-        raw.deviances <- (-apply(object$inputs$y*log(raw.probs),1,sum))
+        raw.deviances <- (-apply(object$inputs$yy*log(raw.probs),1,sum))
         raw.deviances[is.nan(raw.deviances)] <- 0
         raw.residuals <- raw.deviances
       } else if (object$inputs$family=="binomial"){
-        raw.residuals <- -(object$inputs$y * object$inputs$x %*% object$raw.coefficients) +
-          log(1+exp(object$inputs$x %*% object$raw.coefficients))
+        raw.residuals <- -(object$inputs$yy * object$inputs$xx %*% object$raw.coefficients) +
+          log(1+exp(object$inputs$xx %*% object$raw.coefficients))
       } else if (object$inputs$family=="gaussian"){
-        raw.residuals <- object$inputs$y - object$inputs$x %*% object$raw.coefficients
+        raw.residuals <- object$inputs$yy - object$inputs$xx %*% object$raw.coefficients
       }
       return(drop(raw.residuals))
     } 
