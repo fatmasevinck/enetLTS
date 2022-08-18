@@ -1,7 +1,7 @@
 #### gives raw and reweighted
 
 weights.enetLTS <-
-   function(object,vers=c("reweighted","raw","both"),index=FALSE,...){
+   function(object,vers=c("reweighted","raw"),index=FALSE,...){
 
       vers <- match.arg(vers)
 
