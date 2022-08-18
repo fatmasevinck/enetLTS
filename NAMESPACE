@@ -8,7 +8,6 @@ import(glmnet)
 import(reshape)
 import(parallel)
 import(stats)
-import(robustHD)
 
 importFrom("robustbase","covMcd")
 importFrom("cvTools", "cvFolds")
