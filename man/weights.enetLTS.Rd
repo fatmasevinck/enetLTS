@@ -10,7 +10,7 @@ Extract binary weights that indicate outliers from the current model.
 }
 %-------------------------------------------------
 \usage{
-\method{weights}{enetLTS}(object,vers=c("reweighted","raw","both"),index=FALSE,...)
+\method{weights}{enetLTS}(object,vers=c("reweighted","raw"),index=FALSE,...)
 }
 %-------------------------------------------------
 \arguments{
@@ -19,8 +19,7 @@ Extract binary weights that indicate outliers from the current model.
 \item{vers}{a character string specifying for which estimator to extract
 outlier weights. Possible values are \code{"reweighted"} (the default) for
 weights indicating outliers from the reweighted fit, \code{"raw"} for
-weights indicating outliers from the raw fit, or \code{"both"} for the
-outlier weights from both estimators.}
+weights indicating outliers from the raw fit.}
 
 \item{index}{a logical indicating whether the indices of the weight vector should
   be included or not (the default is \code{FALSE}).}
@@ -66,7 +65,7 @@ xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
 fit1 <- enetLTS(xout,yout)
 weights(fit1)
 weights(fit1,vers="raw",index=TRUE)
-weights(fit1,vers="both",index=TRUE)}
+}
 
 
 ## for binomial
@@ -82,7 +81,6 @@ yout <- y                                      # wrong classification for vertic
 fit2 <- enetLTS(xout,yout,family="binomial")
 weights(fit2)
 weights(fit2,vers="raw",index=TRUE)
-weights(fit2,vers="both",index=TRUE)
 }
 
 ## for multinomial
@@ -105,7 +103,6 @@ yout <- y
 fit3    <- enetLTS(xout,yout,family="multinomial")
 weights(fit3)
 weights(fit3,vers="raw",index=TRUE)
-weights(fit3,vers="both",index=TRUE)
 }
 }
 %-------------------------------------------------
