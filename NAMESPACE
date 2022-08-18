@@ -14,6 +14,7 @@ importFrom("robustbase","covMcd")
 importFrom("cvTools", "cvFolds")
 importFrom("graphics", "par")
 importFrom("grDevices", "colorRampPalette")
+importFrom("robustHD", "lambda0", "robStandardize")
 
 S3method(residuals, enetLTS)
 S3method(weights, enetLTS)
