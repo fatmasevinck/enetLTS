@@ -10,10 +10,10 @@ import(parallel)
 import(stats)
 
 importFrom("robustbase","covMcd")
+importFrom("robustHD", "lambda0", "robStandardize")
 importFrom("cvTools", "cvFolds")
 importFrom("graphics", "par")
 importFrom("grDevices", "colorRampPalette")
-importFrom("robustHD", "lambda0", "robStandardize")
 
 S3method(residuals, enetLTS)
 S3method(weights, enetLTS)
