@@ -36,9 +36,9 @@ A number of new robust linear regression methods have been developed during the 
 
 # Example: Robust and Sparse Linear Regression (`family="gaussian"`)
 
-We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to provide an example for `enetLTS` model. NCI-60 data includes 60 human cancer cell lines with nine cancer types, which are breast, central nervous system, colon, leukemia, lung, melanoma, ovearian, prostate and renal cancers. In this example, protein expression is regressed on gene expression data. Using the Affymetrix HG-U133A chip and normalizinf with the GCRMA method, the number of predictors is obtained as 22,283. Since one observation has all missing values, it is omitted and the number of observations is decreased to 59. This data set is available in package `robustHD`.
+We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to provide an example for the `enetLTS` model. The NCI-60 data set includes 60 human cancer cell lines with nine cancer types, which are breast, central nervous system, colon, leukemia, lung, melanoma, ovearian, prostate and renal cancers. In this example, we regress the protein expression on gene expression data. Using the Affymetrix HG-U133A chip and normalizing with the GCRMA method, the number of predictors is obtained as 22,283. One observation with missing values is omitted. This data set is available in the package `robustHD`.
 
-As in [@Alfons21R] we determine the response variable with one of the protein expressions which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. The code lines for loading and re-organizing response variable and predictors are follows: 
+As in [@Alfons21R] we determine the response variable with one of the protein expressions which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. The code lines for loading and re-organizing the response variable and the predictors is as follows: 
 
 ```R
 > # load data
@@ -53,7 +53,7 @@ As in [@Alfons21R] we determine the response variable with one of the protein ex
 > X <- gene[, keep]
 ```
 
-Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN` (or install directly from `Github`). The default `family` option is `gaussian`, which corresponds to linear regression.
+The package `enetLTS` can either be installed from `CRAN` or directly from `Github`. The main function is `enetLTS()`, and the default `family` option is `gaussian`, which corresponds to linear regression.
 
 ```R
 > # install and load package
