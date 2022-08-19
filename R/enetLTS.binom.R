@@ -5,7 +5,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
 
    family <- "binomial"
 
-   k <- dim(yy)
+   k <- dim(yy) 
    if (!is.null(k)){
       nc <- as.integer(k[2])
       if (nc>2) stop ("More than two classes; not available for binomial family; use multinomial family",call.=FALSE)
