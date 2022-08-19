@@ -1,11 +1,12 @@
 
+
 enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept, nsamp,
                           s1, nfold, repl, scal, iniscal, ncores, nCsteps, tol, seed, del, plot,
                           type.response){
 
    family <- "binomial"
 
-   k <- dim(yy) 
+   k <- dim(yy)
    if (!is.null(k)){
       nc <- as.integer(k[2])
       if (nc>2) stop ("More than two classes; not available for binomial family; use multinomial family",call.=FALSE)
@@ -96,32 +97,62 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
   #   reweighted.residuals  <- -(yy * cbind(1,xx) %*% c(a0,coefficients)) + log(1+exp(cbind(1,xx) %*% c(a0,coefficients)))
 
    } else { # nonscaled
-     fit <- glmnet(x[indexbest,], y[indexbest], family, alpha=alphabest, lambda=lambdabest,
-                   standardize=FALSE, intercept=FALSE)
+     if (iniscal){  # non initial scaled for binary explanatory variables
+       fit <- glmnet(x[indexbest,], y[indexbest], family, alpha=alphabest, lambda=lambdabest,
+                     standardize=FALSE, intercept=FALSE)
 
-     a00 <- if (intercept==FALSE) 0 else drop(fit$a0 -
-                                                as.vector(as.matrix(fit$beta)) %*% (attr(x,"center") / attr(x,"scale")))
-     raw.coefficients <- drop(as.matrix(fit$beta)/attr(x,"scale"))
-     # final reweighting:
-     # raw.residuals <- -(y * x %*% as.matrix(fit$beta)) + log(1+exp(x %*% as.matrix(fit$beta)))
-     raw.wt <- weight.binomial(xx,yy,c(a00,raw.coefficients),intercept,del)
-     if (is.null(lambdaw)){
-       lambdaw <- cv.glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family=family,nfolds=5,
-                            alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
-     } else if (!is.null(lambdaw) & length(lambdaw)==1){
-       lambdaw <- lambdaw
-     } else if (!is.null(lambdaw) & length(lambdaw)>1){
-       lambdaw <- cv.glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family=family,lambda=lambdaw,nfolds=5,
-                            alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
+       a00 <- if (intercept==FALSE) 0 else drop(fit$a0 -
+                                                  as.vector(as.matrix(fit$beta)) %*% (attr(x,"center") / attr(x,"scale")))
+       raw.coefficients <- drop(as.matrix(fit$beta) / attr(x,"scale"))
+       # final reweighting:
+       # raw.residuals <- -(y * x %*% as.matrix(fit$beta)) + log(1+exp(x %*% as.matrix(fit$beta)))
+       raw.wt <- weight.binomial(xx,yy,c(a00,raw.coefficients),intercept,del)
+       if (is.null(lambdaw)){
+         lambdaw <- cv.glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family=family,nfolds=5,
+                              alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
+       } else if (!is.null(lambdaw) & length(lambdaw)==1){
+         lambdaw <- lambdaw
+       } else if (!is.null(lambdaw) & length(lambdaw)>1){
+         lambdaw <- cv.glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family=family,lambda=lambdaw,nfolds=5,
+                              alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
+       }
+       fitw <- glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family,alpha=alphabest,lambda=lambdaw,
+                      standardize=FALSE,intercept=FALSE)  ## now we take raw.wt instead of index
+
+       a0 <- if (intercept==FALSE) 0 else drop(fitw$a0 -
+                                                 as.vector(as.matrix(fitw$beta)) %*% (attr(x,"center") / attr(x,"scale")))
+       coefficients <- drop(as.matrix(fitw$beta) / attr(x,"scale"))
+
+       wgt <- weight.binomial(xx, yy, c(a0,coefficients), intercept, del)
+     } else {
+       fit <- glmnet(xx[indexbest,], yy[indexbest], family, alpha=alphabest, lambda=lambdabest,
+                     standardize=FALSE, intercept=FALSE)
+
+       a00 <- if (intercept==FALSE) 0 else drop(fit$a0 -
+                                                  as.vector(as.matrix(fit$beta)) %*% (attr(xx,"center") / attr(xx,"scale")))
+       raw.coefficients <- drop(as.matrix(fit$beta) / attr(xx,"scale"))
+       # final reweighting:
+       # raw.residuals <- -(y * x %*% as.matrix(fit$beta)) + log(1+exp(x %*% as.matrix(fit$beta)))
+       raw.wt <- weight.binomial(xx,yy,c(a00,raw.coefficients),intercept,del)
+       if (is.null(lambdaw)){
+         lambdaw <- cv.glmnet(xx[which(raw.wt==1),],yy[which(raw.wt==1)],family=family,nfolds=5,
+                              alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
+       } else if (!is.null(lambdaw) & length(lambdaw)==1){
+         lambdaw <- lambdaw
+       } else if (!is.null(lambdaw) & length(lambdaw)>1){
+         lambdaw <- cv.glmnet(xx[which(raw.wt==1),],yy[which(raw.wt==1)],family=family,lambda=lambdaw,nfolds=5,
+                              alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
+       }
+       fitw <- glmnet(xx[which(raw.wt==1),],yy[which(raw.wt==1)],family,alpha=alphabest,lambda=lambdaw,
+                      standardize=FALSE,intercept=FALSE)  ## now we take raw.wt instead of index
+
+       a0 <- if (intercept==FALSE) 0 else drop(fitw$a0 -
+                                                 as.vector(as.matrix(fitw$beta)) %*% (attr(xx,"center") / attr(xx,"scale")))
+       coefficients <- drop(as.matrix(fitw$beta) / attr(xx,"scale"))
+
+       wgt <- weight.binomial(xx, yy, c(a0,coefficients), intercept, del)
      }
-     fitw <- glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family,alpha=alphabest,lambda=lambdaw,
-                    standardize=FALSE,intercept=FALSE)  ## now we take raw.wt instead of index
 
-     a0 <- if (intercept==FALSE) 0 else drop(fitw$a0 - as.vector(as.matrix(fitw$beta)) %*% (attr(x,"center") / attr(x,"scale")))
-     coefficients <- drop(as.matrix(fitw$beta) / attr(x,"scale"))
-
-     wgt <- weight.binomial(xx, yy, c(a0,coefficients), intercept, del)
-   #  reweighted.residuals  <- -(yy * cbind(1,xx) %*% c(a0,coefficients)) + log(1+exp(cbind(1,xx) %*% c(a0,coefficients)))
    }
 
    num.nonzerocoef <- sum(coefficients!=0)
