@@ -5,7 +5,7 @@ Version: 1.1.0
 Author: Fatma Sevinc KURNAZ and Irene HOFFMANN and Peter FILZMOSER
 Maintainer: Fatma Sevinc KURNAZ <fatmasevinckurnaz@gmail.com>
 Description: Fully robust versions of the elastic net estimator are introduced for linear and binary and multinomial regression, in particular high dimensional data. The algorithm searches for outlier free subsets on which the classical elastic net estimators can be applied. A reweighting step is added to improve the statistical efficiency of the proposed estimators. Selecting appropriate tuning parameters for elastic net penalties are done via cross-validation. 
-Imports: cvTools, ggplot2, glmnet, grid, parallel, reshape, robustbase, robustHD, stats
+Imports: cvTools, ggplot2, glmnet, grid, parallel, reshape, robustbase, robustHD, stats 
 License: GPL
 Encoding: UTF-8
 LazyData: true
