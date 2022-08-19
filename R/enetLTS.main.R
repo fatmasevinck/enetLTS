@@ -1,5 +1,6 @@
 ## Author: F. Sevinc KURNAZ 
 ## YTU & TUwien 
+
 enetLTS <-
    function(xx,
             yy,
@@ -9,6 +10,7 @@ enetLTS <-
             lambdaw=NULL,
             intercept=TRUE,
             scal=TRUE,
+            iniscal=TRUE,
             hsize=0.75,
             nsamp=c(500,10),
             nCsteps=20,
@@ -32,6 +34,7 @@ enetLTS <-
       if(family=="gaussian" && type.response=="class") stop("'class' is not available for gaussian")
 
       scal      <- isTRUE(scal)
+      iniscal   <- isTRUE(iniscal)
       intercept <- isTRUE(intercept)
       plot      <- isTRUE(crit.plot)
 
@@ -96,12 +99,11 @@ enetLTS <-
                                               nsamp, s1, nfold, repl, scal, ncores, nCsteps, tol, seed, del, plot,
                                               type.response),
                     "binomial"    = enetLTS.binom(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept,
-                                               nsamp, s1, nfold, repl, scal, ncores, nCsteps, tol, seed, del, plot,
-                                               type.response),
+                                               nsamp, s1, nfold, repl, scal, iniscal, ncores, nCsteps, tol, seed, del,
+                                               plot, type.response),
                     "multinomial" = enetLTS.multinom(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept,
-                                                     nsamp, s1, nfold, repl, scal, ncores, nCsteps, tol, seed, plot, typegrouped,
-                                                     type.response)
-
+                                                     nsamp, s1, nfold, repl, scal, iniscal, ncores, nCsteps, tol, seed,
+                                                     plot, typegrouped, type.response)
                      )
       output <- fit
       class(output) <- "enetLTS"
@@ -109,5 +111,4 @@ enetLTS <-
       output$call   <- matchedCall
       output
    }
-
 
