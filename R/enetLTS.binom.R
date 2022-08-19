@@ -1,6 +1,6 @@
 
 enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept, nsamp,
-                          s1, nfold, repl, scal, ncores, nCsteps, tol, seed, del, plot,
+                          s1, nfold, repl, scal, iniscal, ncores, nCsteps, tol, seed, del, plot,
                           type.response){
 
    family <- "binomial"
@@ -20,11 +20,11 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
       classize <- table(class_sizes)
       minclass <- min(classize)
       if (minclass<8) warning ("one binomial class has fewer than 8  observations; dangerous ground")
-      if (minclass<=1) stop ( "one binomial class has 1 or 0 observations; not allowed" )
+      if (minclass<=1) stop ("one binomial class has 1 or 0 observations; not allowed")
       classnames <- names(classize)
       }
 
-   if(length(yy)!=nobs)stop("x and y have different number of rows in call to glmnet",call.=FALSE)
+   if (length(yy)!=nobs) stop ("x and y have different number of rows in call to glmnet",call.=FALSE)
 
    if (is.null(lambdas)){
     l0 <- lambda00(xx, yy, normalize=scal, intercept=intercept)
@@ -33,8 +33,13 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
    if (any(lambdas<0)) stop ("lambdas should be non-negative")
    if (any(lambdaw<0)) stop ("lambdaw should be non-negative")
 
-   x <- standardize.x(xx, centerFun=median, scaleFun=mad)
-   y <- yy   # not centered for binomial
+   if (isTRUE(iniscal)){
+     x <- standardize.x(xx, centerFun=median, scaleFun=mad)
+     y <- yy   # not centered for binomial
+   } else {  # not initial robust scale!!!!! Careful!!!
+     x <- xx
+     y <- yy
+   }
 
    indexall <- warmCsteps.mod(x, y, h, hsize, alphas, lambdas, nsamp, s1,
                               scal, ncores, nCsteps, tol, seed, family)
@@ -46,8 +51,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
      alphabest   <- alphas
      lambdabest  <- lambdas
    } else {
-     CVresults   <- cv.binomial.enetLTS(indexall, x, y, alphas, lambdas,
-                                      nfold, repl, ncores, plot)
+     CVresults   <- cv.binomial.enetLTS(indexall, x, y, alphas, lambdas, nfold, repl, ncores, plot)
      indexbest   <- CVresults$indexbest
      alphabest   <- CVresults$alphaopt
      lambdabest  <- CVresults$lambdaopt
@@ -124,7 +128,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
 
    intercept <- isTRUE(intercept)
    if(intercept) xx <- addIntercept(xx)
- 
+
    if (intercept){
       coefficients            <- c(a0,coefficients)
       names(coefficients)     <- 1:length(coefficients)
@@ -136,7 +140,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
       raw.coefficients        <- raw.coefficients
       names(raw.coefficients) <- 1:length(raw.coefficients)
    }
-  
+
    raw.yhat <- xx %*% raw.coefficients
    raw.probs <- 1/(1+exp(-raw.yhat))
 
