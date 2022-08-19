@@ -129,7 +129,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
                      standardize=FALSE, intercept=FALSE)
        
        print(as.vector(as.matrix(fit$beta)))
-       print(dim((attr(xx,"center") / attr(xx,"scale"))))
+       print((attr(xx,"center") / attr(xx,"scale")))
        
        a00 <- if (intercept==FALSE) 0 else drop(fit$a0 -
                                                   as.vector(as.matrix(fit$beta)) %*% (attr(xx,"center") / attr(xx,"scale")))
