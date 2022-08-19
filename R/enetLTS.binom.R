@@ -1,5 +1,6 @@
 
 
+
 enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept, nsamp,
                           s1, nfold, repl, scal, iniscal, ncores, nCsteps, tol, seed, del, plot,
                           type.response){
@@ -97,7 +98,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
   #   reweighted.residuals  <- -(yy * cbind(1,xx) %*% c(a0,coefficients)) + log(1+exp(cbind(1,xx) %*% c(a0,coefficients)))
 
    } else { # nonscaled
-     if (iniscal){  # non initial scaled for binary explanatory variables
+     if (iniscal){  #
        fit <- glmnet(x[indexbest,], y[indexbest], family, alpha=alphabest, lambda=lambdabest,
                      standardize=FALSE, intercept=FALSE)
 
@@ -124,16 +125,12 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
        coefficients <- drop(as.matrix(fitw$beta) / attr(x,"scale"))
 
        wgt <- weight.binomial(xx, yy, c(a0,coefficients), intercept, del)
-     } else {
+     } else {  ### without any scale
        fit <- glmnet(xx[indexbest,], yy[indexbest], family, alpha=alphabest, lambda=lambdabest,
                      standardize=FALSE, intercept=FALSE)
-       
-       print(as.vector(as.matrix(fit$beta)))
-       print((attr(xx,"center") / attr(xx,"scale")))
-       
-       a00 <- if (intercept==FALSE) 0 else drop(fit$a0 -
-                                                  as.vector(as.matrix(fit$beta)) %*% (attr(xx,"center") / attr(xx,"scale")))
-       raw.coefficients <- drop(as.matrix(fit$beta) / attr(xx,"scale"))
+
+       a00 <- if (intercept==FALSE) 0 else drop(fit$a0)
+       raw.coefficients <- drop(as.matrix(fit$beta))
        # final reweighting:
        # raw.residuals <- -(y * x %*% as.matrix(fit$beta)) + log(1+exp(x %*% as.matrix(fit$beta)))
        raw.wt <- weight.binomial(xx,yy,c(a00,raw.coefficients),intercept,del)
@@ -149,9 +146,8 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
        fitw <- glmnet(xx[which(raw.wt==1),],yy[which(raw.wt==1)],family,alpha=alphabest,lambda=lambdaw,
                       standardize=FALSE,intercept=FALSE)  ## now we take raw.wt instead of index
 
-       a0 <- if (intercept==FALSE) 0 else drop(fitw$a0 -
-                                                 as.vector(as.matrix(fitw$beta)) %*% (attr(xx,"center") / attr(xx,"scale")))
-       coefficients <- drop(as.matrix(fitw$beta) / attr(xx,"scale"))
+       a0 <- if (intercept==FALSE) 0 else drop(fitw$a0)
+       coefficients <- drop(as.matrix(fitw$beta))
 
        wgt <- weight.binomial(xx, yy, c(a0,coefficients), intercept, del)
      }
@@ -244,3 +240,4 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
    class(outlist) <- "binomial"
    return(outlist)
 }
+
