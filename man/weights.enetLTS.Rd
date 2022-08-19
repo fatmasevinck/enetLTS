@@ -94,7 +94,7 @@ lv <- cbind(1,X) \%*\% betas
 probs <- exp(lv)/apply(exp(lv),1,sum)
 y <- apply(probs,1,function(prob){sample(1:NC, 1, TRUE, prob)})
 xout <- X
-eps <-0.05                          # \%10 contamination to only class 0
+eps <-0.05                          # \%10 contamination to only class 0 
 m <- ceiling(eps*n)
 xout[1:m,] <- xout[1:m,] + 10       # bad leverage points
 yout <- y
