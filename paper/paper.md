@@ -69,10 +69,7 @@ The package `enetLTS` can either be installed from `CRAN` or directly from `Gith
 > fit.gaussian
 enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, 
- lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
- hsize = 0.75, nsamp = 500, nCsteps = 20, nfold = 5, repl = 1, 
- ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+Call:  enetLTS(xx = X, yy = y) 
 
  number of the nonzero coefficients:
 [1] 29
@@ -116,10 +113,7 @@ For the binary regression, the `family` argument of `enetLTS()`function should b
 > fit.binomial
 enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, 
- lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
- hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, 
- ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+Call:  enetLTS(xx = X, yy = y.binom, family = "binomial") 
 
  number of the nonzero coefficients:
 [1] 34
@@ -157,17 +151,13 @@ With `family="multinomial"`, the model `enetLTS()` produces the results of multi
 
 ```R
 > lambdas=seq(from=0.01,to=0.1,by=0.01)
-> fit.multinom <- enetLTS(X, y, family="multinomial", 
-  lambdas=lambdas, crit.plot=FALSE)
+> fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=lambdas, crit.plot=FALSE)
 > [1] "optimal model: lambda = 0.01 alpha = 0.02"
 > 
 > fit.mutinom 
 enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y, family = "multinomial", alphas = alphas, 
- lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
- hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, 
- ncores = 1, tol = -1e+06, seed = NULL, crit.plot = FALSE) 
+Call:  enetLTS(xx = X, yy = y, family = "multinomial", lambdas=lambdas, crit.plot = FALSE) 
 
  number of the nonzero coefficients:
 [1] 704
