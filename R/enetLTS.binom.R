@@ -98,41 +98,13 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
   #   reweighted.residuals  <- -(yy * cbind(1,xx) %*% c(a0,coefficients)) + log(1+exp(cbind(1,xx) %*% c(a0,coefficients)))
 
    } else { # nonscaled
-     if (iniscal){  #
-       fit <- glmnet(x[indexbest,], y[indexbest], family, alpha=alphabest, lambda=lambdabest,
-                     standardize=FALSE, intercept=FALSE)
-
-       a00 <- if (intercept==FALSE) 0 else drop(fit$a0 -
-                                                  as.vector(as.matrix(fit$beta)) %*% (attr(x,"center") / attr(x,"scale")))
-       raw.coefficients <- drop(as.matrix(fit$beta) / attr(x,"scale"))
-       # final reweighting:
-       # raw.residuals <- -(y * x %*% as.matrix(fit$beta)) + log(1+exp(x %*% as.matrix(fit$beta)))
-       raw.wt <- weight.binomial(xx,yy,c(a00,raw.coefficients),intercept,del)
-       if (is.null(lambdaw)){
-         lambdaw <- cv.glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family=family,nfolds=5,
-                              alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
-       } else if (!is.null(lambdaw) & length(lambdaw)==1){
-         lambdaw <- lambdaw
-       } else if (!is.null(lambdaw) & length(lambdaw)>1){
-         lambdaw <- cv.glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family=family,lambda=lambdaw,nfolds=5,
-                              alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
-       }
-       fitw <- glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family,alpha=alphabest,lambda=lambdaw,
-                      standardize=FALSE,intercept=FALSE)  ## now we take raw.wt instead of index
-
-       a0 <- if (intercept==FALSE) 0 else drop(fitw$a0 -
-                                                 as.vector(as.matrix(fitw$beta)) %*% (attr(x,"center") / attr(x,"scale")))
-       coefficients <- drop(as.matrix(fitw$beta) / attr(x,"scale"))
-
-       wgt <- weight.binomial(xx, yy, c(a0,coefficients), intercept, del)
-     } else {  ### without any scale
        fit <- glmnet(xx[indexbest,], yy[indexbest], family, alpha=alphabest, lambda=lambdabest,
                      standardize=FALSE, intercept=FALSE)
 
        a00 <- if (intercept==FALSE) 0 else drop(fit$a0)
        raw.coefficients <- drop(as.matrix(fit$beta))
        # final reweighting:
-       # raw.residuals <- -(y * x %*% as.matrix(fit$beta)) + log(1+exp(x %*% as.matrix(fit$beta)))
+       # raw.residuals <- -(yy * xx %*% as.matrix(fit$beta)) + log(1+exp(xx %*% as.matrix(fit$beta)))
        raw.wt <- weight.binomial(xx,yy,c(a00,raw.coefficients),intercept,del)
        if (is.null(lambdaw)){
          lambdaw <- cv.glmnet(xx[which(raw.wt==1),],yy[which(raw.wt==1)],family=family,nfolds=5,
@@ -150,9 +122,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
        coefficients <- drop(as.matrix(fitw$beta))
 
        wgt <- weight.binomial(xx, yy, c(a0,coefficients), intercept, del)
-     }
-
-   }
+    }
 
    num.nonzerocoef <- sum(coefficients!=0)
 
@@ -240,4 +210,3 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
    class(outlist) <- "binomial"
    return(outlist)
 }
-
