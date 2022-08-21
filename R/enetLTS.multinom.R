@@ -165,12 +165,12 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
 
      if (is.null(lambdaw)){
        lambdaw <- cv.glmnet(xx[which(raw.wt==1),], yy[which(raw.wt==1),], family=family, alpha=alphabest,nfolds=5,
-                            standardize=FALSE, intercept=FALSE, type.multinomial=typ)$lambda.1se
+                            standardize=FALSE, intercept=FALSE,type.multinomial=typ)$lambda.1se
      } else if (!is.null(lambdaw) & length(lambdaw)==1){
        lambdaw <- lambdaw
      } else if (!is.null(lambdaw) & length(lambdaw)>1){
-       lambdaw <- cv.glmnet(xx[which(raw.wt==1),], yy[which(raw.wt==1),], family=family, alpha=alphabest, lambda=lambdaw,nfolds=5,
-                            standardize=FALSE, intercept=FALSE, type.multinomial=typ)$lambda.1se
+       lambdaw <- cv.glmnet(xx[which(raw.wt==1),], yy[which(raw.wt==1),], family=family, alpha=alphabest,lambda=lambdaw,nfolds=5,
+                            standardize=FALSE, intercept=FALSE,type.multinomial=typ)$lambda.1se
      }
 
      fitw    <- glmnet(xx[which(raw.wt==1),], yy[which(raw.wt==1),], family=family, alpha=alphabest, lambda=lambdaw,
@@ -181,16 +181,16 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
 
      # reweighting:
      mdw     <- rep(NA,nrow(xx))
-     zjw     <- drop(predict(fitw, newx=xx, type="link"))
-     zj.svdw <- svd(scale(zjw, TRUE, FALSE))
+     zjw     <- drop(predict(fitw,newx=xx,type="link"))
+     zj.svdw <- svd(scale(zjw,TRUE,FALSE))
      svdrank <- sum(zj.svdw$d>1e-4)
      if (svdrank<k-1){
-        return(list(fit=fitw, a0=a0, coefficients=coefficients))
+        return(list(fit=fitw,a0=a0,coefficients=coefficients))
      }
      zj12w   <- zj.svdw$u[,1:svdrank] # first svdrank PCs
      for (j in 1:k){
        mcdjw <- covMcd(zj12w[yy[,j]==1,])
-       mdw[yy[,j]==1] <- sqrt(mahalanobis(zj12w[yy[,j]==1,], mcdjw$center, mcdjw$cov))
+       mdw[yy[,j]==1] <- sqrt(mahalanobis(zj12w[yy[,j]==1,],mcdjw$center,mcdjw$cov))
        mdw[yy[,j]==1] <- mdw[yy[,j]==1]*sqrt(qchisq(0.5,svdrank))/median(mdw[yy[,j]==1])
      }
      wgt    <- weight.multinomial(mdw)
@@ -200,7 +200,7 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
    num.nonzerocoef <- sum(coefficients!=0)
 
    # objective based on indexbest
-   probj     <- drop(predict(fitw, newx=xx[indexbest,], type="response"))
+   probj     <- drop(predict(fitw,newx=xx[indexbest,],type="response"))
    deviances <- (-apply(yy[indexbest,]*log(probj),1,sum))
    deviances[is.nan(deviances)] <- 0
    pnlty     <- lambdabest * ((1/2) * (1 - alphabest) * norm(coefficients, type="F")^2 +
@@ -211,10 +211,10 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
    if(intercept) xx <- addIntercept(xx)
 
    if (intercept){
-     raw.coefficients <- rbind(a00, raw.coefficients)
+     raw.coefficients <- rbind(a00,raw.coefficients)
      colnames(raw.coefficients) <- paste0("class", 1:(length(classize)))
      rownames(raw.coefficients) <- 1:nrow(raw.coefficients)
-     coefficients     <- rbind(a0, coefficients)
+     coefficients     <- rbind(a0,coefficients)
      colnames(coefficients) <- paste0("class", 1:(length(classize)))
      rownames(coefficients) <- 1:nrow(coefficients)
    } else {
