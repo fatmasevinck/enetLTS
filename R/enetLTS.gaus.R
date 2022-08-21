@@ -1,6 +1,5 @@
 
 
-
 enetLTS.gaus <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept, nsamp,
                          s1, nfold, repl, scal, ncores, nCsteps, tol, seed, del, plot,
                          type.response){
@@ -74,9 +73,8 @@ enetLTS.gaus <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars
    } else { # nonscaled
      fit <- glmnet(xx[indexbest,], yy[indexbest], alpha=alphabest, lambda=lambdabest,
                    standardize=FALSE, intercept=FALSE)
-     a00                  <- if (intercept==FALSE) 0 else drop(attr(yy,"center") + fit$a0 -
-                                                as.vector(as.matrix(fit$beta)) %*% (attr(xx,"center") / attr(xx,"scale")))
-     raw.coefficients     <- drop(as.matrix(fit$beta)/attr(xx,"scale"))
+     a00                  <- if (intercept==FALSE) 0 else drop(fit$a0)
+     raw.coefficients     <- drop(as.matrix(fit$beta))
      raw.residuals        <- yy - cbind(1,xx) %*% c(a00,raw.coefficients)
      # final reweighting:
      raw.wt               <- weight.gaussian(raw.residuals, indexbest, del)$we
@@ -92,10 +90,9 @@ enetLTS.gaus <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars
      fitw <- glmnet(xx[which(raw.wt==1),], yy[which(raw.wt==1)], alpha=alphabest, lambda=lambdaw,
                     standardize=FALSE, intercept=FALSE)  ## now we take raw.wt instead of index
 
-     a0                   <- if (intercept==FALSE) 0 else drop(attr(yy,"center") +
-                                               fitw$a0-as.vector(as.matrix(fitw$beta))%*%(attr(xx,"center")/attr(xx,"scale")))
-     coefficients         <- drop(as.matrix(fitw$beta)/attr(xx,"scale"))
-     reweighted.residuals <-  yy - cbind(1,xx) %*% c(a0,coefficients)
+     a0                   <- if (intercept==FALSE) 0 else drop(fitw$a0)
+     coefficients         <- drop(as.matrix(fitw$beta))
+     reweighted.residuals <- yy - cbind(1,xx) %*% c(a0,coefficients)
      wgt                  <- weight.gaussian(reweighted.residuals, raw.wt==1, del)$we
      ## back transformed to the original scale
    }
