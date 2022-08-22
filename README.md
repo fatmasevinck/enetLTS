@@ -145,7 +145,7 @@ Similarly, `plotCoef.enetLTS()` visualizes the coefficients. The other plot func
 
 ![Residuals and Diagnostics](paper/JOSSbinomResidDiagNCI60.png)
 
-
+Examples of plot functions of deviances (left); diagnostic (right) for binary regression
 
 # Example: Robust and Sparse Multinomial Regression (`family="multinomial"`)
 
@@ -191,8 +191,12 @@ The plot functions are adjusted for multinomial regression. `plotCoef.enetLTS()`
 
 ![Coefficients](paper/JOSSmultinomCoef.png)
  
+ Examples of coefficients for multinomial regression
+ 
  
  ![Residuals and diagnostic plots](paper/JOSSmultinomResidDiag.png)
+ 
+ Examples of plot functions of deviances (left); diagnostic (right) for multinomial regression
  
 # References 
 
