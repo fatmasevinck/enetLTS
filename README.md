@@ -200,27 +200,30 @@ The plot functions are adjusted for multinomial regression. `plotCoef.enetLTS()`
  
 # References 
 
-A. Alfons (2021). robustHD: An R package for robust regression with high-dimensional data. 
-Journal of Open Source Software, 6(67), 3786. DOI
-[10.21105/joss.03786](https://joss.theoj.org/papers/10.21105/joss.03786)
 
 Friedman J., Hastie T. and Tibshirani R. (2010). Regularization paths for generalized linear 
 models via coordinate descent. Journal of Statistical Software, 33(1), 1-22. DOI
 [10.1163/ej.9789004178922.i-328.7](https://www.jstatsoft.org/article/download/v033i01/361)
 
-J. Friedman and T. Hastie and R. Tibshirani and B. Narasimhan and K. Tay and N. Simon and J. Qian and J. Yang (2021).
-glmnet: Lasso and Elastic-Net Regularized Generalized Linear Models. R Foundation for Statistical Computing, Vienna, Austria. R package version 4.1--3 
-(https://CRAN.R-project.org/package=glmnet)
-
-F. S. Kurnaz and I. Hoffmann and P. Filzmoser (2018). Robust and sparse estimation methods for high-dimensional linear and logistic regression. Chemometrics and Intelligent Laboratory Systems, 172, 211-222. DOI
-[10.1016/j.chemolab.2017.11.017"](https://www.sciencedirect.com/science/article/pii/S0169743917301247)
-    
-F. S. Kurnaz and P. Filzmoser (2022). Robust and Sparse Multinomial Regression in High Dimensions. DOI
-    [10.48550/arXiv.2205.11835](https://arxiv.org/pdf/2205.11835.pdf)
-   
 Reinhold, W. C., Sunshine, M., Liu, H., Varma, S., Kohn, K. W., Morris, J., Doroshow, J., &
 Pommier, Y. (2012). CellMiner: A web-based suite of genomic and pharmacologic tools to
 explore transcript and drug patterns in the NCI-60 cell line set. Cancer Research, 72(14),
 3499–3511. DOI
 [10.1158/0008-5472.can-12-1370](https://pubmed.ncbi.nlm.nih.gov/22802077/)
+
+F. S. Kurnaz and I. Hoffmann and P. Filzmoser (2018). Robust and sparse estimation methods for high-dimensional linear and logistic regression. Chemometrics and Intelligent Laboratory Systems, 172, 211-222. DOI
+[10.1016/j.chemolab.2017.11.017"](https://www.sciencedirect.com/science/article/pii/S0169743917301247)
+    
+A. Alfons (2021). robustHD: An R package for robust regression with high-dimensional data. 
+Journal of Open Source Software, 6(67), 3786. DOI
+[10.21105/joss.03786](https://joss.theoj.org/papers/10.21105/joss.03786)
+    
+J. Friedman and T. Hastie and R. Tibshirani and B. Narasimhan and K. Tay and N. Simon and J. Qian and J. Yang (2021).
+glmnet: Lasso and Elastic-Net Regularized Generalized Linear Models. R Foundation for Statistical Computing, Vienna, Austria. R package version 4.1--3 
+(https://CRAN.R-project.org/package=glmnet)
+
+F. S. Kurnaz and P. Filzmoser (2022). Robust and Sparse Multinomial Regression in High Dimensions. DOI
+[10.48550/arXiv.2205.11835](https://arxiv.org/pdf/2205.11835.pdf)
+   
+
 
