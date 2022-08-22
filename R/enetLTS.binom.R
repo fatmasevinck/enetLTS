@@ -209,4 +209,4 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
    )
    class(outlist) <- "binomial"
    return(outlist)
-}
+} 
