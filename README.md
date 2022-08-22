@@ -182,11 +182,11 @@ Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, lambda
  lambdaw: 0.003971358
   ```    
 
-The main function `enetLTS()` provides similar options for alpha sequence of the elastic net penalty. As for the tuning parameter $\lambda$, if user does not provide a sequence, as a default algorithm determines the sequence with steps of size -0.05 from 0.95 to 0.05 for multinomial regression, see ([Kurnaz and Filzmoser, 2022](https://arxiv.org/pdf/2205.11835.pdf)). 
+The main function `enetLTS()` provides similar options for the $\alpha$ sequence of the elastic net penalty. The default for the tuning parameters $\lambda$ are values from 0.95 to 0.05 with steps of size -0.05, see ([Kurnaz and Filzmoser, 2022](https://arxiv.org/pdf/2205.11835.pdf)).
 
-The combination of the optimal tuning parameters is defined by 5-fold cross-validation based on certain grids for $\alpha$ and $\lambda$. A heatmap plot is available for evaluation criterion via 5-fold cross-validation, if the arguman `crit.plot` is assigned to `"TRUE"`. Updated tuning parameter $\lambda$ (`lambdaw`) for reweighting step is done using the `cv.glmnet()` function from package `glmnet` [(Friedman et al., 2021)](https://CRAN.R-project.org/package=glmnet) with `family="multinomial"` option. 
+The combination of the optimal tuning parameters is evaluated by 5-fold cross-validation. A heatmap is available if the argument `crit.plot` is assigned to `"TRUE"`. As for the other models, an updated tuning parameter $\lambda$ (`lambdaw`) for the reweighting step is obtained by the `cv.glmnet()` function from the package `glmnet` [(Friedman et al., 2021)](https://CRAN.R-project.org/package=glmnet). 
 
-Plot functions are re-organized for multinomial regression. `plotCoef.enetLTS()` gives the coefficients plots which includes group information. In `plotResid.enetLTS()`, residuals are turned into the deviances, as in binary regression case, with group information. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components, explaining nearly all of the variability. These plots are demonstrated as follows.
+The plot functions are adjusted for multinomial regression. `plotCoef.enetLTS()` gives the coefficients plots which includes group information. In `plotResid.enetLTS()`, residuals are turned into deviances, as in the binary regression case, with group information. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components. 
 
 
 ![Coefficients](paper/JOSSmultinomCoef.png)
