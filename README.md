@@ -2,7 +2,7 @@
 
 ## Summary
 
-`enetLTS` is an `R` package that provides a fully robust version of elastic net estimator for high dimensional linear and binary and multinomial regression. The elastic net penalization provides intrinsic variable selection and coefficient estimates for highly correlated variables in particular for high-dimensional low sample size data sets, and it has been extended to generalized linear regression models ([Friedman et al., 2010](https://www.jstatsoft.org/article/download/v033i01/361)). Combining these advantages with trimming idea yields the robust solutions. The main idea of the algorithm is to search for outlier-free subsets on which the classical elastic net estimator can be applied. Outlier-free subsets are determined by trimming the penalized log-likelihood function belonging to the regression model. The algorithm starts with 500 elemental subsets only for one combination of $\alpha$ and $\lambda$, and takes the *warm start* strategy for subsequent combinations in order to save the computation time. The final reweighting step is added to improve the statistical efficiency of the proposed methods. From this point of view, the enet-LTS estimator can be seen as trimmed version of the elastic net regression estimator for linear, binary and multinomial regression ([Friedman et al., 2010](https://www.jstatsoft.org/article/download/v033i01/361)). Selecting optimal model with optimal tuning parameters is done via cross-validation, and various plots are available to illustrate model and to evaluate the final model estimates. 
+`enetLTS` is an `R` package that provides a fully robust version of elastic net estimator for high dimensional linear, binary, and multinomial regression. The elastic net penalization provides intrinsic variable selection and coefficient estimates for highly correlated variables, in particular for high-dimensional low sample size data sets, and it has been extended to generalized linear regression models ([Friedman et al., 2010](https://www.jstatsoft.org/article/download/v033i01/361)). Combining these advantages with trimming idea yields the robust solutions. The main idea of the algorithm is to search for outlier-free subsets on which the classical elastic net estimator can be applied. Outlier-free subsets are determined by trimming the penalized log-likelihood function for considered regression model. The algorithm starts with 500 elemental subsets only for one combination of elastic net parameters $\alpha$ and $\lambda$, and takes the *warm start* strategy for subsequent combinations in order to save the computation time. The final reweighting step is added to improve the statistical efficiency of the proposed methods. From this point of view, the enet-LTS estimator can be seen as trimmed version of the elastic net regression estimator for linear, binary and multinomial regression ([Friedman et al., 2010](https://www.jstatsoft.org/article/download/v033i01/361)). Selecting model with optimal tuning parameters is done via cross-validation, and various plots are available to illustrate model and to evaluate the final model estimates. 
 
 ## Implemented Methods 
 
@@ -23,9 +23,10 @@ Package `enetLTS` is on CRAN (The Comprehensive `R` Archive Network), hence the 
 > install.packages("enetLTS")
 ```
 
+ 
 ## Building from source
 
-To install the latest (possibly unstable) version from GitHub, you can pull this repository and install it from the `R` command line as follows
+The package `enetLTS` can also installed from `Github` using following the `R` command line
 
 ```R
 > install.packages("devtools")
@@ -38,9 +39,10 @@ If you already have package `devtools` installed, the first line can be skipped.
 # Example: Robust and Sparse Linear Regression (`family="gaussian"`)
 
 We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data in order to provide an example for the `enetLTS` model. 
-NCI-60 data includes 60 human cancer cell lines with nine cancer types, which are breast, central nervous system, colon, leukemia, lung, melanoma,ovearian, prostate and renal cancers. In this example, protein expression is regressed on gene expression data. Using the Affymetrix HG-U133A chip and normalizinf with the GCRMA method, the number of predictors is obtained as 22,283. Since one observation has all missing values, it is omitted and the number of observations is decreased to 59. This data set is available in package robustHD.  
+NCI-60 data includes 60 human cancer cell lines with nine cancer types, which are breast, central nervous system, colon, leukemia, lung, melanoma,ovearian, prostate and renal cancers. In this example, we regress the protein espression on gene expression data. 
+Using the Affymetrix HG-U133A chip and normalizing with the GCRMA method, the number of predictors is obtained as 22,283. Since one observation has all missing values, it is omitted. The number of observations is decreased to 59. This data set is available in package robustHD.  
 
-As in package `robustHD` ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)), the response variable is determined by the protein expressions for a specific protein, which is 92th protein, and the explanatory variable is determined by the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable.  The code lines for loading and re-organizing response variable and predictors are follows:
+As in Alfons ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)), we determine the response variable with one of the protein expressions, which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable.  The code lines for loading and re-organizing response variable and predictors are follows:
 
 ```R
 > # load data
@@ -55,7 +57,7 @@ As in package `robustHD` ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/
 > X <- gene[, keep]
 ```
 
-Like many other packages, the easy way to use the package `enetLTS` is to install it directly from `CRAN` (or install directly from Github). The default `family` option is `gaussian`.
+The package `enetLTS` can either be installed from CRAN or directly from `Github`. The main function is `enetLTS`, and the default `family` option is `gaussian`, which corresponds to linear regression.
 
 ```R
 > # install and load package
@@ -79,24 +81,29 @@ Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, lambdas = l
  lambdaw: 0.07545663
 ```
  
-The main function `enetLTS()` provides user supplied option for alpha sequence for the elastic net penalty, which is the mixing proportion of the ridge and lasso penalties and takes value in $[0,1]$. $\alpha=1$ is the lasso penalty, and $\alpha=0$ the ridge penalty. If not provided a sequence, default is 41 equally spaced values. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, user supplied sequence is available. If not provided a sequence, default is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le lambda0$ for linear regression, where lambda0 is determined as in ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)). 
+The main idea to obtain an outlier-free subset is to carry out concentration steps (C-steps). This means that in each iteration of the algorithm, the value of the objective function improves. Thus, one has to start with several initial subsets, and the C-steps will lead at least to a local optimum. 
 
-The arguman `hsize` shows a numeric value giving the percentage of the trimming of the penalized objective function of current family with default 0.75. 
+For the argument `hsize` one needs to provide a numeric value with the trimming percentage used in the penalized objective function. The default value is 0.75. The argument `nsamp` is a numeric vector: The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after a number of nCsteps C-steps has been performed. For those remaining subsets, additional C-steps are performed until convergence. The default is to start the C-steps with 500 initial subsamples for a first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm makes use of the $warm start$ idea, which means that the best subset of the neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can also be supplied by the user. These arguments are the same for the other `family` options.  
 
-The arguman `nsamp` is a numeric vector giving the number of subsamples which has two entries. The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after the started ncstep C-steps. For those remaining subsets, additional C-steps are performed until convergence. The default is to start with ncstep C-steps on 500 initial subsamples for first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm took the $warm start$ idea, which means the best subset of neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can be determined by users. 
+The main function `enetLTS()` allows the user to specify a sequence of values for $\alpha$ for the elastic net penalty. If this is not provided, a default sequence of 41 equally spaced values between 0 and 1 is taken. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, a user supplied sequence is available. If not provided, the default for `family="gaussian"` is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$lambda0, where lambda0 is determined as in ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)).
 
-After computed all candidate best subsets based on certain grids for $\alpha$ and $\lambda$, the combination of the optimal tuning parameters is defined by 5-fold cross-validation. Evaluation criterion for 5-fold cross-validation is summarized by heatmap for users if the arguman is chosen as `crit.plot="TRUE"`. 
+After computing all candidates based on the best subsets for certain combinations of $\alpha$ and $\lambda$, the combination of the optimal tuning parameters is defined by 5-fold cross-validation. The evaluation criterion for 5-fold cross-validation is summarized by a heatmap, see Figure \ref{fig:hatmapGauss}, if the argument `crit.plot` is assigned to `"TRUE"`. 
+
 
 ![Heatmap for 5-fold cross-validation](paper/JOSSgausHeatMap.png)
 
-To determine updated parameter $\lambda$ (`lambdaw`) in reweighting step, we have considered 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` [(Friedman et al., 2021)](https://CRAN.R-project.org/package=glmnet). 
 
-Several plots are available for the results: `plotCoef.enetLTS()` visualizes the coefficients where the coefficinets which set to zeros are shown clearly, `plotResid.enetLTS()` plots shows the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}. 
+To determine updated parameter $\lambda$ (`lambdaw`) in a reweighting step, 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` [(Friedman et al., 2021)](https://CRAN.R-project.org/package=glmnet) is used. 
+
+Several plots are available for the results. `plotCoef.enetLTS()` visualizes the coefficients where the coefficients which are set to zeros are shown, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
 
 
 ![residuals (left); diagnostic (right)\label{fig:plotexamples}{width=%110}](paper/JOSSgausNCI60.png)
 
 Examples of the residuals plot (left) and the diagnostic plot (right) for output of function `enetLTS()` with the arguman `family="gaussian"`.
+
+
+
 
 # Example: Robust and Sparse Binary Regression (`family="binomial"`)
 
