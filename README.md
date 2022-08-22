@@ -66,7 +66,7 @@ The package `enetLTS` can either be installed from CRAN or directly from `Github
 > # fit the model for family="gaussian"
 > fit.gaussian <- enetLTS(X,y)
 > [1] "optimal model: lambda = 0.1391 alpha = 0.6"
->
+> 
 > fit.gaussian
 enetLTS estimator 
 
