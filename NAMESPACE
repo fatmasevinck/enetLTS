@@ -6,12 +6,14 @@ import(ggplot2)
 import(grid)
 import(glmnet)
 import(reshape)
+import(robustHD)
 import(parallel)
-import(stats)
+import(robustbase)
 
-importFrom("robustbase","covMcd")
-importFrom("robustHD", "lambda0", "robStandardize")
-importFrom("cvTools", "cvFolds")
+importFrom(cvTools, cvFolds)
+importFrom(stats, weights)
+importFrom("stats", "dnorm", "family", "mad", "median", "pnorm",
+             "predict", "qnorm", "quantile", "sd")
 importFrom("graphics", "par")
 importFrom("grDevices", "colorRampPalette")
 
