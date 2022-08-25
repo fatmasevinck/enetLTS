@@ -31,7 +31,7 @@ bibliography: paper.bib
 
 # Statement of need
 
-A number of new robust linear regression methods have been developed during the last decade in the context of high dimensional data, such as [@Alfons21R; @Keplinger21R]. However, to the best of our knowledge, robust logistic (both binary and multinomial) regression for high dimensional data is not available elsewhere. The package `enetLTS` therefore provides researchers with access to robust solutions and variable selection at the same time with high-dimensional linear and logistic regression data. It has already been used in several benchmark studies in the statistical literature, e.g. [@Insolia21b; @Insolia21a; @Monti21], as well as in empirical research, e.g. [@Segaert18; @Jensch22].
+A number of new robust linear regression methods have been developed during the last decade in the context of high dimensional data, such as [@Alfons13; @Alfons21R; @Keplinger21R]. However, to the best of our knowledge, robust logistic (both binary and multinomial) regression for high dimensional data is not available elsewhere. The package `enetLTS` therefore provides researchers with access to robust solutions and variable selection at the same time with high-dimensional linear and logistic regression data. It has already been used in several benchmark studies in the statistical literature, e.g. [@Insolia21b; @Insolia21a; @Monti21], as well as in empirical research, e.g. [@Segaert18; @Jensch22].
 
 
 # Example: Robust and Sparse Linear Regression (`family="gaussian"`)
