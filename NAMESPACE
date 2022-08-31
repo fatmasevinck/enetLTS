@@ -10,8 +10,8 @@ import(robustHD)
 import(parallel)
 import(robustbase)
 
-importFrom(cvTools, cvFolds)
-importFrom(stats, weights)
+importFrom("cvTools", "cvFolds")
+importFrom("stats", "weights")
 importFrom("stats", "dnorm", "family", "mad", "median", "pnorm",
              "predict", "qnorm", "quantile", "sd")
 importFrom("graphics", "par")
