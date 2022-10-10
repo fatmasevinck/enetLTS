@@ -170,7 +170,7 @@ With `family="multinomial"`, the model `enetLTS()` produces the results of multi
 ```R
 set.seed(4)
 fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE)
-[1] "optimal model: lambda = 0.01 alpha = 0.02"
+[1] "optimal model: lambda = 0.01 alpha = 0.01"
 
 fit.mutinom 
 enetLTS estimator 
@@ -178,11 +178,11 @@ enetLTS estimator
 Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = FALSE) 
 
  number of the nonzero coefficients:
-[1] 704
+[1] 742
 
- alpha: 0.02
+ alpha: 0.01
  lambda: 0.01
- lambdaw: 0.003971358
+ lambdaw: 0.005469634
   ```    
 
 The main function `enetLTS()` provides similar options for the $\alpha$ sequence of the elastic net penalty. The default for the tuning parameters $\lambda$ are values from 0.95 to 0.05 with steps of size -0.05, see ([Kurnaz and Filzmoser, 2022](https://arxiv.org/pdf/2205.11835.pdf)).
