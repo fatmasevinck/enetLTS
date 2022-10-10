@@ -20,7 +20,7 @@
 Package `enetLTS` is on CRAN (The Comprehensive `R` Archive Network), hence the latest release can be easily installed from the `R` command as follows
 
 ```R
-> install.packages("enetLTS")
+install.packages("enetLTS")
 ```
 
  
@@ -29,8 +29,8 @@ Package `enetLTS` is on CRAN (The Comprehensive `R` Archive Network), hence the 
 The package `enetLTS` can also installed from `Github` using following the `R` command line
 
 ```R
-> install.packages("devtools")
-> devtools::install_github("fatmasevinck/enetLTS")
+install.packages("devtools")
+devtools::install_github("fatmasevinck/enetLTS")
 ```
 
 If you already have package `devtools` installed, the first line can be skipped.
@@ -45,29 +45,30 @@ Using the Affymetrix HG-U133A chip and normalizing with the GCRMA method, the nu
 As in Alfons ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)), we determine the response variable with one of the protein expressions, which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable.  The code lines for loading and re-organizing response variable and predictors are follows:
 
 ```R
-> # load data
-> library("robustHD")
-> data("nci60")  # contains matrices 'protein' and 'gene'
->
-> # define response variable
-> y <- protein[, 92]
-> # screen most correlated predictor variables
-> correlations <- apply(gene, 2, corHuber, y)
-> keep <- partialOrder(abs(correlations), 100, decreasing = TRUE)
-> X <- gene[, keep]
+# load data
+library("robustHD")
+data("nci60")  # contains matrices 'protein' and 'gene'
+
+# define response variable
+y <- protein[, 92]
+# screen most correlated predictor variables
+correlations <- apply(gene, 2, corHuber, y)
+keep <- partialOrder(abs(correlations), 100, decreasing = TRUE)
+X <- gene[, keep]
 ```
 
 The package `enetLTS` can either be installed from CRAN or directly from `Github`. The main function is `enetLTS`, and the default `family` option is `gaussian`, which corresponds to linear regression.
 
 ```R
-> # install and load package
-> install.packages("enetLTS")
-> library(enetLTS)
-> # fit the model for family="gaussian"
-> fit.gaussian <- enetLTS(X,y)
-> [1] "optimal model: lambda = 0.1391 alpha = 0.6"
-> 
-> fit.gaussian
+# install and load package
+install.packages("enetLTS")
+library(enetLTS)
+# fit the model for family="gaussian"
+set.seed(4)
+fit.gaussian <- enetLTS(X,y)
+[1] "optimal model: lambda = 0.1391 alpha = 0.6"
+
+fit.gaussian
 enetLTS estimator 
 
 Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
@@ -110,17 +111,18 @@ Examples of the residuals plot (left) and the diagnostic plot (right) for output
 For binary regression, we have considered the same NCI-60 data with some modifications. In order to provide an example for binary regression, the response variable is re-organized as follows. If `mean(y)` is smaller than 0.5, the response will be assigned to 0, otherwise, the response will be assigned to 1. The predictors are the same as in the previous section.
 
 ```R
-> y <- protein[, 92]
-> # for binary class 
-> y.binom <- ifelse(y <= mean(y),0,1)
+y <- protein[, 92]
+# for binary class 
+y.binom <- ifelse(y <= mean(y),0,1)
 ```
 
 For the binary regression, the `family` arguman of `enetLTS()`function should be set to `"binomial"`.
 
 ```R
-> # fit the model for family="binomial"
-> fit.binomial <- enetLTS(X, y.binom, family="binomial")
-> fit.binomial
+# fit the model for family="binomial"
+set.seed(4)
+fit.binomial <- enetLTS(X, y.binom, family="binomial")
+fit.binomial
 enetLTS estimator 
 
 Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, 
@@ -152,24 +154,25 @@ Examples of plot functions of deviances (left); diagnostic (right) for binary re
 The fuit data set has been well-known in the context of robust discrimination studies. Therefore, we have considered the fruit data set in order to illustrate the multinomial regression. It contains spectral information with 256 wavelengths for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in R package `rrcov` and it is taken into consideration to illustrate the `enetLTS` model for multinomial regression.
 
 ```R
-> # load data
-> library(rrcov)
-> data(fruit)
-> 
-> d <- fruit[,-1]  # first column includes the fruid names 
-> X <- as.matrix(d)
-> # define response variable
-> grp <- c(rep(1,490),rep(2,106),rep(3,500)) 
-> y <- factor(grp-1)
+# load data
+library(rrcov)
+data(fruit)
+
+d <- fruit[,-1]  # first column includes the fruid names 
+X <- as.matrix(d)
+# define response variable
+grp <- c(rep(1,490),rep(2,106),rep(3,500)) 
+y <- factor(grp-1)
 ```
 
 With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression. Here user supplied values of `lambdas` are considered. 
 
 ```R
-> fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE)
-> [1] "optimal model: lambda = 0.01 alpha = 0.02"
-> 
-> fit.mutinom 
+set.seed(4)
+fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE)
+[1] "optimal model: lambda = 0.01 alpha = 0.02"
+
+fit.mutinom 
 enetLTS estimator 
 
 Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = FALSE) 
