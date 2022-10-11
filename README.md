@@ -168,8 +168,9 @@ y <- factor(grp-1)
 With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression. Here user supplied values of `lambdas` are considered. 
 
 ```R
+alphas=seq(from=0.01,to=0.1,by=0.01)
 set.seed(4)
-fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE)
+fit.multinom <- enetLTS(X, y, family="multinomial", alphas=alphas, lambdas=seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE)
 [1] "optimal model: lambda = 0.01 alpha = 0.01"
 
 fit.mutinom 
