@@ -119,23 +119,24 @@ y.binom <- ifelse(y <= mean(y),0,1)
 For the binary regression, the `family` arguman of `enetLTS()`function should be set to `"binomial"`.
 
 ```R
+# determine alpha and lambda sequences
+alphas=seq(0,1,length=41)
+l0 <- lambda00(X, y.binom, normalize = TRUE, intercept = TRUE)
+lambdas <- seq(l0,0.001,by=-0.025*l0)
 # fit the model for family="binomial"
-set.seed(4)
-fit.binomial <- enetLTS(X, y.binom, family="binomial")
+set.seed(12)
+fit.binomial <- enetLTS(X, y.binom, alphas=alphas, lambdas=lambdas, family="binomial")
 fit.binomial
 enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, 
- lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
- hsize = 0.75, nsamp = c(500, 10), nCsteps = 20, nfold = 5, repl = 1, 
- ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, lambdas = lambdas) 
 
  number of the nonzero coefficients:
-[1] 34
+[1] 48
 
- alpha: 0.65
- lambda: 0.0023
- lambdaw: 0.02225821
+ alpha: 0.325
+ lambda: 0.0011
+ lambdaw: 0.01456879
 ```
 
 The main function `enetLTS()` provides similar options for the values of the elastic net penalty. For the tuning parameter $\lambda$, a user supplied sequence option is available. If this is not provided, the default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see ([Kurnaz et al., 2018](https://www.sciencedirect.com/science/article/pii/S0169743917301247)). 
