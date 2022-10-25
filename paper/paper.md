@@ -115,11 +115,13 @@ lambdas <- seq(l0,0.001,by=-0.025*l0)
 
 # fit the model for family="binomial"
 set.seed(12)
-fit.binomial <- enetLTS(X, y.binom, alphas=alphas, lambdas=lambdas, family="binomial")
+fit.binomial <- enetLTS(X, y.binom, alphas=alphas, lambdas=lambdas, 
+                        family="binomial")
 fit.binomial
 enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, lambdas = lambdas) 
+Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, 
+               lambdas = lambdas) 
 
  number of the nonzero coefficients:
 [1] 48
@@ -158,13 +160,15 @@ With `family="multinomial"`, the model `enetLTS()` produces the results of multi
 ```R
 lambdas=seq(from=0.01,to=0.1,by=0.01)
 set.seed(4)
-fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=lambdas, crit.plot=FALSE)
+fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=lambdas, 
+                        crit.plot=FALSE)
 [1] "optimal model: lambda = 0.01 alpha = 0.02"
 
 fit.mutinom 
 enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y, family = "multinomial", lambdas=lambdas, crit.plot = FALSE) 
+Call:  enetLTS(xx = X, yy = y, family = "multinomial", lambdas=lambdas, 
+               crit.plot = FALSE) 
 
  number of the nonzero coefficients:
 [1] 704
