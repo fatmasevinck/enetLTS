@@ -69,17 +69,17 @@ fit.gaussian <- enetLTS(X,y)
 [1] "optimal model: lambda = 0.1391 alpha = 0.6"
 
 fit.gaussian
+
 enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y, family = "gaussian", alphas = alphas, lambdas = lambdas, lambdaw = NULL, intercept = TRUE, scal = TRUE, 
- hsize = 0.75, nsamp = 500, nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e+06, seed = NULL, crit.plot = TRUE) 
+Call:  enetLTS(xx = X, yy = y, crit.plot = TRUE) 
 
- number of the nonzero coefficients:
-[1] 29
+number of the nonzero coefficients:
+[1] 23
 
- alpha: 0.6
- lambda: 0.1391
- lambdaw: 0.07545663
+alpha: 0.8
+lambda: 0.1043
+lambdaw: 0.1824974
 ```
  
 The main idea to obtain an outlier-free subset is to carry out concentration steps (C-steps). This means that in each iteration of the algorithm, the value of the objective function improves. Thus, one has to start with several initial subsets, and the C-steps will lead at least to a local optimum. 
