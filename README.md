@@ -66,7 +66,7 @@ library(enetLTS)
 # fit the model for family="gaussian"
 set.seed(1)
 fit.gaussian <- enetLTS(X,y)
-[1] "optimal model: lambda = 0.1391 alpha = 0.6"
+[1] "optimal model: lambda = 0.1043 alpha = 0.8"
 
 fit.gaussian
 
