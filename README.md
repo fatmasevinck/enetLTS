@@ -90,21 +90,15 @@ The main function `enetLTS()` allows the user to specify a sequence of values fo
 
 After computing all candidates based on the best subsets for certain combinations of $\alpha$ and $\lambda$, the combination of the optimal tuning parameters is defined by 5-fold cross-validation. The evaluation criterion for 5-fold cross-validation is summarized by a heatmap, see Figure \ref{fig:hatmapGauss}, if the argument `crit.plot` is assigned to `"TRUE"`. 
 
-
 ![Heatmap for 5-fold cross-validation](paper/JOSSgausHeatMap.png)
-
 
 To determine updated parameter $\lambda$ (`lambdaw`) in a reweighting step, 5-fold cross-validation based on the `cv.glmnet()` function from `glmnet` [(Friedman et al., 2021)](https://CRAN.R-project.org/package=glmnet) is used. 
 
 Several plots are available for the results. `plotCoef.enetLTS()` visualizes the coefficients where the coefficients which are set to zeros are shown, `plotResid.enetLTS()` plots the values of residuals vs fitted values, and `plotDiagnostic.enetLTS()` allows to produce various diagnostic plots for the final model fit. Some examples of these plots are shown in Figure \ref{fig:plotexamplesGuas}.
 
-
 ![residuals (left); diagnostic (right)\label{fig:plotexamples}{width=%110}](paper/JOSSgausNCI60.png)
 
 Examples of the residuals plot (left) and the diagnostic plot (right) for output of function `enetLTS()` with the arguman `family="gaussian"`.
-
-
-
 
 # Example: Robust and Sparse Binary Regression (`family="binomial"`)
 
@@ -144,7 +138,6 @@ The main function `enetLTS()` provides similar options for the values of the ela
 The evaluation criterion results for to the candidates of tuning parameters is avaliable in a heatmap if the argument `crit.plot` is assigned to `"TRUE"` (which is omitted here). To determine the updated parameter $\lambda$ (`lambdaw`) for the reweighting step, 5-fold cross-validation based on the `cv.glmnet()` function is used from the `glmnet` package for the current `family` option. 
 
 Similarly, `plotCoef.enetLTS()` visualizes the coefficients. The other plot functions are re-organized for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances, and this plot function produces two plots which are deviances vs index, and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are presented in Figure \ref{fig:ResidDiagbinom}.
-
 
 ![Residuals and Diagnostics](paper/JOSSbinomResidDiagNCI60.png)
 
@@ -193,11 +186,9 @@ The combination of the optimal tuning parameters is evaluated by 5-fold cross-va
 
 The plot functions are adjusted for multinomial regression. `plotCoef.enetLTS()` gives the coefficients plots which includes group information. In `plotResid.enetLTS()`, residuals are turned into deviances, as in the binary regression case, with group information. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components. 
 
-
 ![Coefficients](paper/JOSSmultinomCoef.png)
  
  Examples of coefficients for multinomial regression
- 
  
  ![Residuals and diagnostic plots](paper/JOSSmultinomResidDiag.png)
  
