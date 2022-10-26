@@ -194,6 +194,8 @@ The plot functions are adjusted for multinomial regression. `plotCoef.enetLTS()`
  
  Examples of plot functions of deviances (left); diagnostic (right) for multinomial regression
  
+ Especially for 'family="multinomial"', runtime is long because the algorithm is based on repeated C-steps. 
+ 
 # References 
 
 
