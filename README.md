@@ -133,7 +133,7 @@ Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, lambd
  lambdaw: 0.01456879
 ```
 
-The main function `enetLTS()` provides similar options for the values of the elastic net penalty. For the tuning parameter $\lambda$, a user supplied sequence option is available. If this is not provided, the default is chosen with steps of size -0.025 lambda00 with $0 \le \lambda \le $ lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see [Kurnaz et al., 2018](https://www.sciencedirect.com/science/article/pii/S0169743917301247). 
+The main function `enetLTS()` provides similar options for the values of the elastic net penalty. For the tuning parameter $\lambda$, a user supplied sequence option is available. If this is not provided, the default is chosen with steps of size -0.025 lambda00 with $0 \le \lambda \le$ lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see [Kurnaz et al., 2018](https://www.sciencedirect.com/science/article/pii/S0169743917301247). 
 
 The evaluation criterion results for to the candidates of tuning parameters is avaliable in a heatmap if the argument `crit.plot` is assigned to `"TRUE"` (which is omitted here). To determine the updated parameter $\lambda$ (`lambdaw`) for the reweighting step, 5-fold cross-validation based on the `cv.glmnet()` function is used from the `glmnet` package for the current `family` option. 
 
@@ -180,7 +180,7 @@ Call:  enetLTS(xx = xx, yy = yy, family = "multinomial", alphas = alphas, lambda
  lambdaw: 0.004347225
   ```    
 
-The main function `enetLTS()` provides similar options for the $\alpha$ sequence of the elastic net penalty. The default for the tuning parameters $\lambda$ are values from 0.95 to 0.05 with steps of size -0.05, see ([Kurnaz and Filzmoser, 2022](https://arxiv.org/pdf/2205.11835.pdf)).
+The main function `enetLTS()` provides similar options for the $\alpha$ sequence of the elastic net penalty. The default for the tuning parameters $\lambda$ are values from 0.95 to 0.05 with steps of size -0.05, see [Kurnaz and Filzmoser, 2022](https://arxiv.org/pdf/2205.11835.pdf).
 
 The combination of the optimal tuning parameters is evaluated by 5-fold cross-validation. A heatmap is available if the argument `crit.plot` is assigned to `"TRUE"`. As for the other models, an updated tuning parameter $\lambda$ (`lambdaw`) for the reweighting step is obtained by the `cv.glmnet()` function from the package `glmnet` [(Friedman et al., 2021)](https://CRAN.R-project.org/package=glmnet). 
 
