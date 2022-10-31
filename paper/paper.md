@@ -142,7 +142,7 @@ Similarly, `plotCoef.enetLTS()` visualizes the coefficients. The other plot func
 
 ## Example: Robust and Sparse Multinomial Regression (`family="multinomial"`)
 
-The fuit data set has been well-known in the context of robust discrimination studies. Therefore, we have considered the fruit data set in order to illustrate multinomial regression. It contains spectral information with 256 wavelengths for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in the R package `rrcov`.
+The fruit data set has been well-known in the context of robust discrimination studies. Therefore, we have considered the fruit data set in order to illustrate multinomial regression. It contains spectral information with 256 wavelengths for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in the R package `rrcov`.
 
 ```R
 # load data
