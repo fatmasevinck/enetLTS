@@ -110,7 +110,7 @@ y <- protein[, 92]
 y.binom <- ifelse(y <= mean(y),0,1)
 ```
 
-For the binary regression, the `family` arguman of `enetLTS()`function should be set to `"binomial"`.
+For the binary regression, the `family` arguman of `enetLTS()` function should be set to `"binomial"`.
 
 ```{R, eval = TRUE}
 # determine alpha and lambda sequences
