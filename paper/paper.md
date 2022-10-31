@@ -82,7 +82,7 @@ Call:  enetLTS(xx = X, yy = y)
 
 The main idea to obtain an outlier-free subset is to carry out concentration steps (C-steps). This means that in each iteration of the algorithm, the value of the objective function improves. Thus, one has to start with several initial subsets, and the C-steps will lead at least to a local optimum. 
 
-For the argument `hsize` one needs to provide a numeric value with the trimming percentage used in the penalized objective function. The default value is 0.75. The argument `nsamp` is a numeric vector: The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after a number of nCsteps C-steps has been performed. For those remaining subsets, additional C-steps are performed until convergence. The default is to start the C-steps with 500 initial subsamples for a first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm makes use of the $warm start$ idea, which means that the best subset of the neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can also be supplied by the user. These arguments are the same for the other `family` options.  
+For the argument `hsize` one needs to provide a numeric value with the trimming percentage used in the penalized objective function. The default value is 0.75. The argument `nsamp` is a numeric vector: The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after a number of C-steps has been performed. For those remaining subsets, additional C-steps are performed until convergence. The default is to start the C-steps with 500 initial subsamples for a first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm makes use of the $warm start$ idea, which means that the best subset of the neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can also be supplied by the user. These arguments are the same for the other `family` options.  
 
 The main function `enetLTS()` allows the user to specify a sequence of values for $\alpha$ for the elastic net penalty. If this is not provided, a default sequence of 41 equally spaced values between 0 and 1 is taken. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, a user supplied sequence is available. If not provided, the default for `family="gaussian"` is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$lambda0, where lambda0 is determined as in @Alfons21R. 
 
@@ -106,7 +106,7 @@ y <- protein[, 92]
 # for binary class 
 y.binom <- ifelse(y <= mean(y),0,1)
 ```
-For the binary regression, the `family` argument of `enetLTS()`function should be set to `"binomial"`.
+For the binary regression, the `family` argument of `enetLTS()` function should be set to `"binomial"`.
 
 ```R
 alphas <- seq(0,1,length=41)
