@@ -55,7 +55,7 @@ X <- gene[, keep]
 
 The package `enetLTS` can either be installed from `CRAN` or directly from `Github`. The main function is `enetLTS()`, and the default `family` option is `gaussian`, which corresponds to linear regression.
 
-```{R, eval = TRUE}
+```R
 # install and load package
 install.packages("enetLTS")
 # alternatively install package from Github
@@ -101,7 +101,7 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 
 For binary regression, we have considered the same NCI-60 data set with some modifications. In order to provide an example for binary regression, the response variable is re-organized as follows. If `mean(y)` is smaller than 0.5, the response will be assigned to 0, otherwise, the response will be assigned to 1. The predictors are the same as in the previous section.
 
-```{R, eval = TRUE}
+```{r, eval = TRUE}
 y <- protein[, 92]
 # for binary class 
 y.binom <- ifelse(y <= mean(y),0,1)
