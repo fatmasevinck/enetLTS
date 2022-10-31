@@ -101,14 +101,14 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 
 For binary regression, we have considered the same NCI-60 data set with some modifications. In order to provide an example for binary regression, the response variable is re-organized as follows. If `mean(y)` is smaller than 0.5, the response will be assigned to 0, otherwise, the response will be assigned to 1. The predictors are the same as in the previous section.
 
-```{r, eval = TRUE}
+```R
 y <- protein[, 92]
 # for binary class 
 y.binom <- ifelse(y <= mean(y),0,1)
 ```
 For the binary regression, the `family` argument of `enetLTS()`function should be set to `"binomial"`.
 
-```{R, eval = TRUE}
+```R
 alphas <- seq(0,1,length=41)
 l0 <- lambda00(X, y.binom, normalize = TRUE, intercept = TRUE)
 lambdas <- seq(l0,0.001,by=-0.025*l0)
@@ -144,7 +144,7 @@ Similarly, `plotCoef.enetLTS()` visualizes the coefficients. The other plot func
 
 The fuit data set has been well-known in the context of robust discrimination studies. Therefore, we have considered the fruit data set in order to illustrate multinomial regression. It contains spectral information with 256 wavelengths for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in the R package `rrcov`.
 
-```{R, eval = TRUE}
+```R
 # load data
 library(rrcov)
 data(fruit)
@@ -157,7 +157,7 @@ y <- factor(grp-1)
 ```
 With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression. Here user supplied values of `lambdas` are considered. 
 
-```{R, eval = TRUE}
+```R
 lambdas=seq(from=0.01,to=0.1,by=0.01)
 set.seed(4)
 fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=lambdas, 
