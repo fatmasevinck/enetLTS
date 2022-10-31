@@ -40,7 +40,7 @@ We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/c
 
 As in [@Alfons21R] we determine the response variable with one of the protein expressions which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. The code lines for loading and re-organizing the response variable and the predictors is as follows: 
 
-```R
+```{R, eval = TRUE}
 # load data
 library("robustHD")
 data("nci60")  # contains matrices 'protein' and 'gene'
@@ -55,7 +55,7 @@ X <- gene[, keep]
 
 The package `enetLTS` can either be installed from `CRAN` or directly from `Github`. The main function is `enetLTS()`, and the default `family` option is `gaussian`, which corresponds to linear regression.
 
-```R
+```{R, eval = TRUE}
 # install and load package
 install.packages("enetLTS")
 # alternatively install package from Github
@@ -101,14 +101,14 @@ Several plots are available for the results. `plotCoef.enetLTS()` visualizes the
 
 For binary regression, we have considered the same NCI-60 data set with some modifications. In order to provide an example for binary regression, the response variable is re-organized as follows. If `mean(y)` is smaller than 0.5, the response will be assigned to 0, otherwise, the response will be assigned to 1. The predictors are the same as in the previous section.
 
-```R
+```{R, eval = TRUE}
 y <- protein[, 92]
 # for binary class 
 y.binom <- ifelse(y <= mean(y),0,1)
 ```
 For the binary regression, the `family` argument of `enetLTS()`function should be set to `"binomial"`.
 
-```R
+```{R, eval = TRUE}
 alphas <- seq(0,1,length=41)
 l0 <- lambda00(X, y.binom, normalize = TRUE, intercept = TRUE)
 lambdas <- seq(l0,0.001,by=-0.025*l0)
@@ -144,7 +144,7 @@ Similarly, `plotCoef.enetLTS()` visualizes the coefficients. The other plot func
 
 The fuit data set has been well-known in the context of robust discrimination studies. Therefore, we have considered the fruit data set in order to illustrate multinomial regression. It contains spectral information with 256 wavelengths for observations from 3 different cultivars of the same fruit, named D, M, and HA, with group sizes 490, 106, and 500. This data set is available in the R package `rrcov`.
 
-```R
+```{R, eval = TRUE}
 # load data
 library(rrcov)
 data(fruit)
@@ -157,7 +157,7 @@ y <- factor(grp-1)
 ```
 With `family="multinomial"`, the model `enetLTS()` produces the results of multinomial regression. Here user supplied values of `lambdas` are considered. 
 
-```R
+```{R, eval = TRUE}
 lambdas=seq(from=0.01,to=0.1,by=0.01)
 set.seed(4)
 fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=lambdas, 
