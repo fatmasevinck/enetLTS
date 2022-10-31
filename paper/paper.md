@@ -40,7 +40,7 @@ We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/c
 
 As in [@Alfons21R] we determine the response variable with one of the protein expressions which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. The code lines for loading and re-organizing the response variable and the predictors is as follows: 
 
-```{R, eval = TRUE}
+```R
 # load data
 library("robustHD")
 data("nci60")  # contains matrices 'protein' and 'gene'
