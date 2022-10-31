@@ -42,7 +42,7 @@ We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/c
 NCI-60 data includes 60 human cancer cell lines with nine cancer types, which are breast, central nervous system, colon, leukemia, lung, melanoma,ovearian, prostate and renal cancers. In this example, we regress the protein espression on gene expression data. 
 Using the Affymetrix HG-U133A chip and normalizing with the GCRMA method, the number of predictors is obtained as 22,283. Since one observation has all missing values, it is omitted. The number of observations is decreased to 59. This data set is available in package robustHD.  
 
-As in Alfons [Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786), we determine the response variable with one of the protein expressions, which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable.  The code lines for loading and re-organizing response variable and predictors are follows:
+As in Alfons ([Alfons, 2021](https://joss.theoj.org/papers/10.21105/joss.03786)), we determine the response variable with one of the protein expressions, which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable.  The code lines for loading and re-organizing response variable and predictors are follows:
 
 ```{R, eval = TRUE}
 # load data
@@ -133,7 +133,7 @@ Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, lambd
  lambdaw: 0.01456879
 ```
 
-The main function `enetLTS()` provides similar options for the values of the elastic net penalty. For the tuning parameter $\lambda$, a user supplied sequence option is available. If this is not provided, the default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see ([Kurnaz et al., 2018](https://www.sciencedirect.com/science/article/pii/S0169743917301247)). 
+The main function `enetLTS()` provides similar options for the values of the elastic net penalty. For the tuning parameter $\lambda$, a user supplied sequence option is available. If this is not provided, the default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see [Kurnaz et al., 2018](https://www.sciencedirect.com/science/article/pii/S0169743917301247). 
 
 The evaluation criterion results for to the candidates of tuning parameters is avaliable in a heatmap if the argument `crit.plot` is assigned to `"TRUE"` (which is omitted here). To determine the updated parameter $\lambda$ (`lambdaw`) for the reweighting step, 5-fold cross-validation based on the `cv.glmnet()` function is used from the `glmnet` package for the current `family` option. 
 
