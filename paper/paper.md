@@ -188,7 +188,7 @@ Especially for 'family="multinomial"', runtime is long because the algorithm is 
 
 # Related Software
 
-The package `robustHD` provides the sparseLTS estimator for linear regression based on trimming of the lasso penalized for high dimensional linear regression [@Alfons21R]. The package `pense` provides implementations of robust S- and MM-type estimators using elastic net regularization for linear regression [@Keplinger21R], therefore robustification style is different than trimming idea. Any of them does not desinged for binary or multinomial regression. On the other hand, the package `glmnet` implements the elastic net estimator for generalized linear regression models [@Friedman21R]. The procedure of the R package `enetLTS` [@Kurnaz22Rcran] is implemented using internally the R package `glmnet` [@Friedman21R].  
+The package `robustHD` provides the sparseLTS estimator for linear regression based on trimming of the lasso penalized for high dimensional linear regression [@Alfons21R]. The package `pense` provides implementations of robust S- and MM-type estimators using elastic net regularization for linear regression [@Keplinger21R]. These packages desinged for linear regression, not for binary or multinomial regression. On the other hand, the package `glmnet` implements the elastic net estimator for linear, binary, multinomial regression models and more [@Friedman21R]. The procedure of the R package `enetLTS` [@Kurnaz22Rcran] is implemented using internally the R package `glmnet` [@Friedman21R]. Taking the avantages of this, the package `enetLTS` provides robust and sparse estimator based on trimming of the elastic net penalized for high dimensional linear, binary and multinmial regression.
 
 
 # Acknowledgements
