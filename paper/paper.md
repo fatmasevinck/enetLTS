@@ -68,6 +68,9 @@ fit.gaussian <- enetLTS(X, y, crit.plot= TRUE)
 [1] "optimal model: lambda = 0.1043 alpha = 0.8"
 
 fit.gaussian
+```
+
+```R
 enetLTS estimator 
 
 Call:  enetLTS(xx = X, yy = y) 
@@ -118,6 +121,9 @@ set.seed(12)
 fit.binomial <- enetLTS(X, y.binom, alphas=alphas, lambdas=lambdas, 
                         family="binomial")
 fit.binomial
+```
+
+```R
 enetLTS estimator 
 
 Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, 
@@ -165,6 +171,9 @@ fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=lambdas,
 [1] "optimal model: lambda = 0.01 alpha = 0.02"
 
 fit.mutinom 
+```
+
+```R
 enetLTS estimator 
 
 Call:  enetLTS(xx = X, yy = y, family = "multinomial", lambdas=lambdas, 
