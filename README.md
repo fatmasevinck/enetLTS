@@ -59,7 +59,7 @@ X <- gene[, keep]
 
 The package `enetLTS` can either be installed from CRAN or directly from `Github`. The main function is `enetLTS`, and the default `family` option is `gaussian`, which corresponds to linear regression.
 
-```{R, eval = TRUE}
+```{R}
 # install and load package
 install.packages("enetLTS")
 library(enetLTS)
@@ -71,7 +71,9 @@ fit.gaussian <- enetLTS(X,y)
 fit.gaussian
 
 enetLTS estimator 
+```
 
+```{R}
 Call:  enetLTS(xx = X, yy = y, crit.plot = TRUE) 
 
 number of the nonzero coefficients:
