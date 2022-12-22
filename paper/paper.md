@@ -83,7 +83,7 @@ Call:  enetLTS(xx = X, yy = y, crit.plot=TRUE)
  lambdaw: 0.1824974
 ```
 
-23 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=$0.8 and $\lambda=$0.1043. Here $\lambda_w =$0.1824974 corresponds to updated tuning parameter for reweighted model. 
+23 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=$0.8 and $\lambda=$0.1043. Here $\lambda_w=$0.1824974 corresponds to updated tuning parameter for reweighted model. 
 
 The main idea to obtain an outlier-free subset is to carry out concentration steps (C-steps). This means that in each iteration of the algorithm, the value of the objective function improves. Thus, one has to start with several initial subsets, and the C-steps will lead at least to a local optimum. 
 
