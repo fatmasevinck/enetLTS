@@ -64,7 +64,7 @@ install.packages("enetLTS")
 library(enetLTS)
 # fit the model for family="gaussian"
 set.seed(1)
-fit.gaussian <- enetLTS(X, y, crit.plot= TRUE)
+fit.gaussian <- enetLTS(X, y, crit.plot=TRUE)
 [1] "optimal model: lambda = 0.1043 alpha = 0.8"
 
 fit.gaussian
@@ -73,7 +73,7 @@ fit.gaussian
 ```R
 enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y) 
+Call:  enetLTS(xx = X, yy = y, crit.plot=TRUE) 
 
  number of the nonzero coefficients:
 [1] 23
@@ -118,8 +118,8 @@ lambdas <- seq(l0,0.001,by=-0.025*l0)
 
 # fit the model for family="binomial"
 set.seed(12)
-fit.binomial <- enetLTS(X, y.binom, alphas=alphas, lambdas=lambdas, 
-                        family="binomial")
+fit.binomial <- enetLTS(X, y.binom, family="binomial", alphas=alphas, 
+                                    lambdas=lambdas)
 fit.binomial
 ```
 
