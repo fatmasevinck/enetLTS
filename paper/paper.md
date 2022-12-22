@@ -83,6 +83,8 @@ Call:  enetLTS(xx = X, yy = y, crit.plot=TRUE)
  lambdaw: 0.1824974
 ```
 
+23 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=0.8$ and $\lambda=0.1043$. Here $\lambda_w =0.1824974$ corresponds to updated tuning parameter for reweighted model. 
+
 The main idea to obtain an outlier-free subset is to carry out concentration steps (C-steps). This means that in each iteration of the algorithm, the value of the objective function improves. Thus, one has to start with several initial subsets, and the C-steps will lead at least to a local optimum. 
 
 For the argument `hsize` one needs to provide a numeric value with the trimming percentage used in the penalized objective function. The default value is 0.75. The argument `nsamp` is a numeric vector: The first element gives the number of initial subsamples to be used. The second element gives the number of subsamples to keep after a number of C-steps has been performed. For those remaining subsets, additional C-steps are performed until convergence. The default is to start the C-steps with 500 initial subsamples for a first combination of tuning parameters $\alpha$ and $\lambda$, and then to keep the 10 subsamples with the lowest value of the objective function for additional C-steps until convergence. For the next combination of tuning parameters $\alpha$ and $\lambda$, the algorithm makes use of the $warm start$ idea, which means that the best subset of the neighboring grid value is taken, and C-steps are started from this best subset until convergence. The `nsamp` entries can also be supplied by the user. These arguments are the same for the other `family` options.  
@@ -137,6 +139,8 @@ Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas,
  lambdaw: 0.01456879
 ```
 
+48 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=0.325$ and $\lambda=0.0011$. Here $\lambda_w =0.01456879$ corresponds to updated tuning parameter for reweighted model. 
+
 The main function `enetLTS()` provides similar options for the values of the elastic net penalty. For the tuning parameter $\lambda$, a user supplied sequence option is available. If this is not provided, the default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$ lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see @Kurnaz18.
 
 The evaluation criterion results for to the candidates of tuning parameters is avaliable in a heatmap if the argument `crit.plot` is assigned to `"TRUE"` (which is omitted here). To determine the updated parameter $\lambda$ (`lambdaw`) for the reweighting step, 5-fold cross-validation based on the `cv.glmnet()` function is used from the `glmnet` package for the current `family` option. 
@@ -186,6 +190,8 @@ Call:  enetLTS(xx = X, yy = y, family = "multinomial", lambdas=lambdas,
  lambda: 0.01
  lambdaw: 0.003971358
   ```    
+
+704 out of 1096 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=0.2$ and $\lambda=0.01$. Here $\lambda_w =0.003971358$ corresponds to updated tuning parameter for reweighted model. The effect of tuning parameter $\alpha$ on the model is very clear from less sparsity. 
 
 The main function `enetLTS()` provides similar options for the $\alpha$ sequence of the elastic net penalty. The default for the tuning parameters $\lambda$ are values from 0.95 to 0.05 with steps of size -0.05, see @Kurnaz22Arx. 
 
