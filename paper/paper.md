@@ -83,7 +83,7 @@ Call:  enetLTS(xx = X, yy = y, crit.plot=TRUE)
  lambdaw: 0.1824974
 ```
 
-23 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=0.8$ and $\lambda=0.1043$. Here $\lambda_w =0.1824974$ corresponds to updated tuning parameter for reweighted model. 
+23 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=$0.8 and $\lambda=$0.1043. Here $\lambda_w =$0.1824974 corresponds to updated tuning parameter for reweighted model. 
 
 The main idea to obtain an outlier-free subset is to carry out concentration steps (C-steps). This means that in each iteration of the algorithm, the value of the objective function improves. Thus, one has to start with several initial subsets, and the C-steps will lead at least to a local optimum. 
 
@@ -139,7 +139,7 @@ Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas,
  lambdaw: 0.01456879
 ```
 
-48 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=0.325$ and $\lambda=0.0011$. Here $\lambda_w =0.01456879$ corresponds to updated tuning parameter for reweighted model. 
+48 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=$0.325 and $\lambda=$0.0011. Here $\lambda_w =$0.01456879 corresponds to updated tuning parameter for reweighted model. 
 
 The main function `enetLTS()` provides similar options for the values of the elastic net penalty. For the tuning parameter $\lambda$, a user supplied sequence option is available. If this is not provided, the default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$ lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see @Kurnaz18.
 
@@ -191,7 +191,7 @@ Call:  enetLTS(xx = X, yy = y, family = "multinomial", lambdas=lambdas,
  lambdaw: 0.003971358
   ```    
 
-704 out of 1096 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=0.2$ and $\lambda=0.01$. Here $\lambda_w =0.003971358$ corresponds to updated tuning parameter for reweighted model. The effect of tuning parameter $\alpha$ on the model is very clear from less sparsity. 
+704 out of 1096 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=$0.2 and $\lambda=$0.01. Here $\lambda_w =$0.003971358 corresponds to updated tuning parameter for reweighted model. The effect of tuning parameter $\alpha$ on the model is very clear from less sparsity. 
 
 The main function `enetLTS()` provides similar options for the $\alpha$ sequence of the elastic net penalty. The default for the tuning parameters $\lambda$ are values from 0.95 to 0.05 with steps of size -0.05, see @Kurnaz22Arx. 
 
