@@ -69,11 +69,12 @@ fit.gaussian <- enetLTS(X,y)
 ## [1] "optimal model: lambda = 0.1043 alpha = 0.8"
 
 fit.gaussian
-
-## enetLTS estimator 
 ```
 
 ```{R}
+
+## enetLTS estimator 
+
 ## Call:  enetLTS(xx = X, yy = y, crit.plot = TRUE) 
 
 ## number of the nonzero coefficients:
