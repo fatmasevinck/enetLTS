@@ -65,22 +65,22 @@ library(enetLTS)
 # fit the model for family="gaussian"
 set.seed(1)
 fit.gaussian <- enetLTS(X, y, crit.plot=TRUE)
-[1] "optimal model: lambda = 0.1043 alpha = 0.8"
+## [1] "optimal model: lambda = 0.1043 alpha = 0.8"
 
 fit.gaussian
 ```
 
 ```R
-enetLTS estimator 
+## enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y, crit.plot=TRUE) 
+## Call:  enetLTS(xx = X, yy = y, crit.plot=TRUE) 
 
- number of the nonzero coefficients:
-[1] 23
+## number of the nonzero coefficients:
+## [1] 23
 
- alpha: 0.8
- lambda: 0.1043
- lambdaw: 0.1824974
+## alpha: 0.8
+## lambda: 0.1043
+## lambdaw: 0.1824974
 ```
 
 23 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=$ 0.8 and $\lambda=$ 0.1043. Here $\lambda_w=$ 0.1824974 corresponds to updated tuning parameter for reweighted model. 
@@ -126,17 +126,17 @@ fit.binomial
 ```
 
 ```R
-enetLTS estimator 
+## enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, 
+## Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, 
                lambdas = lambdas) 
 
- number of the nonzero coefficients:
-[1] 48
+## number of the nonzero coefficients:
+## [1] 48
 
- alpha: 0.325
- lambda: 0.0011
- lambdaw: 0.01456879
+## alpha: 0.325
+## lambda: 0.0011
+## lambdaw: 0.01456879
 ```
 
 48 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=$ 0.325 and $\lambda=$ 0.0011. Here $\lambda_w =$ 0.01456879 corresponds to updated tuning parameter for reweighted model. 
@@ -172,23 +172,23 @@ lambdas=seq(from=0.01,to=0.1,by=0.01)
 set.seed(4)
 fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=lambdas, 
                         crit.plot=FALSE)
-[1] "optimal model: lambda = 0.01 alpha = 0.02"
+## [1] "optimal model: lambda = 0.01 alpha = 0.02"
 
 fit.mutinom 
 ```
 
 ```R
-enetLTS estimator 
+## enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y, family = "multinomial", lambdas=lambdas, 
-               crit.plot = FALSE) 
+## Call:  enetLTS(xx = X, yy = y, family = "multinomial", lambdas=lambdas, 
+##               crit.plot = FALSE) 
 
- number of the nonzero coefficients:
-[1] 704
+## number of the nonzero coefficients:
+## [1] 704
 
- alpha: 0.02
- lambda: 0.01
- lambdaw: 0.003971358
+## alpha: 0.02
+## lambda: 0.01
+## lambdaw: 0.003971358
   ```    
 
 704 out of 1096 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=$ 0.2 and $\lambda=$ 0.01. Here $\lambda_w =$ 0.003971358 corresponds to updated tuning parameter for reweighted model. The effect of tuning parameter $\alpha$ on the model is very clear from less sparsity. 
