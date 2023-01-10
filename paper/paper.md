@@ -139,7 +139,7 @@ fit.binomial
 ## lambdaw: 0.01456879
 ```
 
-48 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=$ 0.325 and $\lambda=$ 0.0011. Here $\lambda_w =$ 0.01456879 corresponds to updated tuning parameter for reweighted model. 
+48 out of 100 independent variables are selected by the enetLTS model based on optimal combination of $\alpha=$ 0.325 and $\lambda=$ 0.0011.
 
 The main function `enetLTS()` provides similar options for the values of the elastic net penalty. For the tuning parameter $\lambda$, a user supplied sequence option is available. If this is not provided, the default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$ lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see @Kurnaz18.
 
