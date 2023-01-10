@@ -66,22 +66,22 @@ library(enetLTS)
 # fit the model for family="gaussian"
 set.seed(1)
 fit.gaussian <- enetLTS(X,y)
-[1] "optimal model: lambda = 0.1043 alpha = 0.8"
+## [1] "optimal model: lambda = 0.1043 alpha = 0.8"
 
 fit.gaussian
 
-enetLTS estimator 
+## enetLTS estimator 
 ```
 
 ```{R}
-Call:  enetLTS(xx = X, yy = y, crit.plot = TRUE) 
+## Call:  enetLTS(xx = X, yy = y, crit.plot = TRUE) 
 
-number of the nonzero coefficients:
-[1] 23
+## number of the nonzero coefficients:
+## [1] 23
 
-alpha: 0.8
-lambda: 0.1043
-lambdaw: 0.1824974
+## alpha: 0.8
+## lambda: 0.1043
+## lambdaw: 0.1824974
 ```
  
 The main idea to obtain an outlier-free subset is to carry out concentration steps (C-steps). This means that in each iteration of the algorithm, the value of the objective function improves. Thus, one has to start with several initial subsets, and the C-steps will lead at least to a local optimum. 
@@ -124,18 +124,18 @@ set.seed(12)
 fit.binomial <- enetLTS(X, y.binom, alphas=alphas, lambdas=lambdas, family="binomial")
 fit.binomial
 
-enetLTS estimator 
+## enetLTS estimator 
 ```
 
 ```{R}
-Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, lambdas = lambdas) 
+## Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, lambdas = lambdas) 
 
- number of the nonzero coefficients:
-[1] 48
+## number of the nonzero coefficients:
+## [1] 48
 
- alpha: 0.325
- lambda: 0.0011
- lambdaw: 0.01456879
+## alpha: 0.325
+## lambda: 0.0011
+## lambdaw: 0.01456879
 ```
 
 The main function `enetLTS()` provides similar options for the values of the elastic net penalty. For the tuning parameter $\lambda$, a user supplied sequence option is available. If this is not provided, the default is chosen with steps of size -0.025 lambda00 with $0 \le \lambda \le$ lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see [Kurnaz et al., 2018](https://www.sciencedirect.com/science/article/pii/S0169743917301247). 
@@ -170,22 +170,22 @@ With `family="multinomial"`, the model `enetLTS()` produces the results of multi
 alphas=seq(from=0.01,to=0.1,by=0.01)
 set.seed(4)
 fit.multinom <- enetLTS(X, y, family="multinomial", alphas=alphas, lambdas=seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE)
-[1] "optimal model: lambda = 0.01 alpha = 0.01"
+## [1] "optimal model: lambda = 0.01 alpha = 0.01"
 
 fit.mutinom 
 ```
 
 ```{R}
-enetLTS estimator 
+## enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y, family = "multinomial", alphas = alphas, lambdas = lambdas, seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE) 
+## Call:  enetLTS(xx = X, yy = y, family = "multinomial", alphas = alphas, lambdas = lambdas, seq(from=0.01,to=0.1,by=0.01), crit.plot=FALSE) 
 
- number of the nonzero coefficients:
-[1] 745
+## number of the nonzero coefficients:
+## [1] 745
 
- alpha: 0.01
- lambda: 0.01
- lambdaw: 0.004347225
+## alpha: 0.01
+## lambda: 0.01
+## lambdaw: 0.004347225
 ```    
 
 
@@ -208,23 +208,22 @@ lambdas=seq(from=0.01,to=0.1,by=0.01)
 set.seed(4)
 fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=lambdas, 
                         crit.plot=FALSE)
-[1] "optimal model: lambda = 0.01 alpha = 0.02"
+## [1] "optimal model: lambda = 0.01 alpha = 0.02"
 
 fit.mutinom 
 ```
 
 ```R
-enetLTS estimator 
+## enetLTS estimator 
 
-Call:  enetLTS(xx = X, yy = y, family = "multinomial", lambdas=lambdas, 
-               crit.plot = FALSE) 
+## Call:  enetLTS(xx = X, yy = y, family = "multinomial", lambdas=lambdas, crit.plot = FALSE) 
 
- number of the nonzero coefficients:
-[1] 704
+## number of the nonzero coefficients:
+## [1] 704
 
- alpha: 0.02
- lambda: 0.01
- lambdaw: 0.003971358
+## alpha: 0.02
+## lambda: 0.01
+## lambdaw: 0.003971358
   ```    
 
 The main function `enetLTS()` provides similar options for the $\alpha$ sequence of the elastic net penalty. The default for the tuning parameters $\lambda$ are values from 0.95 to 0.05 with steps of size -0.05, see [Kurnaz and Filzmoser, 2022](https://arxiv.org/pdf/2205.11835.pdf).
