@@ -207,8 +207,7 @@ With `family="multinomial"`, the model `enetLTS()` produces the results of multi
 ```R
 lambdas=seq(from=0.01,to=0.1,by=0.01)
 set.seed(4)
-fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=lambdas, 
-                        crit.plot=FALSE)
+fit.multinom <- enetLTS(X, y, family="multinomial", lambdas=lambdas, crit.plot=FALSE)
 ## [1] "optimal model: lambda = 0.01 alpha = 0.02"
 
 fit.mutinom 
