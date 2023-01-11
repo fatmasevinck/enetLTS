@@ -129,7 +129,7 @@ fit.binomial
 ## enetLTS estimator 
 
 ## Call:  enetLTS(xx = X, yy = y.binom, family = "binomial", alphas = alphas, 
-               lambdas = lambdas) 
+##               lambdas = lambdas) 
 
 ## number of the nonzero coefficients:
 ## [1] 48
