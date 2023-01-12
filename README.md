@@ -232,9 +232,6 @@ The combination of the optimal tuning parameters is evaluated by 5-fold cross-va
 
 The plot functions are adjusted for multinomial regression. `plotCoef.enetLTS()` gives the coefficients plots which includes group information. In `plotResid.enetLTS()`, residuals are turned into deviances, as in the binary regression case, with group information. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components. 
 
-![Coefficients](paper/JOSSmultinomCoef.png)
- 
- Examples of coefficients for multinomial regression
  
  ![Residuals and diagnostic plots](paper/JOSSmultinomResidDiag.png)
  
