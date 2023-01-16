@@ -36,7 +36,7 @@ A number of new robust linear regression methods have been developed during the 
 
 # Example: Robust and Sparse Linear Regression (`family="gaussian"`)
 
-We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to provide an example for the `enetLTS` model. The NCI-60 data set includes 60 human cancer cell lines with nine cancer types, which are breast, central nervous system, colon, leukemia, lung, melanoma, ovearian, prostate and renal cancers. In this example, we regress the protein expression on gene expression data. Using the Affymetrix HG-U133A chip and normalizing with the GCRMA method, the number of predictors is obtained as 22,283. One observation with missing values is omitted. This data set is available in the package `robustHD`.
+We have considered the [NCI-60 cancer cell panel](https://discover.nci.nih.gov/cellminer/) data [@Reinhold12] in order to provide an example for the `enetLTS` model. The NCI-60 data set includes 60 human cancer cell lines with nine cancer types, which are breast, central nervous system, colon, leukemia, lung, melanoma, ovarian, prostate and renal cancers. In this example, we regress the protein expression on gene expression data. Using the Affymetrix HG-U133A chip and normalizing with the GCRMA method, the number of predictors is obtained as 22,283. One observation with missing values is omitted. This data set is available in the package `robustHD`.
 
 As in @Alfons21R we determine the response variable with one of the protein expressions which is 92th protein. Out of the gene expressions of the 22,283 genes for predictors, we have considered the gene expressions of the 100 genes that have the highest (robustly estimated) correlations with the response variable. The code lines for loading and re-organizing the response variable and the predictors is as follows: 
 
@@ -91,7 +91,7 @@ For the argument `hsize` one needs to provide a numeric value with the trimming 
 
 The main function `enetLTS()` allows the user to specify a sequence of values for $\alpha$ for the elastic net penalty. If this is not provided, a default sequence of 41 equally spaced values between 0 and 1 is taken. For the other tuning parameter $\lambda$ that keeps the strength of the elastic net penalty, a user supplied sequence is available. If not provided, the default for `family="gaussian"` is chosen with steps of size -0.025 lambda0 with $0\le\lambda\le$ lambda0, where lambda0 is determined as in @Alfons21R. 
 
-After computing all candidates based on the best subsets for certain combinations of $\alpha$ and $\lambda$, the combination of the optimal tuning parameters is defined by 5-fold cross-validation. The evaluation criterion for 5-fold cross-validation is summarized by a heatmap, see Figure \ref{fig:hatmapGauss}, if the argument `crit.plot` is assigned to `"TRUE"`. 
+After computing all candidates based on the best subsets for certain combinations of $\alpha$ and $\lambda$, the combination of the optimal tuning parameters is defined by 5-fold cross-validation. The evaluation criterion for 5-fold cross-validation is summarized by a heat map, see Figure \ref{fig:hatmapGauss}, if the argument `crit.plot` is assigned to `"TRUE"`. 
 
 ![Heatmap for 5-fold cross-validation \label{fig:hatmapGauss}](JOSSgausHeatMap.png)
 
@@ -143,7 +143,7 @@ fit.binomial
 
 The main function `enetLTS()` provides similar options for the values of the elastic net penalty. For the tuning parameter $\lambda$, a user supplied sequence option is available. If this is not provided, the default is chosen with steps of size -0.025 lambda00 with $0\le\lambda\le$ lambda00, where lambda00 is determined based on the robustified point-biserial correlation, see @Kurnaz18.
 
-The evaluation criterion results for to the candidates of tuning parameters is avaliable in a heatmap if the argument `crit.plot` is assigned to `"TRUE"` (which is omitted here). To determine the updated parameter $\lambda$ (`lambdaw`) for the reweighting step, 5-fold cross-validation based on the `cv.glmnet()` function is used from the `glmnet` package for the current `family` option. 
+The evaluation criterion results for to the candidates of tuning parameters is available in a heat map if the argument `crit.plot` is assigned to `"TRUE"` (which is omitted here). To determine the updated parameter $\lambda$ (`lambdaw`) for the reweighting step, 5-fold cross-validation based on the `cv.glmnet()` function is used from the `glmnet` package for the current `family` option. 
 
 Similarly, `plotCoef.enetLTS()` visualizes the coefficients. The other plot functions are re-organized for binary regression. In `plotResid.enetLTS()`, residuals are turned into the deviances, and this plot function produces two plots which are deviances vs index, and deviances vs fitted values (link function). `plotDiagnostic.enetLTS()` shows the response variable vs fitted values (link function). Some of these plots are presented in Figure \ref{fig:ResidDiagbinom}.
 
@@ -195,11 +195,11 @@ fit.mutinom
 
 The main function `enetLTS()` provides similar options for the $\alpha$ sequence of the elastic net penalty. The default for the tuning parameters $\lambda$ are values from 0.95 to 0.05 with steps of size -0.05, see @Kurnaz22Arx. 
 
-The combination of the optimal tuning parameters is evaluated by 5-fold cross-validation. A heatmap is available if the argument `crit.plot` is assigned to `"TRUE"`. As for the other models, an updated tuning parameter $\lambda$ (`lambdaw`) for the reweighting step is obtained by the `cv.glmnet()` function from the package `glmnet` [@Friedman21R]. 
+The combination of the optimal tuning parameters is evaluated by 5-fold cross-validation. A heat map is available if the argument `crit.plot` is assigned to `"TRUE"`. As for the other models, an updated tuning parameter $\lambda$ (`lambdaw`) for the reweighting step is obtained by the `cv.glmnet()` function from the package `glmnet` [@Friedman21R]. 
 
 The plot functions are adjusted for multinomial regression. `plotCoef.enetLTS()` gives the coefficients plots which includes group information. In `plotResid.enetLTS()`, residuals are turned into deviances, as in the binary regression case, with group information. `plotDiagnostic.enetLTS()` shows the scores of all groups in the space of the first two principal components. 
 
-Especially for 'family="multinomial"', runtime is long because the algorithm is based on repeated C-steps.
+Especially for 'family="multinomial"', run time is long because the algorithm is based on repeated C-steps.
 
 # Related Software
 
