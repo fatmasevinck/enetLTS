@@ -1,315 +1,245 @@
 \name{enetLTS}
 \alias{enetLTS}
-%-------------------------------------------------
-\title{
-Robust and Sparse Methods for High Dimensional Linear and Binary and Multinomial Regression
-}
-%-------------------------------------------------
+\alias{enetLTS-package}
+\title{Robust and Sparse Methods for High Dimensional Linear, Binary and
+Multinomial Regression}
 \description{
-Compute fully robust versions of the elastic net estimator, which allows for sparse model estimates,
-for linear regression and binary and multinomial logistic regression.}
-%-------------------------------------------------
+Computes the robust elastic net estimator enetLTS for linear regression
+(\code{family = "gaussian"}), binary logistic regression (\code{"binomial"}) and
+multinomial logistic regression (\code{"multinomial"}). The estimator searches for
+an outlier-free subset of \eqn{h} observations on which the classical elastic net
+is fitted, and a reweighting step improves its efficiency.
+}
 \usage{
-enetLTS(
-    xx,
-    yy,
-    family=c("gaussian","binomial","multinomial"),
-    alphas=seq(0,1,length=41),
-    lambdas=NULL,
-    lambdaw=NULL,
-    intercept=TRUE,
-    scal=TRUE,
-    hsize=0.75,
-    nsamp=c(500,10),
-    nCsteps=20,
-    nfold=5,
-    repl=1,
-    ncores=1,
-    tol=-1e6,
-    seed=NULL,
-    del=0.0125,
-    crit.plot=FALSE,
-    typegrouped=FALSE,
-    type.response=c("link","response","class")
-  )
-  }
-%-------------------------------------------------
+enetLTS(xx, yy, family = c("gaussian", "binomial", "multinomial"),
+        alphas = seq(0, 1, length = 41), lambdas = NULL, lambdaw = NULL,
+        intercept = TRUE, scal = TRUE, hsize = 0.75, nsamp = c(500, 10),
+        nCsteps = 20, nfold = 5, repl = 1, ncores = 1, tol = -1e6,
+        seed = NULL, del = 0.0125, crit.plot = FALSE, typegrouped = FALSE,
+        type.response = c("link", "response", "class"),
+        hgrid = c(0.65, 0.75, 0.85, 0.95), screen = TRUE, crossfit = NULL)
+}
 \arguments{
-\item{xx}{a numeric matrix containing the predictor variables.}
-
-\item{yy}{response variable. Quantitative for \code{family="gaussian"}. For
-  \code{family="binomial"} should be a factor with two levels which is coded as \code{0} and {1}.
-  For \code{family="multinomial"} should be a factor with the number of categories (NC) which is
-  coded as \code{1,2,...,NC}.}
-
-\item{family}{a description of the error distribution and link function to be used
-  in the model. \code{"gaussian"}, \code{"binomial"} and \code{family="multinomial"} options are available.}
-
-\item{alphas}{a user supplied alpha sequence for the elastic net penalty, which is
-  the mixing proportion of the ridge and lasso penalties and takes value in [0,1].
-  \eqn{\alpha=1} is the lasso penalty, and \eqn{\alpha=0} the
-  ridge penalty. If not provided a sequence, default is 41 equally spaced values.}
-
-\item{lambdas}{a user supplied lambda sequence for the strength of the elastic net penalty.
-  If not provided a sequence, default is chosen with steps of size -0.025 lambda0 with
-  \eqn{0\le\lambda\le lambda0} for linear regression and
-  -0.025 lambda00 with \eqn{0\le\lambda\le lambda00} for binary logistic regression. lambda0
-  is determined based on the Pearson correlation between y and the jth predictor variable x_j
-  on winsorized data for linear regression. In lambda00 for logistic regression, the Pearson
-  correlation is replaced by a robustified point-biserial correlation. Default is chosen with
-  steps of size -0.05 from 0.95 to 0.05 for multinomial logistic regression.}
-
-\item{lambdaw}{a user supplied lambda sequence for reweighting step. If not provided,
-  default is computed by using k-fold cross-validation via \code{cv.glmnet} function.}
-
-\item{intercept}{a logical indicating whether a constant term should be
-  included in the model (the default is \code{TRUE}).}
-
-\item{scal}{a logical value indicating whether scale the predictors by their arithmetic means
-  and standard deviations. For \code{family="gaussian"}, it also indicates if
-  mean-center the response variable or not. The default is \code{TRUE}. Note that scaling
-  is performed on the subsamples rather than the full data set.}
-
-\item{hsize}{a user supplied numeric value giving the percentage of the residuals for
-  which the elastic net penalized sum of squares for linear regression or for which the
-  elastic net penalized sum of deviances for binary and multinomial logistic regression
-  should be minimized. The default is 0.75.}
-
-\item{nsamp}{a numeric vector giving the number of subsamples to be used in
-  the beginning of the algorithm, which gives the number of
-  initial subsamples to be used. The default is to first perform C-steps on 500
-  initial subsamples, and then to keep the \code{s1} subsamples with the lowest value
-  (or highest value based on which model is used - \code{family="gaussian"} or \code{family="binomial"}
-  or \code{family="multinomial"}) of the objective function for additional C-steps until convergence.}
-
-\item{nCsteps}{a positive integer giving the number of C-steps to perform on
-  determined s1 subsamples. The default is 20.}
-
-\item{nfold}{a user supplied numeric value for fold number of k-fold cross-validation which
-  used in varied functions of the algorithm. The default is 5-fold cross-validation.}
-
-\item{repl}{a user supplied positive number for more stable results, repeat the k-fold CV
-  \code{repl} times and take the average of the corresponding evaluation measure. The default is 1.}
-
-\item{ncores}{a positive integer giving the number of processor cores to be
-  used for parallel computing (the default is 1 for no parallelization). If
-  this is set to \code{NA}, all available processor cores are used. For
-  prediction error estimation, parallel computing is implemented on the \R
-  level using package \pkg{parallel}.}
-
-\item{tol}{a small numeric value for convergence. The default is -1e6.}
-
-\item{seed}{optional initial seed for the random number generator (see\code{\link{.Random.seed}})
-  when determine initial subsets at thebeginning of the algorithm. The default is NULL.}
-
-\item{del}{The default is 0.0125.}
-
-\item{crit.plot}{a logical value indicating if produces a plot for k-fold cross-validation based on
-  alpha and lambda combinations. The default is TRUE.}
-
-\item{typegrouped}{This argument is available for only \code{family="multinomial"} in the last
-  fit based on the best subset. \code{TRUE} means "grouped" and \code{FALSE} means "ungrouped".
-  If "TRUE" then a grouped lasso penalty is used on the multinomial coefficients for a variable.
-  The default is FALSE.}
-
-\item{type.response}{type of prediction required. \code{type.response="link"} gives the linear predictors.
-  \code{type.response="response"} gives the fitted probabilities for \code{family="multinomial"} and 
-  \code{family="binomial"} and gives the fitted values for \code{family="gaussian"}. 
-  \code{type.response="class"} is available only for \code{family="binomial"} and \code{family="multinomial"},
-  and produces the class label corresponding to the maximum probability. 
-  The default is \code{type.response="link"}.}
+\item{xx}{a numeric matrix of predictors, \eqn{n \times p}; \eqn{p > n} is allowed.}
+\item{yy}{the response. Numeric for \code{family = "gaussian"}; a numeric 0/1
+  vector (numeric, or a factor with levels 0 and 1) for
+  \code{"binomial"}; for \code{"multinomial"} a factor (or a vector of
+  class labels) with \eqn{K \ge 3} classes, or an \eqn{n \times K} indicator matrix.}
+\item{family}{\code{"gaussian"} (the default), \code{"binomial"} or
+  \code{"multinomial"}.}
+\item{alphas}{the grid of the elastic net mixing parameter
+  \eqn{\alpha \in [0, 1]} (\eqn{\alpha = 1}: lasso, \eqn{\alpha = 0}: ridge).
+  The default is 41 equally spaced values.}
+\item{lambdas}{the grid of the penalty parameter \eqn{\lambda}. By default the
+  grid runs from \eqn{\lambda_0} down to 0 in steps of \eqn{0.025\lambda_0},
+  where \eqn{\lambda_0} is a robust estimate of the smallest penalty that sets all
+  slopes to zero: \code{\link[robustHD]{lambda0}} for \code{"gaussian"} and
+  \code{\link{lambda00}} for \code{"binomial"}. For \code{"multinomial"} the
+  default is 20 values, equally spaced on the log scale, from the
+  \eqn{\lambda_{max}} of \pkg{glmnet} (\eqn{\alpha = 1}, robustly standardized
+  data) down to 1\% of it.}
+\item{lambdaw}{the penalty of the reweighting step. By default it is chosen by
+  \code{\link[glmnet]{cv.glmnet}} on the observations with raw weight 1.}
+\item{intercept}{logical; whether the model has an intercept (for
+  \code{"multinomial"}: class intercepts). The default is \code{TRUE}.}
+\item{scal}{logical; if \code{TRUE} (the default), the predictors are centered and
+  scaled by the means and standard deviations of the current subset in every
+  C-step, and for \code{"gaussian"} the response is centered as well.}
+\item{hsize}{the proportion of observations in the subset, \eqn{h =
+  \lfloor (n+1) \cdot}\code{hsize}\eqn{\rfloor}. The default is 0.75.
+  \emph{Experimental:} with \code{hsize = "optimal"} the model is fitted for every
+  value in \code{hgrid}, and the value with the smallest cross-fitted loss on all
+  observations (ignoring the worst 25\%) is chosen, taking the largest value within
+  10\% of the best criterion. This takes about \code{length(hgrid)} times as long
+  as a single fit. The result then contains \code{hsize.search} with the criterion
+  of every candidate, and a warning is given if the chosen value is below 0.70.}
+\item{nsamp}{a vector of two integers. Two C-steps are carried out on each of
+  \code{nsamp[1]} elemental subsets (default 500), and the \code{nsamp[2]} best of
+  them (default 10) are iterated further.}
+\item{nCsteps}{the largest number of C-steps in one iteration; the C-steps stop
+  earlier when the criterion no longer improves. The default is 20.}
+\item{nfold}{the number of folds of the cross-validation. The default is 5.}
+\item{repl}{the number of repetitions of the cross-validation. The default is 1.}
+\item{ncores}{the number of processor cores (package \pkg{parallel}); \code{NA}
+  uses all available cores. The default is 1.}
+\item{tol}{not used by the current algorithm; kept for compatibility with earlier
+  versions.}
+\item{seed}{an optional seed for the random number generator, set before the
+  elemental subsets are drawn (and, for \code{"multinomial"}, before the screening
+  step). The default \code{NULL} does not set a seed.}
+\item{del}{the tail probability of the reweighting step. For \code{"gaussian"} and
+  \code{"binomial"} an observation gets weight 0 if its standardized or Pearson
+  residual is larger than \code{qnorm(1 - del)} in absolute value; with the
+  default 0.0125 this flags about 2.5\% of the observations under the model. For
+  \code{"multinomial"} with \code{crossfit = TRUE} the cut-off is calibrated at
+  \code{2 * del} (see \code{crossfit}).}
+\item{crit.plot}{logical; if \code{TRUE} a heat map of the cross-validation
+  criterion over the \eqn{(\alpha, \lambda)} grid is drawn. The default is
+  \code{FALSE}.}
+\item{typegrouped}{logical; \code{"multinomial"} only. If \code{TRUE}, the grouped
+  lasso penalty of \pkg{glmnet} (\code{type.multinomial = "grouped"}) is used in the
+  fits on the best subset and in the reweighting step. The default is \code{FALSE}.}
+\item{type.response}{the scale of \code{fitted.values} and
+  \code{raw.fitted.values} in the result: \code{"link"} (the default) for the linear
+  predictors, \code{"response"} for the fitted values (gaussian) or probabilities,
+  \code{"class"} for class labels (not for \code{"gaussian"}).}
+\item{hgrid}{the candidate values of \code{hsize} (between 0.5 and 1), used only if
+  \code{hsize = "optimal"}.}
+\item{screen}{logical; \code{"multinomial"} only. If \code{TRUE} (the default),
+  observations that are outlying in the predictors (leverage points) are found
+  beforehand without using the class labels (spatial-sign principal components and
+  robust distances of their scores) and are left out of the fit; they get weight
+  zero in \code{raw.wt} and \code{wt} and are listed in \code{screened}. This
+  protects against contamination that falls mostly into one class, for which the
+  class-wise robust distances of the reweighting step are unreliable.}
+\item{crossfit}{logical or \code{NULL} (the default); \code{"gaussian"} and
+  \code{"multinomial"} only. \code{NULL} means \code{TRUE} for
+  \code{"multinomial"} with \code{scal = TRUE} and \code{FALSE} otherwise. If
+  \code{TRUE}, the observations that are kept are chosen by \emph{cross-fitted}
+  residuals: an observation is never judged by a model that has seen it. The
+  ordinary trimming keeps the observations that the current fit describes best;
+  with many predictors this partly selects observations that noise variables happen
+  to explain, which raises the false positive rate and the prediction error even on
+  clean data. After the trimming, \eqn{\alpha} and \eqn{\lambda} are chosen again on
+  the reweighted observations (common folds), within the range of \code{alphas}.
+  For \code{"multinomial"} the cross-fitted loss is \eqn{-\log \hat{p}(y_i)}, and the
+  reweighting step keeps an observation if its cross-fitted probability of the
+  observed class, from a model fitted on all screened observations, is at least a
+  cut-off \eqn{c}. The cut-off is calibrated: \eqn{c} is the largest value for
+  which, if these probabilities were correct, the expected share of observations
+  with \eqn{\hat{p}(y_i) < c} is at most \code{2 * del}. An earlier rule, a robust
+  median/MAD bound on the cross-fitted loss within every class, is used with
+  \code{options(enetLTS.wrule = "mad")}. The final model contains class intercepts.
+  Requires \code{scal = TRUE}. For \code{"binomial"} it is ignored with a warning.}
 }
-%-------------------------------------------------
 \details{
-The idea of repeatedly applying the non-robust classical elastic net estimators to data subsets
-only is used for linear and logistic regression. The algorithm starts with 500 elemental subsets
-only for one combination of \eqn{\alpha} and \eqn{\lambda}, and takes the warm start strategy
-for subsequent combinations. This idea saves the computation time.
-To choose the elastic net penalties, k-fold cross-validation is used and the replication option is
-provided for more stable results.
-Robustness has been achieved by using trimming idea, therefore a reweighting step is introduced
-in order to improve the efficiency. The outliers are identified according to current model.
-For \code{family="gaussian"}, standardized residuals are used. For \code{family="binomial"}, the Pearson
-residuals which are approximately standard normally distributed is used. Then the weights are defined by
-the binary weight function using \code{del=0.0125}, which allows to be flagged as outliers of the
-2.5\% of the observations in the normal model. For \code{family="multinomial"},
-group-wise scaled robust distances are used. The the binary weights defined using the constant $c_2=5$.
-Therefore, binary weight function produces a clear distinction between the "good observations" and "outliers".}
+The estimator applies the classical elastic net (\pkg{glmnet}) to subsets of the
+data only. For one pair \eqn{(\alpha, \lambda)} the search starts from
+\code{nsamp[1]} elemental subsets and improves them by C-steps; the C-steps keep the
+\eqn{h} observations with the smallest squared residuals (\code{"gaussian"}) or
+negative log-likelihood contributions (\code{"binomial"}, within each class). For
+\code{"multinomial"} they keep, within each class \eqn{k}, the
+\eqn{\lfloor n_k \cdot}\code{hsize}\eqn{+ 1\rfloor} observations with the smallest
+robust (MCD) distance in the space of the linear predictors.
+For \code{"binomial"} the start subsets are ranked by the Bianco-Yohai criterion
+(Croux and Haesbroeck, 2003), as in Kurnaz et al. (2018). The other grid points
+are computed with warm starts. The pair \eqn{(\alpha, \lambda)} is chosen by
+\code{repl} times repeated \code{nfold}-fold cross-validation on the best subsets
+(see \code{\link{cv.enetLTS}}), and the raw fit is the elastic net on the best
+subset of the chosen pair.
 
-%-------------------------------------------------
+In the reweighting step the observations with large residuals of the raw fit get
+weight 0 (see \code{del} and \code{\link{weights.enetLTS}}), and the elastic net
+with penalty \code{lambdaw} is fitted to the observations with weight 1; this is
+the reweighted fit. The weights \code{wt} are then computed from the reweighted
+fit with the same rule. With \code{crossfit = TRUE} the raw weights come from the
+cross-fitted trimming instead, and for \code{"multinomial"} \code{wt} then equals
+\code{raw.wt}.
+}
 \value{
-\item{objective}{a numeric vector giving the respective values of the
-  enetLTS objective function, i.e., the elastic net penalized sums of
-  the \eqn{h} smallest squared residuals from the raw fits for \code{family="gaussian"}
-  and the elastic net penalized sums of the \eqn{h} deviances from the raw fits for
-  \code{family="binomial"}.}
-
-\item{raw.rmse}{root mean squared error for raw fit, which is available for only
-\code{family="gaussian"}.}
-
-\item{rmse}{root mean squared error for reweighted fit, which is available for only
-\code{family  ="gaussian"}.}
-
-\item{raw.mae}{mean absolute error for raw fit.}
-
-\item{mae}{mean absolute error for reweighted fit.}
-
-\item{best}{an integer vector containing the respective best
-  subsets of \eqn{h} observations found and used for computing the raw
-  estimates.}
-
-\item{raw.wt}{an integer vector containing binary weights
-  that indicate outliers from the respective raw fits, i.e., the weights used
-  for the reweighted fits.}
-
-\item{wt}{an integer vector containing binary weights that
-  indicate outliers from the respective reweighted fits, i.e., the weights are
-  \eqn{1} for observations with reasonably small reweighted residuals and
-  \eqn{0} for observations with large reweighted residuals.}
-
-\item{raw.coefficients}{a numeric vector containing the
-  respective coefficient estimates from the raw fit.}
-
-\item{coefficients}{a numeric vector containing the
-  respective coefficient estimates from the reweighted fit.}
-
-\item{raw.fitted.values}{a numeric vector containing the
-  respective fitted values of the response from the raw fits.}
-
-\item{fitted.values}{a numeric vector containing the
-  respective fitted values of the response from the reweighted fits.}
-
-\item{raw.residuals}{a numeric vector containing the
-  respective residuals for \code{family="gaussian"} and respective deviances for
-  \code{family="binomial"} and \code{family="multinomial"} from the raw fits.}
-
-\item{residuals}{a numeric vector containing the
-  respective residuals for \code{family="gaussian"} and respective deviances for
-  \code{family="binomial"} and \code{family="multinomial"} from the reweighted fits.}
-
-\item{alpha}{an optimal elastic net mixing parameter value obtained with
-  k-fold cross-validation.}
-
-\item{lambda}{an optimal value for the strength of the elastic net penalty
-  obtained with k-fold cross-validation.}
-
-\item{lambdaw}{an optimal value for the strength of the elastic net penalty
-  re-obtained with k-fold cross-validation for reweighted fit.}
-
-\item{num.nonzerocoef}{the number of the nonzero coefficients in the model.}
-
-\item{n}{the number of observations.}
-
-\item{p}{the number of variables.}
-
-\item{h}{the number of observations used to compute the raw estimates.}
-
-\item{classnames}{class names for logistic model, which is available for only
-\code{family="binomial"} and \code{family="multinomial"}.}
-
-\item{classize}{class sizes for logisitic model, which is available for only
-\code{family="binomial"} and \code{family="multinomial"}.}
-
-\item{inputs}{all inputs used in the function \code{enetLTS.R}.}
-
-\item{call}{the matched function call.}
+An object of class \code{"enetLTS"}, a list with components
+\item{objective}{the penalized criterion of the raw fit on the final subset
+  \eqn{H} (the \eqn{h} retained observations), on the scale on which the C-steps
+  fit and penalize: \eqn{\frac{1}{h}\sum_{i\in H}\ell_i + \lambda P_\alpha(s_H \circ \beta)},
+  where \eqn{\ell_i} is the squared residual divided by two (\code{"gaussian"}) or
+  the negative log-likelihood contribution (\code{"binomial"}, \code{"multinomial"}), \eqn{\beta} the raw
+  coefficients without the intercept, \eqn{s_H} the standard deviations of the
+  columns of \code{xx} on \eqn{H} (one if \code{scal = FALSE} and
+  \code{family = "multinomial"}), and \eqn{(\alpha, \lambda)} those of the raw fit.
+  It is reported only and is not used by the algorithm. The search for
+  \code{"binomial"} ranks subsets by the Bianco-Yohai criterion without penalty, so
+  for that family the value is not what the C-steps optimize.}
+\item{raw.rmse, rmse}{\code{"gaussian"} only: root mean squared residual of the
+  raw and the reweighted fit on all observations.}
+\item{raw.mae, mae}{mean absolute residual of the raw and the reweighted fit on all
+  observations; for \code{"binomial"} and \code{"multinomial"} the mean absolute
+  difference between the 0/1 indicators and the fitted probabilities.}
+\item{best}{the indices of the best subset of \eqn{h} observations, used for the
+  raw fit.}
+\item{raw.wt}{integer 0/1 weights from the raw fit; the observations with weight 1
+  are used for the reweighted fit.}
+\item{wt}{integer 0/1 weights from the reweighted fit (0 = flagged as outlier).}
+\item{raw.coefficients, coefficients}{the coefficients of the raw and the
+  reweighted fit, intercept first (a matrix with one column per class for
+  \code{"multinomial"}). Use \code{\link{coef.enetLTS}} to get them with names.}
+\item{raw.fitted.values, fitted.values}{the fitted values of the raw and the
+  reweighted fit, on the scale given by \code{type.response}.}
+\item{raw.residuals, residuals}{the residuals (\code{"gaussian"}) or the negative
+  log-likelihood contributions (\code{"binomial"}, \code{"multinomial"}) of the
+  raw and the reweighted fit.}
+\item{alpha}{the selected mixing parameter of the reweighted fit.}
+\item{alpha.raw}{\code{"gaussian"} and \code{"multinomial"}: the mixing parameter
+  of the raw fit. It equals \code{alpha} unless \code{crossfit} selects
+  \eqn{\alpha} again for the reweighted fit.}
+\item{lambda}{the selected penalty of the raw fit.}
+\item{lambdaw}{the penalty of the reweighted fit.}
+\item{num.nonzerocoef}{the number of nonzero coefficients of the reweighted fit.}
+\item{n, p}{the number of observations and of predictors.}
+\item{h}{the size of the subsets.}
+\item{classnames, classize}{\code{"binomial"} and \code{"multinomial"}: the class
+  labels and the class sizes.}
+\item{screened}{\code{"multinomial"} only: the indices of the observations removed
+  by the screening step (\code{screen = TRUE}).}
+\item{hsize.search}{only if \code{hsize = "optimal"}: the criterion of every
+  candidate value.}
+\item{inputs}{a list with the data and the settings used by the fit.}
+\item{call}{the matched call.}
 }
-%-------------------------------------------------
 \references{
-Kurnaz, F.S., Hoffmann, I. and Filzmoser, P. (2017) Robust and sparse estimation methods
-for high dimensional linear and logistic regression. \emph{Chemometrics and Intelligent Laboratory Systems.}
+Kurnaz, F.S. and Filzmoser, P. (2023). enetLTS: Robust and sparse methods
+for high dimensional linear, binary, and multinomial regression.
+\emph{Journal of Open Source Software}, \bold{8}(82), 4773.
+\doi{10.21105/joss.04773}
+
+Kurnaz, F.S. and Filzmoser, P. (2023). Robust and sparse multinomial
+regression in high dimensions. \emph{Data Mining and Knowledge Discovery},
+\bold{37}(4), 1609--1629. \doi{10.1007/s10618-023-00936-6}
+
+Kurnaz, F.S., Hoffmann, I. and Filzmoser, P. (2018). Robust and sparse
+estimation methods for high-dimensional linear and logistic regression.
+\emph{Chemometrics and Intelligent Laboratory Systems}, \bold{172}, 211--222.
+\doi{10.1016/j.chemolab.2017.11.017}
+
+Croux, C. and Haesbroeck, G. (2003). Implementing the Bianco and Yohai estimator
+for logistic regression. \emph{Computational Statistics & Data Analysis},
+\bold{44}, 273--295.
 }
-%-------------------------------------------------
-\author{
-Fatma Sevinc KURNAZ, Irene HOFFMANN, Peter FILZMOSER
-}
-%---------------------------------------------------
 \seealso{
-\code{\link{print}},
-\code{\link{predict}},
-\code{\link{coef}},
-\code{\link{nonzeroCoef.enetLTS}},
-\code{\link{plot}},
-\code{\link{plotCoef.enetLTS}},
-\code{\link{plotResid.enetLTS}},
-\code{\link{plotDiagnostic.enetLTS}},
-\code{\link{residuals}},
-\code{\link{fitted}},
-\code{\link{weights}}
+\code{\link{print.enetLTS}}, \code{\link{coef.enetLTS}},
+\code{\link{predict.enetLTS}}, \code{\link{outliers.enetLTS}},
+\code{\link{assess.enetLTS}}, \code{\link{plot.enetLTS}},
+\code{\link{cv.enetLTS}}, \code{\link{GaussianExample}},
+\code{\link{BinomialExample}}, \code{\link{MultinomialExample}}
 }
-%-------------------------------------------------
 \examples{
-## for gaussian
-
-set.seed(86)
-n <- 100; p <- 25                             # number of observations and variables
-beta <- rep(0,p); beta[1:6] <- 1              # 10\% nonzero coefficients
-sigma <- 0.5                                  # controls signal-to-noise ratio
-x <- matrix(rnorm(n*p, sigma),nrow=n)
-e <- rnorm(n,0,1)                             # error terms
-eps <- 0.1                                    # contamination level
-m <- ceiling(eps*n)                           # observations to be contaminated
-eout <- e; eout[1:m] <- eout[1:m] + 10        # vertical outliers
-yout <- c(x \%*\% beta + sigma * eout)        # response
-xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
-
+data("GaussianExample")
 \donttest{
-# determine user supplied alpha and lambda sequences
-# alphas=seq(0,1,length=11)
-# l0 <- robustHD::lambda0(xout,yout)          # use lambda0 function from robustHD package
-# lambdas <- seq(l0,0,by=-0.1*l0)
-# fit <- enetLTS(xout,yout,alphas=alphas,lambdas=lambdas)
+## linear regression, n = 100, p = 200, 10 outliers
+fit <- enetLTS(GaussianExample$x, GaussianExample$y)
+fit
+which(fit$wt == 0)
 }
 
-## for binomial
-
-eps <-0.05                                     # \%10 contamination to only class 0
-m <- ceiling(eps*n)
-y <- sample(0:1,n,replace=TRUE)
-xout <- x
-xout[y==0,][1:m,] <- xout[1:m,] + 10;          # class 0
-yout <- y                                      # wrong classification for vertical outliers
-
+data("BinomialExample")
 \donttest{
-# determine user supplied alpha and lambda sequences
-# alphas=seq(0,1,length=11)
-# l00 <- lambda00(xout,yout,normalize=TRUE,intercept=TRUE)
-# lambdas <-  seq(l00,0,by=-0.01*l00)
-# fit <- enetLTS(xout,yout,family="binomial",alphas=alphas,lambdas=lambdas)
+## logistic regression
+fitb <- enetLTS(BinomialExample$x, BinomialExample$y, family = "binomial")
+fitb
+outliers.enetLTS(fitb)
 }
 
-## for multinomial
-
-n <- 120; p <- 15
-NC <- 3           # number of groups
-X <- matrix(rnorm(n * p), n, p)
-betas <- matrix(1:NC, ncol=NC, nrow=p, byrow=TRUE)
-betas[(p-5):p,]=0; betas <- rbind(rep(0,NC),betas)
-lv <- cbind(1,X) \%*\% betas
-probs <- exp(lv)/apply(exp(lv),1,sum)
-y <- apply(probs,1,function(prob){sample(1:NC, 1, TRUE, prob)})
-xout <- X
-eps <-0.05                          # \%10 contamination to only class 0
-m <- ceiling(eps*n)
-xout[1:m,] <- xout[1:m,] + 10       # bad leverage points
-yout <- y
-
+data("MultinomialExample")
 \donttest{
-# determine user supplied alpha and lambda sequences
-alphas=seq(0,1,length=11)
-lambdas <- seq(from=0.95,to=0.05,by=-0.05)
-fit <- enetLTS(xout,yout,family="multinomial",alphas=alphas,lambdas=lambdas)
+## multinomial regression, K = 3
+fitm <- enetLTS(MultinomialExample$x, MultinomialExample$y, family = "multinomial")
+fitm
+fitm$screened
 }
 }
-
-%-------------------------------------------------
-\keyword{regression}
-\keyword{classification}
-\keyword{sparse}
+\author{
+Fatma Sevinc Kurnaz, Irene Hoffmann, Peter Filzmoser
+\cr Maintainer: Fatma Sevinc Kurnaz <fatmasevinckurnaz@gmail.com>
+}
 \keyword{robust}
-
-
-
-
-
-
+\keyword{regression}
+\keyword{classif}

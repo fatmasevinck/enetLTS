@@ -1,12 +1,29 @@
 Package: enetLTS
 Type: Package
-Title: Robust and Sparse Methods for High Dimensional Linear and Binary and Multinomial Regression
-Version: 1.1.0
-Author: Fatma Sevinc KURNAZ and Irene HOFFMANN and Peter FILZMOSER
-Maintainer: Fatma Sevinc KURNAZ <fatmasevinckurnaz@gmail.com>
-Description: Fully robust versions of the elastic net estimator are introduced for linear and binary and multinomial regression, in particular high dimensional data. The algorithm searches for outlier free subsets on which the classical elastic net estimators can be applied. A reweighting step is added to improve the statistical efficiency of the proposed estimators. Selecting appropriate tuning parameters for elastic net penalties are done via cross-validation. 
-Imports: ggplot2, glmnet, robustHD, grid, reshape, parallel, cvTools,
-        stats, robustbase
-License: GPL
+Title: Robust and Sparse Methods for High Dimensional Linear, Binary
+        and Multinomial Regression
+Version: 1.2.0
+Authors@R: c(
+    person("Fatma Sevinc", "Kurnaz", role = c("aut", "cre"),
+           email = "fatmasevinckurnaz@gmail.com"),
+    person("Irene", "Hoffmann", role = "aut"),
+    person("Peter", "Filzmoser", role = "aut"))
+Author: Fatma Sevinc Kurnaz [aut, cre], Irene Hoffmann [aut], Peter Filzmoser [aut]
+Maintainer: Fatma Sevinc Kurnaz <fatmasevinckurnaz@gmail.com>
+Description: Fully robust versions of the elastic net estimator for linear,
+        binary and multinomial regression, in particular for high dimensional
+        data. The algorithm searches for outlier-free subsets on which the
+        classical elastic net estimator can be applied. A reweighting step is
+        added to improve the statistical efficiency of the estimators. The
+        tuning parameters of the elastic net penalty are selected by
+        cross-validation.
+Depends: R (>= 3.6.0)
+Imports: ggplot2 (>= 3.4.0), glmnet, parallel, stats, robustbase,
+        robustHD, grDevices
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
+NeedsCompilation: no
+Packaged: 2026-11-18 14:31:06 UTC; root

@@ -1,8 +1,6 @@
 
-
-
 enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept, nsamp,
-                          s1, nfold, repl, scal, iniscal, ncores, nCsteps, tol, seed, del, plot,
+                          s1, nfold, repl, scal, ncores, nCsteps, tol, seed, del, plot,
                           type.response){
 
    family <- "binomial"
@@ -22,11 +20,11 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
       classize <- table(class_sizes)
       minclass <- min(classize)
       if (minclass<8) warning ("one binomial class has fewer than 8  observations; dangerous ground")
-      if (minclass<=1) stop ("one binomial class has 1 or 0 observations; not allowed")
+      if (minclass<=1) stop ( "one binomial class has 1 or 0 observations; not allowed" )
       classnames <- names(classize)
       }
 
-   if (length(yy)!=nobs) stop ("x and y have different number of rows in call to glmnet",call.=FALSE)
+   if(length(yy)!=nobs)stop("x and y have different number of rows in call to glmnet",call.=FALSE)
 
    if (is.null(lambdas)){
     l0 <- lambda00(xx, yy, normalize=scal, intercept=intercept)
@@ -35,13 +33,8 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
    if (any(lambdas<0)) stop ("lambdas should be non-negative")
    if (any(lambdaw<0)) stop ("lambdaw should be non-negative")
 
-   if (isTRUE(iniscal)){
-     x <- standardize.x(xx, centerFun=median, scaleFun=mad)
-     y <- yy   # not centered for binomial
-   } else {  # not initial robust scale!!!!! Careful!!!
-     x <- xx
-     y <- yy
-   }
+   x <- standardize.x(xx, centerFun=median, scaleFun=mad)
+   y <- yy   # not centered for binomial
 
    indexall <- warmCsteps.mod(x, y, h, hsize, alphas, lambdas, nsamp, s1,
                               scal, ncores, nCsteps, tol, seed, family)
@@ -53,12 +46,14 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
      alphabest   <- alphas
      lambdabest  <- lambdas
    } else {
-     CVresults   <- cv.binomial.enetLTS(indexall, x, y, alphas, lambdas, nfold, repl, ncores, plot)
+     CVresults   <- cv.binomial.enetLTS(indexall, x, y, alphas, lambdas,
+                                      nfold, repl, ncores, plot)
      indexbest   <- CVresults$indexbest
      alphabest   <- CVresults$alphaopt
      lambdabest  <- CVresults$lambdaopt
      evalCritCV  <- CVresults$evalCrit
    }
+   alpha0 <- alphabest; lambda0 <- lambdabest      # (alpha, lambda) of the raw fit, for $objective
    if (scal){
      xs <- standardize.x(xx, index=indexbest, centerFun=mean, scaleFun=sd)
      ys <- yy # # not centered for binomail
@@ -69,8 +64,8 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
      a00 <- if (intercept==FALSE) 0 else drop(fit$a0 -
                                                 as.vector(as.matrix(fit$beta)) %*% (attr(xs,"center") / attr(xs,"scale")))
      raw.coefficients <- drop(as.matrix(fit$beta) / attr(xs,"scale"))
+     sH <- attr(xs,"scale")
      # final reweighting:
-     # raw.residuals <- -(ys * xs %*% as.matrix(fit$beta)) + log(1 + exp(xs %*% as.matrix(fit$beta)))
 
      raw.wt <- weight.binomial(xx, yy, c(a00, raw.coefficients), intercept=intercept, del)
      xss <- standardize.x(xx, index=which(raw.wt==1), centerFun=mean, scaleFun=sd)
@@ -95,34 +90,34 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
 
      wgt <- weight.binomial(xx,yy,c(a0,coefficients),intercept,del)
 
-  #   reweighted.residuals  <- -(yy * cbind(1,xx) %*% c(a0,coefficients)) + log(1+exp(cbind(1,xx) %*% c(a0,coefficients)))
 
    } else { # nonscaled
-       fit <- glmnet(xx[indexbest,], yy[indexbest], family, alpha=alphabest, lambda=lambdabest,
-                     standardize=FALSE, intercept=FALSE)
+     fit <- glmnet(x[indexbest,], y[indexbest], family, alpha=alphabest, lambda=lambdabest,
+                   standardize=FALSE, intercept=FALSE)
 
-       a00 <- if (intercept==FALSE) 0 else drop(fit$a0)
-       raw.coefficients <- drop(as.matrix(fit$beta))
-       # final reweighting:
-       # raw.residuals <- -(yy * xx %*% as.matrix(fit$beta)) + log(1+exp(xx %*% as.matrix(fit$beta)))
-       raw.wt <- weight.binomial(xx,yy,c(a00,raw.coefficients),intercept,del)
-       if (is.null(lambdaw)){
-         lambdaw <- cv.glmnet(xx[which(raw.wt==1),],yy[which(raw.wt==1)],family=family,nfolds=5,
-                              alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
-       } else if (!is.null(lambdaw) & length(lambdaw)==1){
-         lambdaw <- lambdaw
-       } else if (!is.null(lambdaw) & length(lambdaw)>1){
-         lambdaw <- cv.glmnet(xx[which(raw.wt==1),],yy[which(raw.wt==1)],family=family,lambda=lambdaw,nfolds=5,
-                              alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
-       }
-       fitw <- glmnet(xx[which(raw.wt==1),],yy[which(raw.wt==1)],family,alpha=alphabest,lambda=lambdaw,
-                      standardize=FALSE,intercept=FALSE)  ## now we take raw.wt instead of index
+     a00 <- if (intercept==FALSE) 0 else drop(fit$a0 -
+                                                as.vector(as.matrix(fit$beta)) %*% (attr(x,"center") / attr(x,"scale")))
+     raw.coefficients <- drop(as.matrix(fit$beta)/attr(x,"scale"))
+     sH <- attr(x,"scale")
+     # final reweighting:
+     raw.wt <- weight.binomial(xx,yy,c(a00,raw.coefficients),intercept,del)
+     if (is.null(lambdaw)){
+       lambdaw <- cv.glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family=family,nfolds=5,
+                            alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
+     } else if (!is.null(lambdaw) & length(lambdaw)==1){
+       lambdaw <- lambdaw
+     } else if (!is.null(lambdaw) & length(lambdaw)>1){
+       lambdaw <- cv.glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family=family,lambda=lambdaw,nfolds=5,
+                            alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
+     }
+     fitw <- glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family,alpha=alphabest,lambda=lambdaw,
+                    standardize=FALSE,intercept=FALSE)  ## now we take raw.wt instead of index
 
-       a0 <- if (intercept==FALSE) 0 else drop(fitw$a0)
-       coefficients <- drop(as.matrix(fitw$beta))
+     a0 <- if (intercept==FALSE) 0 else drop(fitw$a0 - as.vector(as.matrix(fitw$beta)) %*% (attr(x,"center") / attr(x,"scale")))
+     coefficients <- drop(as.matrix(fitw$beta) / attr(x,"scale"))
 
-       wgt <- weight.binomial(xx, yy, c(a0,coefficients), intercept, del)
-    }
+     wgt <- weight.binomial(xx, yy, c(a0,coefficients), intercept, del)
+   }
 
    num.nonzerocoef <- sum(coefficients!=0)
 
@@ -130,15 +125,11 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
    if(intercept) xx <- addIntercept(xx)
 
    if (intercept){
-      coefficients            <- c(a0,coefficients)
-      names(coefficients)     <- 1:length(coefficients)
-      raw.coefficients        <- c(a00,raw.coefficients)
-      names(raw.coefficients) <- 1:length(raw.coefficients)
+      coefficients     <- c(a0,coefficients)
+      raw.coefficients <- c(a00,raw.coefficients)
    } else {
-      coefficients            <- coefficients
-      names(coefficients)     <- 1:length(coefficients)
-      raw.coefficients        <- raw.coefficients
-      names(raw.coefficients) <- 1:length(raw.coefficients)
+      coefficients     <- coefficients
+      raw.coefficients <- raw.coefficients
    }
 
    raw.yhat <- xx %*% raw.coefficients
@@ -148,13 +139,13 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
    probs <- 1/(1+exp(-yhat))
 
    # deviances
-   raw.deviances  <- -(yy * xx %*% raw.coefficients) + log(1+exp(xx %*% raw.coefficients))
-   deviances      <- -(yy * xx %*% coefficients) + log(1+exp(xx %*% coefficients))
+   raw.deviances  <- -(yy * xx %*% raw.coefficients) + log1pexp(xx %*% raw.coefficients)
+   deviances      <- -(yy * xx %*% coefficients) + log1pexp(xx %*% coefficients)
 
    raw.fitted.values <-  if (type.response=="link"){
      raw.yhat
    } else if (type.response=="class"){
-     ifelse(raw.yhat <= 0.5,0,1)
+     ifelse(raw.probs <= 0.5,0,1)   # class from probabilities (threshold 0.5)
    } else if (type.response=="response"){
      raw.probs
    }
@@ -162,21 +153,20 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
    fitted.values     <-  if (type.response=="link"){
      yhat
    } else if (type.response=="class"){
-     ifelse(yhat <= 0.5,0,1)
+     ifelse(probs <= 0.5,0,1)   # class from probabilities (threshold 0.5)
    } else if (type.response=="response"){
      probs
    }
 
-   # raw.rmse <- sqrt(mean((yy - raw.yhat)^2))
-   # rmse     <- sqrt(mean((yy - yhat)^2))
-   raw.mae  <- mean(abs(yy - raw.yhat))
-   mae      <- mean(abs(yy - yhat))
+   ## mean absolute difference between the 0/1 response and the fitted probabilities
+   raw.mae  <- mean(abs(yy - raw.probs))
+   mae      <- mean(abs(yy - probs))
 
 
-   objective <- h * (mean((-yy[indexbest] * (xx[indexbest,] %*% coefficients)) +
-                            log(1+exp(xx[indexbest,] %*% coefficients))) +
-                       lambdabest * sum(1/2 * (1-alphabest) * coefficients^2 +
-                                          alphabest*abs(coefficients)))
+   # $objective: penalized criterion of the raw fit on the subset 'indexbest' (see reportObjective())
+   eta.raw   <- xx[indexbest,,drop=FALSE] %*% raw.coefficients
+   objective <- reportObjective(-(yy[indexbest] * eta.raw) + log1pexp(eta.raw),
+                                if (intercept) raw.coefficients[-1] else raw.coefficients, sH, alpha0, lambda0)
 
    inputs <- list(xx=xx, yy=yy, family=family, alphas=alphas, lambdas=lambdas, lambdaw=lambdaw,
                   hsize=hsize, intercept=intercept, nsamp=nsamp, s1=s1, nCsteps=nCsteps, nfold=nfold,
@@ -191,8 +181,8 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
       wt                = wgt,
       raw.coefficients  = raw.coefficients,
       coefficients      = coefficients,
-      raw.fitted.values = drop(raw.fitted.values),
-      fitted.values     = drop(fitted.values),
+      raw.fitted.values = raw.fitted.values,
+      fitted.values     = fitted.values,
       raw.residuals     = drop(raw.deviances),
       residuals         = drop(deviances),
       alpha             = alphabest,
@@ -205,8 +195,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
       classnames        = classnames,
       classize          = classize,
       inputs            = inputs
-      # indexall = indexall
    )
    class(outlist) <- "binomial"
    return(outlist)
-} 
+}

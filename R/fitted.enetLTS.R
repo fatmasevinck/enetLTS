@@ -1,7 +1,6 @@
 
-
 fitted.enetLTS <-
-  function(object,vers=c("reweighted","raw"),type=c("response","class"),...){
+  function(object,vers=c("reweighted","raw","both"),type=c("response","class"),...){
     
     vers <- match.arg(vers)
     type <- match.arg(type)
@@ -18,10 +17,10 @@ fitted.enetLTS <-
       if (vers=="reweighted"){
         u <- xx %*% reweighted.coefficients
         if (type=="class"){
-          probs         <- exp(u)/apply(exp(u),1,sum)
-          fitted.values <- apply(probs,1,which.max)
+          probs         <- multinomProbs(u)
+          fitted.values <- object$classnames[apply(probs,1,which.max)]
         } else if (type=="response"){
-          fitted.values           <- exp(u)/apply(exp(u),1,sum)
+          fitted.values           <- multinomProbs(u)
           colnames(fitted.values) <- paste0("class", 1:(length(object$classize))) 
           rownames(fitted.values) <- 1:nrow(xx)
         }
@@ -29,42 +28,81 @@ fitted.enetLTS <-
       } else if (vers=="raw"){
         uu <- xx %*% raw.coefficients
         if (type=="class"){
-          raw.probs         <- exp(uu)/apply(exp(uu),1,sum)
-          raw.fitted.values <- apply(raw.probs,1,which.max)
+          raw.probs         <- multinomProbs(uu)
+          raw.fitted.values <- object$classnames[apply(raw.probs,1,which.max)]
         } else if (type=="response"){
-          fitted.values           <- exp(uu)/apply(exp(uu),1,sum)
+          raw.fitted.values           <- multinomProbs(uu)
+          colnames(raw.fitted.values) <- paste0("class", 1:(length(object$classize))) 
+          rownames(raw.fitted.values) <- 1:nrow(xx)
+        }
+        nfit <- list(raw.fitted.values=raw.fitted.values)
+      } else if (vers=="both"){
+        u <- xx %*% reweighted.coefficients
+        uu <- xx %*% raw.coefficients
+        if (type=="class"){
+          probs             <- multinomProbs(u)
+          fitted.values     <- object$classnames[apply(probs,1,which.max)]
+        } else if (type=="response"){
+          fitted.values           <- multinomProbs(u)
           colnames(fitted.values) <- paste0("class", 1:(length(object$classize))) 
           rownames(fitted.values) <- 1:nrow(xx)
         }
-      } 
-       nfit <- fitted.values
+        if (type=="class"){
+          raw.probs         <- multinomProbs(uu)
+          raw.fitted.values <- object$classnames[apply(raw.probs,1,which.max)]
+        } else if (type=="response"){
+          raw.fitted.values           <- multinomProbs(uu)
+          colnames(raw.fitted.values) <- paste0("class", 1:(length(object$classize))) 
+          rownames(raw.fitted.values) <- 1:nrow(xx)
+        }
+        nfit <- list(fitted.values=fitted.values,raw.fitted.values=raw.fitted.values)
+      }
     } else if (object$inputs$family=="binomial"){
         if (vers=="reweighted"){
           u <- xx %*% reweighted.coefficients
           if (type=="class"){
-            fitted.values <- ifelse(u>0.5,0,1)
+            fitted.values <- ifelse(u>0,1,0)
           } else if (type=="response"){
             fitted.values <-  1/(1+exp(-u))
           }
+          nfit <- list(fitted.values=fitted.values)
         } else if (vers=="raw"){
           uu <- xx %*% raw.coefficients
           if (type=="class"){
-            fitted.values <- ifelse(uu>0.5,0,1)
+            raw.fitted.values <- ifelse(uu>0,1,0)
           } else if (type=="response"){
-            fitted.values <-  1/(1+exp(-uu))
+            raw.fitted.values <-  1/(1+exp(-uu))
           }
-        } 
-        nfit <- drop(fitted.values)
+          nfit <- list(raw.fitted.values=raw.fitted.values)
+        } else if (vers=="both"){
+          u <- xx %*% reweighted.coefficients
+          uu <- xx %*% raw.coefficients
+          if (type=="class"){
+            fitted.values <- ifelse(u>0,1,0)
+          } else if (type=="response"){
+            fitted.values <- 1/(1+exp(-u))
+          }
+          if (type=="class"){
+            raw.fitted.values <- ifelse(uu>0,1,0)
+          } else if (type=="response"){
+            raw.fitted.values <- 1/(1+exp(-uu))
+          }
+          nfit <- list(fitted.values=fitted.values,raw.fitted.values=raw.fitted.values)
+        }
       } else if (object$inputs$family=="gaussian"){
         if (vers=="reweighted"){
           res=as.matrix(xx %*% reweighted.coefficients)
-          fitted.values <- res
+          nfit <- list(fitted.values=res)
         } else if (vers=="raw"){
           res=as.matrix(xx %*% raw.coefficients)
-          fitted.values <- res
-        } 
-        nfit <- drop(fitted.values)
+          nfit <- list(raw.fitted.values=res)
+        } else if (vers=="both"){
+          res1=as.matrix(xx %*% reweighted.coefficients)
+          res2=as.matrix(xx %*% raw.coefficients)
+          nfit <- list(fitted.values=res1,raw.fitted.values=res2)
+        }
       }
+    
     return(nfit)
   }
 

@@ -1,113 +1,53 @@
 \name{print.enetLTS}
 \alias{print.enetLTS}
-%-------------------------------------------------
-\title{
-print from the \code{"enetLTS"} object
-}
-%-------------------------------------------------
+\title{Print an \code{"enetLTS"} fit}
 \description{
-Print a summary of the \code{enetLTS} object.
+Prints a short summary of a fitted \code{"enetLTS"} object.
 }
-%-------------------------------------------------
 \usage{
-\method{print}{enetLTS}(x,vers=c("reweighted","raw"),...)
+\method{print}{enetLTS}(x, vers = c("reweighted", "raw"),
+      digits = max(3, getOption("digits") - 3), maxprint = 20, ...)
 }
-%------------------------------------
 \arguments{
-\item{x}{fitted \code{enetLTS} object}
-
-\item{vers}{a character string specifying for which fit to make
-  predictions.  Possible values are \code{"reweighted"} (the default) for
-  predicting values from the reweighted fit, \code{"raw"} for predicting
-  values from the raw fit.}
-
-
-\item{\dots}{additional arguments from the \code{enetLTS} object if needed.}
+\item{x}{a fitted object of class \code{"enetLTS"}.}
+\item{vers}{a character string: \code{"reweighted"} (the default) for the
+  reweighted fit or \code{"raw"} for the raw fit.}
+\item{digits}{the number of digits for the coefficients.}
+\item{maxprint}{the largest number of nonzero coefficients (for the multinomial
+  family: rows) that are printed; all are available with \code{\link{coef.enetLTS}}.}
+\item{\dots}{not used.}
 }
-
-%-------------------------------------------------
 \details{
-  The call that produced the \code{enetLTS} object is printed, followed by
-  the coefficients, the number of nonzero coefficients and penalty parameters.
+The family and the call are printed, followed by the nonzero coefficients with the
+variable names (\code{x1}, \code{x2}, \dots if \code{xx} has no column names), the
+number of nonzero slopes, the selected \code{alpha}, \code{lambda} and
+\code{lambdaw}, and the number of observations flagged as outliers. For the
+multinomial family the rows of the coefficient matrix that are nonzero in at least
+one class are printed.
 }
-%-------------------------------------------------
 \value{
-  The produced object, the coefficients, the number of nonzero coefficients and penalty parameters are returned.
+The object \code{x}, invisibly.
 }
-%-------------------------------------------------
-\author{
-Fatma Sevinc KURNAZ, Irene HOFFMANN, Peter FILZMOSER
-\cr Maintainer: Fatma Sevinc KURNAZ <fatmasevinckurnaz@gmail.com>;<fskurnaz@yildiz.edu.tr>}
-%-------------------------------------------------
 \seealso{
-\code{enetLTS},
-\code{predict.enetLTS},
-\code{coef.enetLTS}
+\code{\link{enetLTS}}, \code{\link{coef.enetLTS}}, \code{\link{outliers.enetLTS}}
 }
-%-------------------------------------------------
 \examples{
-## for gaussian
-
-set.seed(86)
-n <- 100; p <- 25                             # number of observations and variables
-beta <- rep(0,p); beta[1:6] <- 1              # 10\% nonzero coefficients
-sigma <- 0.5                                  # controls signal-to-noise ratio
-x <- matrix(rnorm(n*p, sigma),nrow=n)
-e <- rnorm(n,0,1)                             # error terms
-eps <- 0.1                                    # contamination level
-m <- ceiling(eps*n)                           # observations to be contaminated
-eout <- e; eout[1:m] <- eout[1:m] + 10        # vertical outliers
-yout <- c(x \%*\% beta + sigma * eout)        # response
-xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
-
+data("GaussianExample")
+data("BinomialExample")
+data("MultinomialExample")
 \donttest{
-fit1 <- enetLTS(xout,yout)
-print(fit1)
-print(fit1,vers="raw")
-}
-
-## for binomial
-
-eps <-0.05                                     # \%10 contamination to only class 0
-m <- ceiling(eps*n)
-y <- sample(0:1,n,replace=TRUE)
-xout <- x
-xout[y==0,][1:m,] <- xout[1:m,] + 10;          # class 0
-yout <- y                                      # wrong classification for vertical outliers
-
-
-\donttest{
-fit2 <- enetLTS(xout,yout,family="binomial")
-print(fit2)
-print(fit2,vers="raw")
-}
-
-## for multinomial
-
-n <- 120; p <- 15
-NC <- 3
-X <- matrix(rnorm(n * p), n, p)
-betas <- matrix(1:NC, ncol=NC, nrow=p, byrow=TRUE)
-betas[(p-5):p,]=0; betas <- rbind(rep(0,NC),betas)
-lv <- cbind(1,X) \%*\% betas
-probs <- exp(lv)/apply(exp(lv),1,sum)
-y <- apply(probs,1,function(prob){sample(1:NC, 1, TRUE, prob)})
-xout <- X
-eps <-0.05                          # \%10 contamination to only class 0
-m <- ceiling(eps*n)
-xout[1:m,] <- xout[1:m,] + 10       # bad leverage points
-yout <- y
-
-\donttest{
-fit3    <- enetLTS(xout,yout,family="multinomial")
-print(fit3)
-print(fit3,vers="raw")
+fit  <- enetLTS(GaussianExample$x, GaussianExample$y)
+fitb <- enetLTS(BinomialExample$x, BinomialExample$y, family = "binomial")
+fitm <- enetLTS(MultinomialExample$x, MultinomialExample$y, family = "multinomial")
+fit
+print(fit, vers = "raw")
+fitb
+fitm
 }
 }
-
-%-------------------------------------------------
+\author{
+Fatma Sevinc Kurnaz, Irene Hoffmann, Peter Filzmoser
+\cr Maintainer: Fatma Sevinc Kurnaz <fatmasevinckurnaz@gmail.com>
+}
 \keyword{models}
 \keyword{regression}
-
-
-

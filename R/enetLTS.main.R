@@ -1,5 +1,3 @@
-## Author: F. Sevinc KURNAZ 
-## YTU & TUwien 
 
 enetLTS <-
    function(xx,
@@ -10,7 +8,6 @@ enetLTS <-
             lambdaw=NULL,
             intercept=TRUE,
             scal=TRUE,
-            iniscal=TRUE,
             hsize=0.75,
             nsamp=c(500,10),
             nCsteps=20,
@@ -22,19 +19,33 @@ enetLTS <-
             del=0.0125,
             crit.plot=FALSE,
             typegrouped=FALSE,
-            type.response=c("link","response","class"))
+            type.response=c("link","response","class"),
+            hgrid=c(0.65,0.75,0.85,0.95),
+            screen=TRUE,
+            crossfit=NULL)
    {
 
       matchedCall      <- match.call()
       matchedCall[[1]] <- as.name("enetLTS")
       family           <- match.arg(family)
-      #type <- match.arg(type)
+
+      # hsize = "optimal": fit for every value of 'hgrid' and keep the best one
+      if (is.character(hsize)) {
+        match.arg(hsize, "optimal")
+        return(enetLTSoptimal(matchedCall, parent.frame(), hgrid))
+      }
+
 
       type.response    <- match.arg(type.response)
+      if (isTRUE(crossfit) && family == "binomial") {
+        warning("'crossfit' is available for the gaussian and multinomial families only and is ignored")
+        crossfit <- FALSE
+      }
       if(family=="gaussian" && type.response=="class") stop("'class' is not available for gaussian")
 
       scal      <- isTRUE(scal)
-      iniscal   <- isTRUE(iniscal)
+      # default: cross-fitted trimming for the multinomial family (needs scal = TRUE), off otherwise
+      if (is.null(crossfit)) crossfit <- (family == "multinomial" && scal)
       intercept <- isTRUE(intercept)
       plot      <- isTRUE(crit.plot)
 
@@ -47,7 +58,12 @@ enetLTS <-
       if (is.null(ncx) | (ncx[2]<=1)) stop ("X should be a matrix with 2 or more columns")
 
       xx        <- addColnames(as.matrix(xx))
-      nobs      <- as.integer(ncx[1])  # number of observatıons
+      if (family == "binomial" && is.factor(yy)) {
+        if (!all(levels(yy) %in% c("0", "1")))
+          stop("for family = \"binomial\", 'yy' must be coded 0/1")
+        yy <- as.numeric(as.character(yy))
+      }
+      nobs      <- as.integer(ncx[1])  # number of observations
       nvars     <- as.integer(ncx[2]) # number of variables
 
       hsize     <- rep(hsize, length.out=1)
@@ -73,20 +89,9 @@ enetLTS <-
       s1 <- nsamp[2]  # the number of subsamples to keep after the first phase
       nsamp <- nsamp[1] # the number of initial subsamples
 
-      ncores <- rep(ncores, length.out=1)
-      if (is.na(ncores)) ncores <- detectCores()  # use all available cores
-      if (!is.numeric(ncores) || is.infinite(ncores) || ncores < 1) {
-         ncores <- 1  # use default value
-         warning ("invalid value of 'ncores'; using default value")
-      } else ncores <- as.integer(ncores)
-      # check whether parallel computing should be used
-      haveNCores <- ncores > 1
-      if (haveNCores) {
-         if (.Platform$OS.type == "windows") {
-            cl <- makePSOCKcluster(rep.int("localhost", ncores))
-         } else cl <- makeForkCluster(ncores)
-         on.exit(stopCluster(cl))
-      }
+      ncores <- checkNcores(ncores)
+      startWorkers(ncores)
+      on.exit(stopWorkers())
 
       tol <- rep(tol, length.out=1)
       if(!is.numeric(tol) || !is.finite(tol)) {
@@ -97,13 +102,14 @@ enetLTS <-
       fit <- switch(family,
                     "gaussian"    = enetLTS.gaus(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept,
                                               nsamp, s1, nfold, repl, scal, ncores, nCsteps, tol, seed, del, plot,
-                                              type.response),
+                                              type.response, crossfit),
                     "binomial"    = enetLTS.binom(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept,
-                                               nsamp, s1, nfold, repl, scal, iniscal, ncores, nCsteps, tol, seed, del,
-                                               plot, type.response),
+                                               nsamp, s1, nfold, repl, scal, ncores, nCsteps, tol, seed, del, plot,
+                                               type.response),
                     "multinomial" = enetLTS.multinom(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars, intercept,
-                                                     nsamp, s1, nfold, repl, scal, iniscal, ncores, nCsteps, tol, seed,
-                                                     plot, typegrouped, type.response)
+                                                     nsamp, s1, nfold, repl, scal, ncores, nCsteps, tol, seed, plot, typegrouped,
+                                                     type.response, screen, crossfit, del)
+
                      )
       output <- fit
       class(output) <- "enetLTS"

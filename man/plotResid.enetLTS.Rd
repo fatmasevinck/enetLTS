@@ -1,121 +1,63 @@
 \name{plotResid.enetLTS}
 \alias{plotResid.enetLTS}
-%-------------------------------------------------
-\title{
-residuals plots from the \code{"enetLTS"} object
-}
-%-------------------------------------------------
+\title{Residual plots of an \code{"enetLTS"} fit}
 \description{
-  Produce plots for the residuals of the current model. Residuals corresponds to deviances for \code{family="multinomial"} and \code{family="binomial"}.
+Plots the residuals of the reweighted or the raw fit against the observation index
+and, for the gaussian and binomial families, against the linear predictor.
 }
-%-------------------------------------------------
 \usage{
-plotResid.enetLTS(object,vers=c("reweighted","raw"), ...)
+plotResid.enetLTS(object, vers = c("reweighted", "raw"), zoom = TRUE, ...)
 }
-%-------------------------------------------------
 \arguments{
-\item{object}{the model fit to be plotted.}
-
-\item{vers}{a character string denoting which model to use for the plots.
-  Possible values are \code{"reweighted"} (the default) for
-  plots from the reweighted fit, and \code{"raw"} for
-  plots from the raw fit.}
-
-\item{\dots}{additional arguments from the \code{enetLTS} object if needed.}
+\item{object}{a fitted object of class \code{"enetLTS"}.}
+\item{vers}{a character string: \code{"reweighted"} (the default) for the
+  reweighted fit or \code{"raw"} for the raw fit.}
+\item{zoom}{logical; if \code{TRUE} (the default) and the flagged observations lie
+  far from the regular ones, a second panel shows only the range of the regular
+  observations (and of the flagged observations close to them), so that the fit and
+  the cut-off lines remain visible.}
+\item{\dots}{not used.}
 }
-%-------------------------------------------------
+\details{
+For \code{family = "gaussian"} the residuals are standardized as in the
+reweighting step (location and scale from the observations with raw weight 1 for
+the reweighted fit, from the best subset for the raw fit), and the horizontal
+lines at \eqn{\pm}\code{qnorm(1 - del)} are the cut-offs of the reweighting step.
+For \code{family = "binomial"} and \code{"multinomial"} the residuals are the
+negative log-likelihood contributions (see \code{\link{residuals.enetLTS}}).
+The multinomial family has only the index plot.
+
+Observations are marked as flagged if they have weight 0 in \code{wt}
+(\code{vers = "reweighted"}) or if they are not in the best subset \code{best}
+of the raw fit (\code{vers = "raw"}). For the gaussian family regular
+observations are blue crosses and flagged ones red triangles. For the binomial
+and multinomial families the class is shown by color and shape, and flagged
+observations are drawn filled, regular ones open.
+}
 \value{
-  An object of class \code{"ggplot"} (see \code{\link[ggplot2]{ggplot}}).
+A list of the drawn \code{"ggplot"} objects (two for the gaussian and binomial
+families, one for the multinomial family), invisibly.
 }
-%-------------------------------------------------
-\note{
-gives the plot of
-        - residuals vs indices. (for \code{family="gaussian"}).
-
-        - deviances vs indices. (for both \code{family="multinomial"} and \code{family="binomial"}).
-
-        - additionally, residuals vs fitted values/link function (for \code{family="binomial"} and \code{family="gaussian"}).
-}
-%-------------------------------------------------
 \seealso{
-\code{\link[ggplot2]{ggplot}},
-\code{\link{enetLTS}},
-\code{\link{predict.enetLTS}},
-\code{\link{residuals.enetLTS}},
-\code{\link{fitted.enetLTS}}
+\code{\link{enetLTS}}, \code{\link{residuals.enetLTS}},
+\code{\link{plotDiagnostic.enetLTS}}, \code{\link{outliers.enetLTS}}
 }
-%-------------------------------------------------
 \examples{
-## for gaussian
-
-set.seed(86)
-n <- 100; p <- 25                             # number of observations and variables
-beta <- rep(0,p); beta[1:6] <- 1              # 10\% nonzero coefficients
-sigma <- 0.5                                  # controls signal-to-noise ratio
-x <- matrix(rnorm(n*p, sigma),nrow=n)
-e <- rnorm(n,0,1)                             # error terms
-eps <- 0.1                                    # contamination level
-m <- ceiling(eps*n)                           # observations to be contaminated
-eout <- e; eout[1:m] <- eout[1:m] + 10        # vertical outliers
-yout <- c(x \%*\% beta + sigma * eout)        # response
-xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
-
+data("GaussianExample")
+data("BinomialExample")
+data("MultinomialExample")
 \donttest{
-fit1 <- enetLTS(xout,yout)
-plotResid.enetLTS(fit1)
-plotResid.enetLTS(fit1,vers="raw")}
-
-## for binomial
-
-eps <-0.05                                     # \%10 contamination to only class 0
-m <- ceiling(eps*n)
-y <- sample(0:1,n,replace=TRUE)
-xout <- x
-xout[y==0,][1:m,] <- xout[1:m,] + 10;          # class 0
-yout <- y                                      # wrong classification for vertical outliers
-
-\donttest{
-fit2 <- enetLTS(xout,yout,family="binomial",crit.plot=FALSE)
-plotResid.enetLTS(fit2)
-plotResid.enetLTS(fit2,vers="raw")
-}
-
-## for multinomial
-
-n <- 120; p <- 15
-NC <- 3
-X <- matrix(rnorm(n * p), n, p)
-betas <- matrix(1:NC, ncol=NC, nrow=p, byrow=TRUE)
-betas[(p-5):p,]=0; betas <- rbind(rep(0,NC),betas)
-lv <- cbind(1,X) \%*\% betas
-probs <- exp(lv)/apply(exp(lv),1,sum)
-y <- apply(probs,1,function(prob){sample(1:NC, 1, TRUE, prob)})
-xout <- X
-eps <-0.05                          # \%10 contamination to only class 0
-m <- ceiling(eps*n)
-xout[1:m,] <- xout[1:m,] + 10       # bad leverage points
-yout <- y
-
-\donttest{
-fit3 <- enetLTS(xout,yout,family="multinomial")
-plotResid.enetLTS(fit3)
-plotResid.enetLTS(fit3,vers="raw")
+fit  <- enetLTS(GaussianExample$x, GaussianExample$y)
+fitb <- enetLTS(BinomialExample$x, BinomialExample$y, family = "binomial")
+fitm <- enetLTS(MultinomialExample$x, MultinomialExample$y, family = "multinomial")
+plotResid.enetLTS(fit)
+plotResid.enetLTS(fit, vers = "raw", zoom = FALSE)
+plotResid.enetLTS(fitb)
+plotResid.enetLTS(fitm)
 }
 }
-
-
-%-------------------------------------------------
-\references{
-Kurnaz, F.S., Hoffmann, I. and Filzmoser, P. (2017) Robust and sparse
-estimation methods for high dimensional linear and logistic regression.
-\emph{Chemometrics and Intelligent Laboratory Systems}.
-}
-%-------------------------------------------------
 \author{
-Fatma Sevinc KURNAZ, Irene HOFFMANN, Peter FILZMOSER
-\cr Maintainer: Fatma Sevinc KURNAZ <fatmasevincskurnaz@gmail.com>;<fskurnaz@yildiz.edu.tr>}
-%-------------------------------------------------
-\keyword{regression}
-\keyword{classification}
-
-
+Fatma Sevinc Kurnaz, Irene Hoffmann, Peter Filzmoser
+\cr Maintainer: Fatma Sevinc Kurnaz <fatmasevinckurnaz@gmail.com>
+}
+\keyword{hplot}

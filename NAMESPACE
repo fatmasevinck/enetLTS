@@ -1,21 +1,20 @@
 export(enetLTS, cv.enetLTS, print.enetLTS, predict.enetLTS, residuals.enetLTS, weights.enetLTS,
        nonzeroCoef.enetLTS, fitted.enetLTS, plot.enetLTS, plotCoef.enetLTS, plotDiagnostic.enetLTS,
-       coef.enetLTS, plotResid.enetLTS, lambda00)
+       plotResid.enetLTS, lambda00,
+       assess.enetLTS, confusion.enetLTS, roc.enetLTS, outliers.enetLTS)
 
 import(ggplot2)
-import(grid)
 import(glmnet)
-import(reshape)
 import(robustHD)
 import(parallel)
-import(robustbase)
 
-importFrom("cvTools", "cvFolds")
-importFrom("stats", "weights")
-importFrom("stats", "dnorm", "family", "mad", "median", "pnorm",
-             "predict", "qnorm", "quantile", "sd")
-importFrom("graphics", "par")
+import(robustbase)
+import(stats)
+
+
 importFrom("grDevices", "colorRampPalette")
+
+
 
 S3method(residuals, enetLTS)
 S3method(weights, enetLTS)
@@ -24,4 +23,7 @@ S3method(coef, enetLTS)
 S3method(fitted, enetLTS)
 S3method(predict, enetLTS)
 S3method(print, enetLTS)
+S3method(print, confusion.enetLTS)
+S3method(print, outliers.enetLTS)
+
 

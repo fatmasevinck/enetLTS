@@ -5,14 +5,8 @@
 ##     ``Implementing the Bianco and Yohai estimator for Logistic Regression'',
 ##     Computational Statistics and Data Analysis, 44, 273-295
 
-dev1 <- function(s,y) log(1+exp(-abs(s))) + abs(s)*((y-0.5)*s<0)
-dev2 <- function(s,y) log1p(exp(-abs(s))) + abs(s)*((y-0.5)*s<0)
-dev3 <- function(s,y) -( y  * plogis(s, log.p=TRUE) +
-                            (1-y)*plogis(s, lower.tail=FALSE, log.p=TRUE))
-
-
-devBY <- dev1
-rm(dev1, dev2, dev3)
+## deviance of a logistic fit with linear predictor s and 0/1 response y
+devBY <- function(s,y) log(1+exp(-abs(s))) + abs(s)*((y-0.5)*s<0)
 
 GBY3Fs <- function(s,c3)
 {

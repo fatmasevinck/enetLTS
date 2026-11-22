@@ -1,116 +1,64 @@
 \name{weights.enetLTS}
 \alias{weights.enetLTS}
-%-------------------------------------------------
-\title{
- binary weights from the \code{"enetLTS"} object
-}
-%-------------------------------------------------
+\title{Binary outlier weights of an \code{"enetLTS"} fit}
 \description{
-Extract binary weights that indicate outliers from the current model.
+Extracts the 0/1 weights that mark the outliers of the reweighted and/or the raw fit.
 }
-%-------------------------------------------------
 \usage{
-\method{weights}{enetLTS}(object,vers=c("reweighted","raw"),index=FALSE,...)
+\method{weights}{enetLTS}(object, vers = c("reweighted", "raw", "both"), index = FALSE, ...)
 }
-%-------------------------------------------------
 \arguments{
- \item{object}{the model fit from which to extract outlier weights.}
-
-\item{vers}{a character string specifying for which estimator to extract
-outlier weights. Possible values are \code{"reweighted"} (the default) for
-weights indicating outliers from the reweighted fit, \code{"raw"} for
-weights indicating outliers from the raw fit.}
-
-\item{index}{a logical indicating whether the indices of the weight vector should
-  be included or not (the default is \code{FALSE}).}
-
-\item{\dots}{additional arguments from the \code{enetLTS} object if needed.}
+\item{object}{a fitted object of class \code{"enetLTS"}.}
+\item{vers}{a character string: \code{"reweighted"} (the default) for the
+  reweighted fit, \code{"raw"} for the raw fit, or \code{"both"} for both fits.}
+\item{index}{logical; if \code{TRUE}, the weights are named by the observation
+  numbers. The default is \code{FALSE}.}
+\item{\dots}{not used.}
 }
-%-------------------------------------------------
+\details{
+An observation has weight 1 if it is regular and 0 if it is flagged as an outlier.
+The raw weights \code{raw.wt} come from the raw fit and define the observations
+used for the reweighted fit; the weights \code{wt} come from the reweighted fit.
+With \code{del} the argument of \code{\link{enetLTS}}, the rules are:
+\describe{
+\item{gaussian}{standardized residuals (location and scale estimated from the
+  observations with raw weight 1, with a consistency factor) larger than
+  \code{qnorm(1 - del)} in absolute value get weight 0.}
+\item{binomial}{Pearson residuals larger than \code{qnorm(1 - del)} in absolute
+  value get weight 0.}
+\item{multinomial}{with \code{crossfit = TRUE} (the default) an observation gets
+  weight 0 if its cross-fitted probability of the observed class is below a
+  calibrated cut-off (see \code{crossfit} in \code{\link{enetLTS}}); with
+  \code{crossfit = FALSE} it gets weight 0 if it is outlying in the space of the
+  linear predictors (class-wise robust distances) or if the fitted probability of
+  its observed class is below 1/6. Observations removed by \code{screen = TRUE}
+  have weight 0 in both vectors.}
+}
+}
 \value{
-A numeric vector containing the requested outlier weights.
+A list with the component \code{wt} (\code{vers = "reweighted"}), \code{raw.wt}
+(\code{vers = "raw"}) or both (\code{vers = "both"}); each is an integer vector of
+length \eqn{n}.
 }
-%-------------------------------------------------
-\note{
-The weights are \eqn{1} for observations with reasonably small
-residuals and \eqn{0} for observations with large residuals.
-Here, residuals represent standardized residuals
-for \code{family="gaussian"}, Pearson residuals for
-\code{family="binomial"} and group-wise scaled robust distances
-\code{family="multinomial"}.
-
-Use weights with or without index is available.
-}
-%-------------------------------------------------
 \seealso{
-\code{\link{enetLTS}}
+\code{\link{enetLTS}}, \code{\link{outliers.enetLTS}}
 }
-%-------------------------------------------------
 \examples{
-## for gaussian
-
-set.seed(86)
-n <- 100; p <- 25                             # number of observations and variables
-beta <- rep(0,p); beta[1:6] <- 1              # 10\% nonzero coefficients
-sigma <- 0.5                                  # controls signal-to-noise ratio
-x <- matrix(rnorm(n*p, sigma),nrow=n)
-e <- rnorm(n,0,1)                             # error terms
-eps <- 0.1                                    # contamination level
-m <- ceiling(eps*n)                           # observations to be contaminated
-eout <- e; eout[1:m] <- eout[1:m] + 10        # vertical outliers
-yout <- c(x \%*\% beta + sigma * eout)        # response
-xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
-
+data("GaussianExample")
+data("BinomialExample")
+data("MultinomialExample")
 \donttest{
-fit1 <- enetLTS(xout,yout)
-weights(fit1)
-weights(fit1,vers="raw",index=TRUE)
-}
-
-
-## for binomial
-
-eps <-0.05                                     # \%10 contamination to only class 0
-m <- ceiling(eps*n)
-y <- sample(0:1,n,replace=TRUE)
-xout <- x
-xout[y==0,][1:m,] <- xout[1:m,] + 10;          # class 0
-yout <- y                                      # wrong classification for vertical outliers
-
-\donttest{
-fit2 <- enetLTS(xout,yout,family="binomial")
-weights(fit2)
-weights(fit2,vers="raw",index=TRUE)
-}
-
-## for multinomial
-
-n <- 120; p <- 15
-NC <- 3
-X <- matrix(rnorm(n * p), n, p)
-betas <- matrix(1:NC, ncol=NC, nrow=p, byrow=TRUE)
-betas[(p-5):p,]=0; betas <- rbind(rep(0,NC),betas)
-lv <- cbind(1,X) \%*\% betas
-probs <- exp(lv)/apply(exp(lv),1,sum)
-y <- apply(probs,1,function(prob){sample(1:NC, 1, TRUE, prob)})
-xout <- X
-eps <-0.05                          # \%10 contamination to only class 0 
-m <- ceiling(eps*n)
-xout[1:m,] <- xout[1:m,] + 10       # bad leverage points
-yout <- y
-
-\donttest{
-fit3    <- enetLTS(xout,yout,family="multinomial")
-weights(fit3)
-weights(fit3,vers="raw",index=TRUE)
+fit  <- enetLTS(GaussianExample$x, GaussianExample$y)
+fitb <- enetLTS(BinomialExample$x, BinomialExample$y, family = "binomial")
+fitm <- enetLTS(MultinomialExample$x, MultinomialExample$y, family = "multinomial")
+which(weights(fit)$wt == 0)
+which(weights(fitb)$wt == 0)
+w <- weights(fitm, vers = "both")
+table(raw = w$raw.wt, reweighted = w$wt)
 }
 }
-%-------------------------------------------------
 \author{
-Fatma Sevinc KURNAZ, Irene HOFFMANN, Peter FILZMOSER
-\cr Maintainer: Fatma Sevinc KURNAZ <fatmasevinckurnaz@gmail.com>;<fskurnaz@yildiz.edu.tr>}
-%-------------------------------------------------
+Fatma Sevinc Kurnaz, Irene Hoffmann, Peter Filzmoser
+\cr Maintainer: Fatma Sevinc Kurnaz <fatmasevinckurnaz@gmail.com>
+}
 \keyword{regression}
-\keyword{classification}
-
-

@@ -11,14 +11,12 @@ weight.multinomial <- function(md,c1=2.5,c2=5){
 
 ### weights for binomial
 weight.binomial <- function(x, y, beta, intercept, del){
-   if(intercept==TRUE){
-      pi <- exp(cbind(1,x)%*%beta)/(1+exp(cbind(1,x)%*%beta))
-      res <- (y - pi) / sqrt(pi*(1-pi))     ### pearson resiuals
-   } else{
-      pi <- exp(x%*%beta[-1])/(1+exp(x%*%beta[-1]))
-      res <- (y - pi) / sqrt(pi*(1-pi))
-   }
-   we <- as.integer(abs(res) <= qnorm(1-del))
+   eta <- if(intercept==TRUE) cbind(1,x)%*%beta else x%*%beta[-1]
+   ## plogis avoids Inf/Inf = NaN for large linear predictors (e.g. leverage points);
+   ## clipping keeps the Pearson residual finite
+   pi  <- pmin(pmax(plogis(eta), 1e-15), 1-1e-15)
+   res <- (y - pi) / sqrt(pi*(1-pi))     ### pearson resiuals
+   we  <- as.integer(abs(res) <= qnorm(1-del))
    return(we)
 }
 
