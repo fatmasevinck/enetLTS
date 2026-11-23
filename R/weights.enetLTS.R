@@ -1,7 +1,7 @@
-#### gives raw and reweighted
+## 0/1 weights of the raw and/or the reweighted fit
 
 weights.enetLTS <-
-   function(object,vers=c("reweighted","raw"),index=FALSE,...){
+   function(object,vers=c("reweighted","raw","both"),index=FALSE,...){
 
       vers <- match.arg(vers)
 
@@ -10,14 +10,21 @@ weights.enetLTS <-
          if (index==TRUE){
              names(wt) <- 1:length(wt)
          }
-         return(wt)
-      } 
-      if (vers=="raw"){
+         wfit <- list(wt=wt)
+      } else if (vers=="raw"){
          raw.wt <- object$raw.wt
          if (index==TRUE){
              names(raw.wt) <- 1:length(raw.wt)
          }
-         return(raw.wt)
-      } 
-   
+         wfit <- list(raw.wt=raw.wt)
+      } else if (vers=="both"){
+         wt <- object$wt
+         raw.wt <- object$raw.wt
+         if (index==TRUE){
+            names(wt) <- 1:length(wt)
+            names(raw.wt) <- 1:length(raw.wt)
+         }
+         wfit <- list(wt=wt,raw.wt=raw.wt)
+      }
+      return(wfit)
    }

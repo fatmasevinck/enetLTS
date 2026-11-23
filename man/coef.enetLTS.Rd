@@ -1,112 +1,82 @@
 \name{coef.enetLTS}
 \alias{coef.enetLTS}
-%-------------------------------------------------
-\title{
-coefficients from the \code{enetLTS} object
-}
-%-------------------------------------------------
+\title{Coefficients of an \code{"enetLTS"} fit}
 \description{
-  Extracts model coefficients from object
-  returned by regression model.
+Extracts the estimated coefficients of the reweighted or the raw fit.
 }
-%-------------------------------------------------
 \usage{
-  \method{coef}{enetLTS}(object,vers,zeros,...)
+\method{coef}{enetLTS}(object, vers = c("reweighted", "raw"), zeros = TRUE, ...)
 }
-%-------------------------------------------------
 \arguments{
-\item{object}{fitted \code{enetLTS} model object.}
-
-\item{vers}{a character string specifying for which fit to make
-  predictions. Possible values are \code{reweighted} (the default) for
-  predicting values from the reweighted fit, \code{raw} for predicting
-  values from the raw fit.}
-
-\item{zeros}{a logical indicating whether to give nonzero coefficients indices.
-(\code{TRUE}, the default) or to omit them (\code{FALSE}).}
-
-\item{\dots}{additional arguments from the \code{enetLTS} object if needed.}
+\item{object}{a fitted object of class \code{"enetLTS"}.}
+\item{vers}{a character string: \code{"reweighted"} (the default) for the
+  reweighted fit or \code{"raw"} for the raw fit.}
+\item{zeros}{logical; if \code{TRUE} (the default) all coefficients are returned,
+  if \code{FALSE} only the nonzero ones (for the multinomial family: the rows that
+  are nonzero in at least one class).}
+\item{\dots}{not used.}
 }
-%-------------------------------------------------
 \value{
-  a numeric vector (or a list object for family="multinomial") containing the requested coefficients.
+For \code{family = "gaussian"} and \code{"binomial"}, a named numeric vector: the
+intercept \code{"(Intercept)"} (if \code{intercept = TRUE}) followed by the
+slopes, named by the column names of \code{xx} (\code{x1}, \code{x2}, \dots if
+\code{xx} has no column names).
+For \code{family = "multinomial"}, a matrix with one row per coefficient (named as
+above) and one column per class.
 }
-%-------------------------------------------------
+\note{
+In versions before 1.2.0, \code{zeros = FALSE} returned the indices of the nonzero
+coefficients; these are now given by \code{\link{nonzeroCoef.enetLTS}}.
+}
 \seealso{
-\code{\link{enetLTS}},
-\code{\link{predict.enetLTS}},
-\code{\link{nonzeroCoef.enetLTS}}
+\code{\link{enetLTS}}, \code{\link{predict.enetLTS}},
+\code{\link{nonzeroCoef.enetLTS}}, \code{\link{print.enetLTS}}
 }
-%-------------------------------------------------
 \examples{
-## for gaussian
-
+## linear regression
 set.seed(86)
-n <- 100; p <- 25                             # number of observations and variables
-beta <- rep(0,p); beta[1:6] <- 1              # 10\% nonzero coefficients
-sigma <- 0.5                                  # controls signal-to-noise ratio
-x <- matrix(rnorm(n*p, sigma),nrow=n)
-e <- rnorm(n,0,1)                             # error terms
-eps <- 0.1                                    # contamination level
-m <- ceiling(eps*n)                           # observations to be contaminated
-eout <- e; eout[1:m] <- eout[1:m] + 10        # vertical outliers
-yout <- c(x \%*\% beta + sigma * eout)        # response
-xout <- x; xout[1:m,] <- xout[1:m,] + 10      # bad leverage points
+n <- 100; p <- 25                              # observations and variables
+beta <- c(rep(1, 6), rep(0, p - 6))            # six nonzero coefficients
+x <- matrix(rnorm(n * p), n, p)
+y <- drop(x \%*\% beta) + rnorm(n)
+m <- 10                                        # contaminated observations
+y[1:m] <- y[1:m] + 10                          # vertical outliers
+x[1:m, ] <- x[1:m, ] + 10                      # bad leverage points
+
+## logistic regression
+set.seed(86)
+n <- 100; p <- 25
+beta <- c(rep(1, 6), rep(0, p - 6))
+xb <- matrix(rnorm(n * p), n, p)
+yb <- rbinom(n, 1, plogis(drop(xb \%*\% beta)))
+mb <- 5
+i0 <- which(yb == 0)[1:mb]                      # observations of class 0 ...
+xb[i0, ] <- xb[i0, ] + 10                      # ... become bad leverage points
+
+## multinomial regression
+set.seed(86)
+n <- 120; p <- 15; K <- 3                      # observations, variables, classes
+Bm <- matrix(0, p, K)
+Bm[1:2, 1] <- 3; Bm[3:4, 2] <- 3; Bm[5:6, 3] <- 3
+xm <- matrix(rnorm(n * p), n, p)
+pr <- exp(xm \%*\% Bm); pr <- pr / rowSums(pr)
+ym <- apply(pr, 1, function(q) sample(K, 1, prob = q))
+mm <- 10
+xm[1:mm, 1:2] <- xm[1:mm, 1:2] + 5               # far out in the predictors of class 1 ...
+ym[1:mm] <- 3                                   # ... but labeled as class 3
 
 \donttest{
-fit1 <- enetLTS(xout,yout)
-coef(fit1)
-coef(fit1,vers="raw")
-coef(fit1,vers="reweighted",zeros=FALSE)
+fit  <- enetLTS(x, y)
+fitb <- enetLTS(xb, yb, family = "binomial")
+fitm <- enetLTS(xm, ym, family = "multinomial")
+coef(fit, zeros = FALSE)
+coef(fit, vers = "raw", zeros = FALSE)
+coef(fitb, zeros = FALSE)
+coef(fitm, zeros = FALSE)
 }
-
-
-## for binomial
-
-eps <-0.05                                     # \%10 contamination to only class 0
-m <- ceiling(eps*n)
-y <- sample(0:1,n,replace=TRUE)
-xout <- x
-xout[y==0,][1:m,] <- xout[1:m,] + 10;          # class 0
-yout <- y                                      # wrong classification for vertical outliers
-
-\donttest{
-fit2 <- enetLTS(xout,yout,family="binomial")
-coef(fit2)
-coef(fit2,vers="reweighted")
-coef(fit2,vers="raw",zeros=FALSE)
 }
-
-
-## for multinomial
-
-n <- 120; p <- 15
-NC <- 3                # number of groups
-X <- matrix(rnorm(n * p), n, p)
-betas <- matrix(1:NC, ncol=NC, nrow=p, byrow=TRUE)
-betas[(p-5):p,]=0; betas <- rbind(rep(0,NC),betas)
-lv <- cbind(1,X)\%*\%betas
-probs <- exp(lv)/apply(exp(lv),1,sum)
-y <- apply(probs,1,function(prob){sample(1:NC, 1, TRUE, prob)})
-xout <- X
-eps <-0.05                          # \%10 contamination to only class 0
-m <- ceiling(eps*n)
-xout[1:m,] <- xout[1:m,] + 10       # bad leverage points
-yout <- y
-
-\donttest{
-fit3    <- enetLTS(xout,yout,family="multinomial")
-coef(fit3)
-coef(fit3,vers="reweighted")
-coef(fit3,vers="raw",zeros=FALSE)
-}
-
-}
-%-------------------------------------------------
 \author{
-Fatma Sevinc KURNAZ, Irene HOFFMANN, Peter FILZMOSER
-\cr Maintainer: Fatma Sevinc KURNAZ <fatmasevinckurnaz@gmail.com>;<fskurnaz@yildiz.edu.tr>}
-%-------------------------------------------------
+Fatma Sevinc Kurnaz, Irene Hoffmann, Peter Filzmoser
+\cr Maintainer: Fatma Sevinc Kurnaz <fatmasevinckurnaz@gmail.com>
+}
 \keyword{regression}
-\keyword{classification}
-

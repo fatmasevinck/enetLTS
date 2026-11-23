@@ -1,30 +1,18 @@
-
-
 coef.enetLTS <-
-  function(object ,vers=c("reweighted","raw"), zeros=TRUE,...)
+  function(object, vers = c("reweighted", "raw"), zeros = TRUE, ...)
   {
-    vers=match.arg(vers)
-    nbeta <- predict.enetLTS(object,newX=object$inputs$xx,vers=vers,type="coefficients",...)
-    if (object$inputs$family=="gaussian" | object$inputs$family=="binomial") {
-      nbeta <- as.numeric(unlist(nbeta))
+    vers <- match.arg(vers)
+    b    <- if (vers == "reweighted") object$coefficients else object$raw.coefficients
+    labs <- colnames(object$inputs$xx)       # "(Intercept)", then the predictor names
+    if (is.matrix(b)) {                      # multinomial: one column per class
+      if (!is.null(labs) && length(labs) == nrow(b)) rownames(b) <- labs
+      if (!is.null(object$classnames) && length(object$classnames) == ncol(b))
+        colnames(b) <- object$classnames
+      if (!isTRUE(zeros)) b <- b[rowSums(b != 0) > 0, , drop = FALSE]
+    } else {
+      b <- as.numeric(b)
+      names(b) <- if (!is.null(labs) && length(labs) == length(b)) labs else seq_along(b)
+      if (!isTRUE(zeros)) b <- b[b != 0]
     }
-    if (isTRUE(zeros)) {
-      nbeta <- nbeta
-      names(nbeta) <- 1:length(nbeta)
-    } else if (!isTRUE(zeros)) {
-      nbeta <- nonzeroCoef.enetLTS(object,vers)
-      # namesbeta <- which(nbeta != 0)
-      # nbeta <- nbeta[nbeta != 0]
-      # names(nbeta) <- namesbeta
-    }
-    if (object$inputs$family=="multinomial") {
-      nbeta <- matrix(unlist(nbeta),ncol=length(object$classize))
-      colnames(nbeta) <- paste0("class", 1:(length(object$classize))) 
-      rownames(nbeta) <- 1:nrow(nbeta)
-    }
-    return(nbeta)
+    b
   }
-
-
-
-

@@ -1,38 +1,66 @@
 
 residuals.enetLTS <-
-  function(object,vers=c("reweighted","raw"),...){
-    
+  function(object,vers=c("reweighted","raw","both"),...){
+
     vers <- match.arg(vers)
-    
+    coefficients <- object$coefficients
+    raw.coefficients <- object$raw.coefficients
+    xx <- object$inputs$xx
+    yy <- object$inputs$yy
+
+
     if (vers=="reweighted"){
       if (object$inputs$family=="multinomial"){
-        yhat      <- object$inputs$xx %*% object$coefficients
-        probs     <- exp(yhat)/apply(exp(yhat),1,sum)
-        deviances <- (-apply(object$inputs$yy*log(probs),1,sum))
+        yhat      <- xx %*% coefficients
+        probs     <- multinomProbs(yhat)
+        deviances <- (-apply(yy*log(probs),1,sum))
         deviances[is.nan(deviances)] <- 0
         residuals <- deviances
       } else if (object$inputs$family=="binomial"){
-        residuals <-  -(object$inputs$yy * object$inputs$xx %*% object$coefficients) +
-          log(1+exp(object$inputs$xx %*% c(object$a0,object$coefficients)))
+        residuals <-  -(yy * xx %*% coefficients) +
+          log1pexp(xx %*% coefficients)
       } else if (object$inputs$family=="gaussian"){
-        residuals <- object$inputs$yy - object$inputs$xx %*% object$coefficients
+        residuals <- yy - xx %*% coefficients
       }
-      return(drop(residuals))
-    }  
-    if (vers=="raw"){
+      nfit <- list(residuals=drop(residuals))
+    } else if (vers=="raw"){
       if (object$inputs$family=="multinomial"){
-        raw.yhat      <- object$inputs$xx %*% object$raw.coefficients
-        raw.probs     <- exp(raw.yhat)/apply(exp(raw.yhat),1,sum)
-        raw.deviances <- (-apply(object$inputs$yy*log(raw.probs),1,sum))
+        raw.yhat      <- xx %*% raw.coefficients
+        raw.probs     <- multinomProbs(raw.yhat)
+        raw.deviances <- (-apply(yy*log(raw.probs),1,sum))
         raw.deviances[is.nan(raw.deviances)] <- 0
         raw.residuals <- raw.deviances
       } else if (object$inputs$family=="binomial"){
-        raw.residuals <- -(object$inputs$yy * object$inputs$xx %*% object$raw.coefficients) +
-          log(1+exp(object$inputs$xx %*% object$raw.coefficients))
+        raw.residuals <- -(yy * xx %*% raw.coefficients) +
+          log1pexp(xx %*% raw.coefficients)
       } else if (object$inputs$family=="gaussian"){
-        raw.residuals <- object$inputs$yy - object$inputs$xx %*% object$raw.coefficients
+        raw.residuals <- yy - xx %*% raw.coefficients
       }
-      return(drop(raw.residuals))
-    } 
-  }
+      nfit <- list(raw.residuals=drop(raw.residuals))
+    } else if (vers=="both"){
+      if (object$inputs$family=="multinomial"){
+        yhat      <- xx %*% coefficients
+        probs     <- multinomProbs(yhat)
+        deviances <- (-apply(yy*log(probs),1,sum))
+        deviances[is.nan(deviances)] <- 0
+        residuals <- deviances
 
+        raw.yhat      <- xx %*% raw.coefficients
+        raw.probs     <- multinomProbs(raw.yhat)
+        raw.deviances <- (-apply(yy*log(raw.probs),1,sum))
+        raw.deviances[is.nan(raw.deviances)] <- 0
+        raw.residuals <- raw.deviances
+
+      } else if (object$inputs$family=="binomial"){
+        residuals     <-  -(yy * xx %*% coefficients) +
+          log1pexp(xx %*% coefficients)
+        raw.residuals <- -(yy * xx %*% raw.coefficients) +
+          log1pexp(xx %*% raw.coefficients)
+      } else if (object$inputs$family=="gaussian"){
+        residuals     <- yy - xx %*% coefficients
+        raw.residuals <- yy - xx %*% raw.coefficients
+      }
+      nfit <- list(residuals=drop(residuals),raw.residuals=drop(raw.residuals))
+    }
+    nfit
+  }

@@ -12,13 +12,8 @@ addIntercept <- function(x, check = FALSE) {
 }
 
 
-uptrimMSE<- function(x,trim=0.1){
-   # computes trim% upper trimmed mean
-   return(mean(x[x<quantile(x,1-trim)]))
-}
-
+## mean of the smallest (1 - trim) share of the values (upper trimmed mean)
 uptrimCrit <- function(x,trim=0.1) {
-   # return(mean(x[x<quantile(x,1-trim,na.rm=TRUE)],na.rm=TRUE))
    return(mean(sort(x)[1:(length(x)*(1-trim))],na.rm=TRUE))
 }
 
@@ -36,8 +31,6 @@ winsorize.default <- function(x, standardized = FALSE, centerFun = median,
       scale <- attr(x, "scale")
    }
    ## winsorize standardized data
-   #   ind <- abs(x) > const           # observations in 'x' that need to be shrunken
-   #   x[ind] <- const * sign(x[ind])  # winsorize
    weights <- pmin(const / abs(x), 1)
    if(standardized && return == "weights") return(weights)
    x <- weights * x
@@ -49,5 +42,22 @@ winsorize.default <- function(x, standardized = FALSE, centerFun = median,
    x
 }
 
-utils::globalVariables(c("Comp.1", "Comp.2", "Wavelength", "residuals", "Groups"))
+utils::globalVariables(c("residuals", "index", "coef", "class", "FPR", "TPR", "X", "Y", "cls", "P", "status", "ind", "panel"))
 
+
+## Row-wise softmax of the linear predictors `eta` (n x k), computed without
+## overflow for large predictors.
+multinomProbs <- function(eta) {
+  eta <- as.matrix(eta)
+  p   <- exp(eta - apply(eta, 1, max))
+  p / rowSums(p)
+}
+
+## glmnet stops a path whose smallest lambdas do not converge (near-separable
+## classes) and returns the solutions for the larger lambdas; the warning about
+## it is dropped, all other warnings are passed on.
+quietPathEnd <- function(expr) {
+  withCallingHandlers(expr, warning = function(w) {
+    if (grepl("Convergence for", conditionMessage(w), fixed = TRUE)) invokeRestart("muffleWarning")
+  })
+}
