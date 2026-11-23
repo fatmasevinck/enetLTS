@@ -1,29 +1,31 @@
 Package: enetLTS
 Type: Package
-Title: Robust and Sparse Methods for High Dimensional Linear, Binary
-        and Multinomial Regression
+Title: Robust and Sparse Methods for High Dimensional Linear, Binary and
+        Multinomial Regression
 Version: 1.2.0
 Authors@R: c(
     person("Fatma Sevinc", "Kurnaz", role = c("aut", "cre"),
            email = "fatmasevinckurnaz@gmail.com"),
     person("Irene", "Hoffmann", role = "aut"),
     person("Peter", "Filzmoser", role = "aut"))
-Author: Fatma Sevinc Kurnaz [aut, cre], Irene Hoffmann [aut], Peter Filzmoser [aut]
-Maintainer: Fatma Sevinc Kurnaz <fatmasevinckurnaz@gmail.com>
 Description: Fully robust versions of the elastic net estimator for linear,
         binary and multinomial regression, in particular for high dimensional
         data. The algorithm searches for outlier-free subsets on which the
         classical elastic net estimator can be applied. A reweighting step is
         added to improve the statistical efficiency of the estimators. The
         tuning parameters of the elastic net penalty are selected by
-        cross-validation.
+        cross-validation. The methods are described in Kurnaz, Hoffmann and
+        Filzmoser (2018) <doi:10.1016/j.chemolab.2017.11.017> and in Kurnaz and
+        Filzmoser (2023) <doi:10.1007/s10618-023-00936-6>.
 Depends: R (>= 3.6.0)
-Imports: ggplot2 (>= 3.4.0), glmnet, parallel, stats, robustbase,
-        robustHD, grDevices, cvTools, grid, reshape
-Suggests: knitr, rmarkdown, testthat
+Imports: ggplot2 (>= 3.4.0), glmnet, parallel, stats, robustbase, robustHD,
+        grDevices
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 License: GPL (>= 3)
+URL: https://github.com/fatmasevinck/enetLTS
+BugReports: https://github.com/fatmasevinck/enetLTS/issues
 Encoding: UTF-8
+Language: en-US
 LazyData: true
 NeedsCompilation: no
-Packaged: 2026-11-18 14:31:06 UTC; root

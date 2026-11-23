@@ -6,12 +6,6 @@ export(enetLTS, cv.enetLTS, print.enetLTS, predict.enetLTS, residuals.enetLTS, w
 import(ggplot2)
 import(glmnet)
 import(robustHD)
-importFrom(cvTools, cvFolds)
-importFrom(reshape,melt)
-importFrom(grid,grid.newpage)
-importFrom(grid,pushViewport)
-importFrom(grid,viewport)
-importFrom(grid,grid.layout)
 import(parallel)
 
 import(robustbase)
