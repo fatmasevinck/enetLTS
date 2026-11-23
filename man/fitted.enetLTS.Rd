@@ -29,15 +29,44 @@ class (multinomial, \code{type = "response"}) or a vector of class labels
 \code{\link{enetLTS}}, \code{\link{predict.enetLTS}}, \code{\link{residuals.enetLTS}}
 }
 \examples{
-data("GaussianExample")
-data("BinomialExample")
-data("MultinomialExample")
+## linear regression
+set.seed(86)
+n <- 100; p <- 25                              # observations and variables
+beta <- c(rep(1, 6), rep(0, p - 6))            # six nonzero coefficients
+x <- matrix(rnorm(n * p), n, p)
+y <- drop(x \%*\% beta) + rnorm(n)
+m <- 10                                        # contaminated observations
+y[1:m] <- y[1:m] + 10                          # vertical outliers
+x[1:m, ] <- x[1:m, ] + 10                      # bad leverage points
+
+## logistic regression
+set.seed(86)
+n <- 100; p <- 25
+beta <- c(rep(1, 6), rep(0, p - 6))
+xb <- matrix(rnorm(n * p), n, p)
+yb <- rbinom(n, 1, plogis(drop(xb \%*\% beta)))
+mb <- 5
+i0 <- which(yb == 0)[1:mb]                      # observations of class 0 ...
+xb[i0, ] <- xb[i0, ] + 10                      # ... become bad leverage points
+
+## multinomial regression
+set.seed(86)
+n <- 120; p <- 15; K <- 3                      # observations, variables, classes
+Bm <- matrix(0, p, K)
+Bm[1:2, 1] <- 3; Bm[3:4, 2] <- 3; Bm[5:6, 3] <- 3
+xm <- matrix(rnorm(n * p), n, p)
+pr <- exp(xm \%*\% Bm); pr <- pr / rowSums(pr)
+ym <- apply(pr, 1, function(q) sample(K, 1, prob = q))
+mm <- 10
+xm[1:mm, 1:2] <- xm[1:mm, 1:2] + 5               # far out in the predictors of class 1 ...
+ym[1:mm] <- 3                                   # ... but labeled as class 3
+
 \donttest{
-fit  <- enetLTS(GaussianExample$x, GaussianExample$y)
-fitb <- enetLTS(BinomialExample$x, BinomialExample$y, family = "binomial")
-fitm <- enetLTS(MultinomialExample$x, MultinomialExample$y, family = "multinomial")
+fit  <- enetLTS(x, y)
+fitb <- enetLTS(xb, yb, family = "binomial")
+fitm <- enetLTS(xm, ym, family = "multinomial")
 head(fitted(fit)$fitted.values)
-table(fitted(fitb, type = "class")$fitted.values, BinomialExample$y)
+table(fitted(fitb, type = "class")$fitted.values, yb)
 head(fitted(fitm, vers = "raw")$raw.fitted.values)
 }
 }

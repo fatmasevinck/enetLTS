@@ -69,16 +69,37 @@ Vignette of the R package \pkg{glmnet}.
 \code{\link{enetLTS}}, \code{\link{predict.enetLTS}}, \code{\link{outliers.enetLTS}}
 }
 \examples{
-data("GaussianExample")
-data("BinomialExample")
-\donttest{
-fit <- enetLTS(GaussianExample$x, GaussianExample$y)
-assess.enetLTS(fit, GaussianExample$xtest, GaussianExample$ytest)
+## linear regression
+set.seed(86)
+n <- 100; p <- 25                              # observations and variables
+beta <- c(rep(1, 6), rep(0, p - 6))            # six nonzero coefficients
+x <- matrix(rnorm(n * p), n, p)
+y <- drop(x \%*\% beta) + rnorm(n)
+xt <- matrix(rnorm(200 * p), 200, p)           # clean test data
+yt <- drop(xt \%*\% beta) + rnorm(200)
+m <- 10                                        # contaminated observations
+y[1:m] <- y[1:m] + 10                          # vertical outliers
+x[1:m, ] <- x[1:m, ] + 10                      # bad leverage points
 
-fitb <- enetLTS(BinomialExample$x, BinomialExample$y, family = "binomial")
-assess.enetLTS(fitb, BinomialExample$xtest, BinomialExample$ytest)
-confusion.enetLTS(fitb, BinomialExample$xtest, BinomialExample$ytest)
-roc.enetLTS(fitb, BinomialExample$xtest, BinomialExample$ytest, plot = TRUE)
+## logistic regression
+set.seed(86)
+n <- 100; p <- 25
+beta <- c(rep(1, 6), rep(0, p - 6))
+xb <- matrix(rnorm(n * p), n, p)
+yb <- rbinom(n, 1, plogis(drop(xb \%*\% beta)))
+xbt <- matrix(rnorm(200 * p), 200, p)          # clean test data
+ybt <- rbinom(200, 1, plogis(drop(xbt \%*\% beta)))
+mb <- 5
+i0 <- which(yb == 0)[1:mb]                      # observations of class 0 ...
+xb[i0, ] <- xb[i0, ] + 10                      # ... become bad leverage points
+
+\donttest{
+fit  <- enetLTS(x, y)
+fitb <- enetLTS(xb, yb, family = "binomial")
+assess.enetLTS(fit, xt, yt)
+assess.enetLTS(fitb, xbt, ybt)
+confusion.enetLTS(fitb, xbt, ybt)
+roc.enetLTS(fitb, xbt, ybt, plot = TRUE)
 }
 }
 \author{

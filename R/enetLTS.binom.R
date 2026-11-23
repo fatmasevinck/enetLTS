@@ -56,7 +56,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
    alpha0 <- alphabest; lambda0 <- lambdabest      # (alpha, lambda) of the raw fit, for $objective
    if (scal){
      xs <- standardize.x(xx, index=indexbest, centerFun=mean, scaleFun=sd)
-     ys <- yy # # not centered for binomail
+     ys <- yy                # not centered for binomial
 
      fit <- glmnet(xs[indexbest,], ys[indexbest], family, alpha=alphabest, lambda=lambdabest,
                    standardize=FALSE, intercept=FALSE)
@@ -82,7 +82,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
      }
 
      fitw <- glmnet(xss[which(raw.wt==1),],yss[which(raw.wt==1)],family,alpha=alphabest,lambda=lambdaw,
-                    standardize=FALSE,intercept=FALSE)  ## now take raw.wt instead of index
+                    standardize=FALSE,intercept=FALSE)
 
      a0 <- if (intercept==FALSE) 0 else drop(fitw$a0 -
                                                as.vector(as.matrix(fitw$beta)) %*% (attr(xss,"center") / attr(xss,"scale")))
@@ -91,7 +91,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
      wgt <- weight.binomial(xx,yy,c(a0,coefficients),intercept,del)
 
 
-   } else { # nonscaled
+   } else {                # scal = FALSE
      fit <- glmnet(x[indexbest,], y[indexbest], family, alpha=alphabest, lambda=lambdabest,
                    standardize=FALSE, intercept=FALSE)
 
@@ -111,7 +111,7 @@ enetLTS.binom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvar
                             alpha=alphabest,standardize=FALSE,intercept=FALSE,type.measure="mse")$lambda.min
      }
      fitw <- glmnet(x[which(raw.wt==1),],y[which(raw.wt==1)],family,alpha=alphabest,lambda=lambdaw,
-                    standardize=FALSE,intercept=FALSE)  ## now we take raw.wt instead of index
+                    standardize=FALSE,intercept=FALSE)
 
      a0 <- if (intercept==FALSE) 0 else drop(fitw$a0 - as.vector(as.matrix(fitw$beta)) %*% (attr(x,"center") / attr(x,"scale")))
      coefficients <- drop(as.matrix(fitw$beta) / attr(x,"scale"))

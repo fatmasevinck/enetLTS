@@ -77,7 +77,7 @@ enetLTS.gaus <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars
      }
      
      fitw <- glmnet(xss[which(raw.wt==1),], yss[which(raw.wt==1)], alpha=alphabest, lambda=lambdaw,
-                    standardize=FALSE, intercept=FALSE)  ## now take raw.wt instead of index
+                    standardize=FALSE, intercept=FALSE)
      a0                   <- if (intercept==FALSE) 0 else drop(attr(yss,"center") + fitw$a0 - 
                                                as.vector(as.matrix(fitw$beta)) %*% (attr(xss,"center") / attr(xss,"scale")))
      coefficients         <- drop(as.matrix(fitw$beta)/attr(xss,"scale"))
@@ -85,7 +85,7 @@ enetLTS.gaus <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars
      reweighted.residuals <- yy - cbind(1,xx) %*% c(a0,coefficients)
      wgt <- weight.gaussian(reweighted.residuals, raw.wt==1, del)$we
      
-   } else { # nonscaled
+   } else {                # scal = FALSE
      fit <- glmnet(x[indexbest,], y[indexbest], alpha=alphabest, lambda=lambdabest,
                    standardize=FALSE, intercept=FALSE)
      a00                  <- if (intercept==FALSE) 0 else drop(attr(y,"center") + fit$a0 - 
@@ -105,14 +105,14 @@ enetLTS.gaus <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, nvars
                             standardize=FALSE, intercept=FALSE, type.measure="mse")$lambda.min
      }
      fitw <- glmnet(x[which(raw.wt==1),], y[which(raw.wt==1)], alpha=alphabest, lambda=lambdaw,
-                    standardize=FALSE, intercept=FALSE)  ## now we take raw.wt instead of index
+                    standardize=FALSE, intercept=FALSE)
      
      a0                   <- if (intercept==FALSE) 0 else drop(attr(y,"center") + 
                                                fitw$a0-as.vector(as.matrix(fitw$beta))%*%(attr(x,"center")/attr(x,"scale")))
      coefficients         <- drop(as.matrix(fitw$beta)/attr(x,"scale"))
      reweighted.residuals <-  yy - cbind(1,xx) %*% c(a0,coefficients)
      wgt                  <- weight.gaussian(reweighted.residuals, raw.wt==1, del)$we
-     ## back transformed to the original scale
+     ## back-transformed to the original scale
    }
    num.nonzerocoef  <- sum(coefficients!=0)
    

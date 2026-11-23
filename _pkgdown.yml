@@ -1,0 +1,27 @@
+url: ~
+template:
+  bootstrap: 5
+  bootswatch: flatly
+  bslib:
+    base_font: "-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif"
+    code_font: "SFMono-Regular, Menlo, Consolas, Liberation Mono, monospace"
+    font_scale: 1.05
+development:
+  mode: release
+navbar:
+  structure:
+    left: [intro, reference, articles]
+    right: [search]
+articles:
+  - title: Get started
+    navbar: ~
+    contents: [enetLTS]
+reference:
+  - title: Fitting
+    contents: [enetLTS, cv.enetLTS, lambda00]
+  - title: Extracting results
+    contents: [coef.enetLTS, fitted.enetLTS, residuals.enetLTS, weights.enetLTS, nonzeroCoef.enetLTS, predict.enetLTS, print.enetLTS]
+  - title: Outliers and assessment
+    contents: [outliers.enetLTS, assess.enetLTS]
+  - title: Plots
+    contents: [plot.enetLTS, plotCoef.enetLTS, plotResid.enetLTS, plotDiagnostic.enetLTS]

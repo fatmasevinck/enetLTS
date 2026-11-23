@@ -20,8 +20,7 @@
 
 ## Fold membership of every observation: random within each group of
 ## `groups`, folds of (almost) equal size. This is `cvTools::cvFolds(type =
-## "random")` applied group-wise and consumes random numbers in the same order,
-## so a given seed gives the same folds as before.
+## "random")` applied group-wise.
 cvFoldIds <- function(groups, nfold) {
   ids <- integer(length(groups))
   for (g in sort(unique(groups))) {

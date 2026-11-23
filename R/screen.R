@@ -23,14 +23,14 @@ leverageScreen <- function(x, kmax = 10, varp = 0.9, level = 0.975, maxfrac = 0.
   if (!is.finite(k) || k < 1) return(rep(FALSE, n))
   V  <- ev$v[, seq_len(k), drop = FALSE]
   tt <- xr %*% V
-  sd <- tryCatch({
+  rdist <- tryCatch({
     mcd <- robustbase::covMcd(tt, alpha = 0.75, nsamp = 100)
     sqrt(mahalanobis(tt, mcd$center, mcd$cov))
   }, error = function(e) NULL)
-  if (is.null(sd) || any(!is.finite(sd)) || median(sd) <= 0) return(rep(FALSE, n))
-  sd <- sd * sqrt(qchisq(0.5, k)) / median(sd)
-  flag <- sd > sqrt(qchisq(level, k))
+  if (is.null(rdist) || any(!is.finite(rdist)) || median(rdist) <= 0) return(rep(FALSE, n))
+  rdist <- rdist * sqrt(qchisq(0.5, k)) / median(rdist)
+  flag <- rdist > sqrt(qchisq(level, k))
   maxn <- floor(maxfrac * n)
-  if (sum(flag) > maxn) flag <- rank(-sd, ties.method = "first") <= maxn
+  if (sum(flag) > maxn) flag <- rank(-rdist, ties.method = "first") <= maxn
   flag
 }

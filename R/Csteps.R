@@ -103,9 +103,8 @@ CStep.multinom <- function(x, y, indx, h, hsize, alpha, lambda, scal) {
 
   # The MCD uses random subsamples; seeding it from the subset makes the C-step
   # a deterministic function of its input, whichever worker evaluates it. The
-  # score space has at most k dimensions, so 50 subsamples (instead of 500) give
-  # practically the same subsets (99.3-99.8% overlap, the same as two different
-  # seeds) at a quarter of the cost.
+  # score space has at most k dimensions, so 50 subsamples are used instead of
+  # the default 500 to save computing time.
   zj <- zj.svd$u[, seq_len(svdrank), drop = FALSE]
   localSeed(subsetSeed(indx), {
     for (j in seq_len(k)) {

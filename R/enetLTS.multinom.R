@@ -28,7 +28,7 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
     if (minclass<=1) stop ( "one multinomial has 1 or 0 observations; not allowed" )
     k <- as.integer(length(classize))
     yy <- diag(ny)[as.integer(class_sizes), , drop = FALSE]
-  } else if (!is.null(k) & k[2]>=2){   # if yy is a matrix
+  } else if (!is.null(k) & k[2]>=2){   # yy is an indicator matrix
     nk <- k[1]
     if (nk!=nobs) stop ( "x and y have different number of rows in call to enetLTS", call.=FALSE )
     k <- as.integer(k[2])
@@ -141,7 +141,7 @@ enetLTS.multinom <- function(xx, yy, alphas, lambdas, lambdaw, h, hsize, nobs, n
      zjw     <- drop(predict(fitw,newx=xss,type="link"))
      wt      <- if (isTRUE(crossfit)) raw.wt else multinomReweight(zjw, yss)
      
-   } else { # nonscaled
+   } else {                # scal = FALSE
      fit <- glmnet(xx[indexbest,], yy[indexbest,], family, alpha=alphabest, lambda=lambdabest,
                    standardize=FALSE, intercept=FALSE,type.multinomial=typ)
      a00 <- if (intercept==FALSE) rep(0,k) else drop(t(fit$a0)) 

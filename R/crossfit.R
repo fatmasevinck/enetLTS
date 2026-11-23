@@ -7,7 +7,7 @@
 ## them; every later step (reweighting, choice of alpha and lambda) then inherits
 ## a subset that favours false positives. Here the residuals that decide who is
 ## kept are cross-fitted: an observation is never judged by a model that has seen
-## it. See NEWS for the simulation evidence.
+## it.
 ## -----------------------------------------------------------------------------
 
 ## Alphas used inside the refinement: positive values of the user's grid, thinned.
@@ -120,8 +120,8 @@ multinomProbCut <- function(P, target) {
 multinomCrossfitPick <- function(x, cls, K, H, alphas, nfold) {
   fid <- sample(rep(seq_len(nfold), length.out = length(H)))
   cvs <- lapply(alphas, function(a)
-    cv.glmnet(x[H, , drop = FALSE], factor(cls[H], levels = seq_len(K)), family = "multinomial", alpha = a,
-              foldid = fid, standardize = FALSE, type.measure = "deviance"))
+    quietPathEnd(cv.glmnet(x[H, , drop = FALSE], factor(cls[H], levels = seq_len(K)), family = "multinomial",
+                           alpha = a, foldid = fid, standardize = FALSE, type.measure = "deviance")))
   i <- which.min(vapply(cvs, function(z) min(z$cvm), numeric(1)))
   list(alpha = alphas[i], lambda = cvs[[i]]$lambda.1se)
 }
@@ -132,7 +132,7 @@ multinomCrossfitPick <- function(x, cls, K, H, alphas, nfold) {
 ## whose cross-fitted sqrt(loss) lies within `wk` robust standard deviations
 ## (median / MAD) of the class [option enetLTS.wrule = "mad"; see below for the
 ## default rule]. wk = 3.5 (not qnorm(1 - del) = 2.24): in the simulations
-## the narrower cut dropped well-labelled boundary observations and made the fit too
+## the narrower cut dropped well-labeled boundary observations and made the fit too
 ## sparse. `del` is used by the default rule (cut calibrated to 2 * del).
 multinomCrossfitTrim <- function(x, cls, K, H0, hsize, alphas, nfold, del, iters = 4, wk = 3.5) {
   pool <- seq_len(nrow(x)); ag <- multinomCrossfitAlphas(alphas); H <- H0
@@ -146,8 +146,8 @@ multinomCrossfitTrim <- function(x, cls, K, H0, hsize, alphas, nfold, del, iters
     H <- Hn
   }
   if (identical(getOption("enetLTS.wrule", "full"), "mad")) {
-    ## earlier rule (kept for comparison, option enetLTS.wrule = "mad"): within every class, cross-fitted
-    ## sqrt(loss) within wk robust standard deviations of the class median
+    ## option enetLTS.wrule = "mad": within every class, cross-fitted sqrt(loss)
+    ## within wk robust standard deviations of the class median
     W <- unlist(lapply(seq_len(K), function(l) {
       ix <- pool[cls == l]; s <- sqrt(loss[ix])
       ix[s <= median(s) + wk * 1.4826 * mad(s)] }))
@@ -178,8 +178,9 @@ finalAlphaGrid <- function(alphas, grid) {
 multinomCrossfitFinal <- function(xw, yw, nfold, typ, alphas = c(0, 0.1, 0.3, 0.5, 0.7, 1)) {
   fid <- sample(rep(seq_len(nfold), length.out = nrow(xw)))
   cvs <- lapply(alphas, function(a)
-    try(cv.glmnet(xw, yw, family = "multinomial", alpha = a, foldid = fid, standardize = FALSE,
-                  intercept = TRUE, type.multinomial = typ, type.measure = "deviance"), silent = TRUE))
+    try(quietPathEnd(cv.glmnet(xw, yw, family = "multinomial", alpha = a, foldid = fid, standardize = FALSE,
+                               intercept = TRUE, type.multinomial = typ, type.measure = "deviance")),
+        silent = TRUE))
   ok  <- !vapply(cvs, inherits, logical(1), "try-error")
   cvs <- cvs[ok]; alphas <- alphas[ok]
   i   <- which.min(vapply(cvs, function(z) min(z$cvm), numeric(1)))

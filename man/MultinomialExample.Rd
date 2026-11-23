@@ -21,8 +21,8 @@ The predictors are independent standard normal. Each class is driven by its own 
 \eqn{\beta_{5,3} = \beta_{6,3} = 3} (class 3); the class probabilities follow the multinomial
 logistic model. The first 15 observations are contaminated: predictors 1 and 2 are shifted by 5
 (far out in the direction of class 1) and the label is set to 3, so they are bad leverage points.
-Values are rounded to three decimals. The generating code is in the \code{data-raw} directory of
-the package sources.
+Values are rounded to three decimals. The generating code is in the \code{data-raw} directory of the
+package repository on GitHub.
 }
 \examples{
 data("MultinomialExample")

@@ -1,4 +1,3 @@
-
 enetLTS <-
    function(xx,
             yy,
@@ -44,7 +43,7 @@ enetLTS <-
       if(family=="gaussian" && type.response=="class") stop("'class' is not available for gaussian")
 
       scal      <- isTRUE(scal)
-      # default: cross-fitted trimming for the multinomial family (needs scal = TRUE), off otherwise
+      # default: cross-fitted trimming for the multinomial family with scal = TRUE, off otherwise
       if (is.null(crossfit)) crossfit <- (family == "multinomial" && scal)
       intercept <- isTRUE(intercept)
       plot      <- isTRUE(crit.plot)
@@ -55,7 +54,8 @@ enetLTS <-
       alphas    <- as.double(alphas)
 
       ncx       <- dim(xx)
-      if (is.null(ncx) | (ncx[2]<=1)) stop ("X should be a matrix with 2 or more columns")
+      if (is.null(ncx) || (ncx[2]<=1)) stop ("X should be a matrix with 2 or more columns")
+      if (anyNA(xx) || anyNA(yy)) stop("missing values in 'xx' or 'yy' are not allowed")
 
       xx        <- addColnames(as.matrix(xx))
       if (family == "binomial" && is.factor(yy)) {
@@ -72,7 +72,7 @@ enetLTS <-
       }
       h         <- floor((nobs+1)*hsize)
 
-      yy        <- drop(yy)   # dont use matrix
+      yy        <- drop(yy)   # a one-column matrix becomes a vector
       dimy      <- dim(yy)
       nrowy     <- ifelse(is.null(dimy), length(yy), dimy[1])
 
@@ -83,7 +83,7 @@ enetLTS <-
 
       nsamp <- rep(nsamp, length.out=2)
       if(!is.numeric(nsamp) || any(!is.finite(nsamp))) {
-        nsamp <- formals$nsamp()
+        nsamp <- c(500, 10)
         warning("missing or infinite values in 'nsamp'; using default values")
       } else nsamp <- as.integer(nsamp)
       s1 <- nsamp[2]  # the number of subsamples to keep after the first phase
@@ -95,7 +95,7 @@ enetLTS <-
 
       tol <- rep(tol, length.out=1)
       if(!is.numeric(tol) || !is.finite(tol)) {
-        tol <- formals()$tol
+        tol <- -1e6
         warning("missing or infinite value of 'tol'; using default value")
       }
 

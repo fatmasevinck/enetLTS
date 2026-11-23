@@ -1,5 +1,5 @@
 ## Common style of the enetLTS plots.
-## Colours: regular observations are blue, flagged observations red
+## Colors: regular observations are blue, flagged observations red
 ## (always together with a different shape, so the distinction never relies on
 ## color alone); classes use blue, red and green, and are always shown by
 ## shape as well, so that they remain distinguishable under color vision deficiency.
@@ -86,7 +86,7 @@
   }
   lev  <- levels(d$cls)
   cols <- if (K <= length(.enetLTS_pal$classes)) .enetLTS_pal$classes[seq_len(K)] else grDevices::hcl.colors(K, "Dark 3")
-  cols <- stats::setNames(cols, lev)                 # colours tied to the class labels
+  cols <- stats::setNames(cols, lev)                 # colors tied to the class labels
   shp  <- stats::setNames(rep_len(.classShapes, K), lev)
   ## second legend for the outlier status: open = regular, filled = flagged
   slab <- c("regular observation", if (grepl("best subset", flagLabel)) "not in best subset" else "outlier")

@@ -52,3 +52,12 @@ multinomProbs <- function(eta) {
   p   <- exp(eta - apply(eta, 1, max))
   p / rowSums(p)
 }
+
+## glmnet stops a path whose smallest lambdas do not converge (near-separable
+## classes) and returns the solutions for the larger lambdas; the warning about
+## it is dropped, all other warnings are passed on.
+quietPathEnd <- function(expr) {
+  withCallingHandlers(expr, warning = function(w) {
+    if (grepl("Convergence for", conditionMessage(w), fixed = TRUE)) invokeRestart("muffleWarning")
+  })
+}

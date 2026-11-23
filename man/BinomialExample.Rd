@@ -22,8 +22,8 @@ The first 20 predictors are informative (\eqn{\beta_j = 1}) and correlated with
 \eqn{0.5^{|j-k|}}. The response is \eqn{y = 1} if \eqn{1 + x^\top\beta + \varepsilon > 0} with
 \eqn{\varepsilon \sim N(0,1)}, and \eqn{y = 0} otherwise. The first 10\% of the observations of
 class 0 (4 observations) are contaminated: their informative predictors are drawn from \eqn{N(20, 1)} while their
-label stays 0, so they are bad leverage points. Values are rounded to three decimals. The
-generating code is in the \code{data-raw} directory of the package sources.
+label stays 0, so they are bad leverage points. Values are rounded to three decimals. The generating code is in the \code{data-raw} directory of the
+package repository on GitHub.
 }
 \references{
 Kurnaz, F.S., Hoffmann, I. and Filzmoser, P. (2018). Robust and sparse

@@ -24,8 +24,8 @@ The predictors form three independent blocks: two informative blocks of 10 predi
 The first 10 observations are contaminated: their informative predictors are drawn from
 \eqn{N(20, 1)} and their errors from \eqn{N(20\,\hat\sigma_y, 1)}, where \eqn{\hat\sigma_y} is the
 standard deviation of the clean response, so they are both leverage points and vertical outliers.
-Values are rounded to three decimals. The generating code is in the \code{data-raw} directory of
-the package sources.
+Values are rounded to three decimals. The generating code is in the \code{data-raw} directory of the
+package repository on GitHub.
 }
 \references{
 Kurnaz, F.S., Hoffmann, I. and Filzmoser, P. (2018). Robust and sparse
