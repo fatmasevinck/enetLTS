@@ -1,0 +1,11 @@
+^\.github$
+^LICENSE$
+^CONTRIBUTING\.md$
+^enetLTS\.Rproj$
+^paper$
+^_pkgdown\.yml$
+^docs$
+^data-raw$
+^README\.md$
+^cran-comments\.md$
+^vignettes/.*\.orig$
