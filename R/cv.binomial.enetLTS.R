@@ -103,7 +103,7 @@ cv.binomial.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
       ggmspe <- evalCrit
       rownames(ggmspe) <- alphas
       colnames(ggmspe) <- lambdas
-      ggmspe <- melt(ggmspe)
+      ggmspe <- reshape::melt(ggmspe)
       if (is.null(index)){
 
          names(ggmspe) <- c("lambda","alpha","TMNLL")
