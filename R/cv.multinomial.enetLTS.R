@@ -126,7 +126,7 @@ cv.multinom.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
       ggmspe <- evalCrit
       rownames(ggmspe) <- alphas
       colnames(ggmspe) <- lambdas
-      ggmspe <- melt(ggmspe)
+      ggmspe <- reshape::melt(ggmspe)
       if (is.null(index)){
          names(ggmspe) <- c("lambda","alpha","TMNLL")
          mspeplot <- ggplot(ggmspe,aes(x=as.factor(alpha),y=as.factor(lambda),fill=TMNLL)) +
