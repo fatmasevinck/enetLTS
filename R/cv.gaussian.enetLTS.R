@@ -28,7 +28,7 @@ cv.gaussian.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
          }
       evalCritl <- rep(NA,repl)
       for (l in 1:repl){ # repeate CV
-         folds <- cvFolds(length(y), K = nfold, R = 1, type = "random")
+         folds <- cvTools::cvFolds(length(y), K = nfold, R = 1, type = "random")
          loss <- rep(NA,nrow(x))
          for (f in 1:nfold) {
             xtrain <- x[folds$subsets[folds$which != f, 1], ]
