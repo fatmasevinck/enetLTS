@@ -36,7 +36,7 @@ cv.multinom.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
          }
       evalCritl <- rep(NA,repl)
       for (l in 1:repl){ # repeate CV
-         folds_k <- lapply(1:k, function(c,y,nfold){cvFolds(length(y[,c][y[,c]==1]),K=nfold,R=1,type="random")},y,nfold)
+         folds_k <- lapply(1:k, function(c,y,nfold){cvTools::cvFolds(length(y[,c][y[,c]==1]),K=nfold,R=1,type="random")},y,nfold)
         # print(folds_k)
          loss <- lapply(1:k, function(c,y){rep(NA,length(y[,c][y[,c]==1]))},y)
          for (f in 1:nfold) {
