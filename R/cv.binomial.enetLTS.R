@@ -27,8 +27,8 @@ cv.binomial.enetLTS <- function(index=NULL, xx, yy, alphas, lambdas,
          }
       evalCritl <- rep(NA,repl)
       for (l in 1:repl){ # repeate CV
-         folds0 <- cvFolds(length(y[y==0]), K = nfold, R = 1, type = "random")
-         folds1 <- cvFolds(length(y[y==1]), K = nfold, R = 1, type = "random")
+         folds0 <- cvTools::cvFolds(length(y[y==0]), K = nfold, R = 1, type = "random")
+         folds1 <- cvTools::cvFolds(length(y[y==1]), K = nfold, R = 1, type = "random")
          loss0 <- rep(NA,sum(y==0))
          loss1 <- rep(NA,sum(y==1))
          for (f in 1:nfold) {
