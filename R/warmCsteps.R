@@ -25,10 +25,14 @@ warmCsteps.mod <-
       startCstep500 <- startCstep500.fun(x, y, h, hsize, alpha, lambda, nsamp, s1,
                                          scal, ncores, nCsteps, tol, seed)
       
-      if (length(alphas)==1 & length(lambdas)==1) {
-         indexall[,1,1] <- startCstep500
-         return(indexall=indexall)
-      } else if (length(alphas)>1 & length(lambdas)==1) {
+      
+if (length(alphas) == 1L && length(lambdas) == 1L) {
+   indexall <- array(
+      startCstep500,
+      dim = c(length(startCstep500), 1L, 1L)
+   )
+   return(indexall)
+} else if (length(alphas)>1 & length(lambdas)==1) {
          firstindex <- startCstep500
          indexall <- run.lambda.alphas(x, y, h, hsize, alphas, lambdas, firstindex, scal, nCsteps, tol, CStep.fun)
          return(indexall=indexall)
