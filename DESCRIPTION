@@ -19,8 +19,8 @@ Description: Fully robust versions of the elastic net estimator for linear,
         cross-validation.
 Depends: R (>= 3.6.0)
 Imports: ggplot2 (>= 3.4.0), glmnet, parallel, stats, robustbase,
-        robustHD, grDevices, cvTools
-Suggests: knitr, rmarkdown
+        robustHD, grDevices, cvTools, grid, reshape
+Suggests: knitr, rmarkdown, testthat
 VignetteBuilder: knitr
 License: GPL (>= 3)
 Encoding: UTF-8
